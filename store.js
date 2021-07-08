@@ -23,6 +23,7 @@ class Store {
     "/": true,
     "/registration": true,
     "/resetpassword/email": true,
+    "/email": true,
   }
 
   @action setLoading = (page) => {

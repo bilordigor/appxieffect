@@ -7,8 +7,8 @@ import { CircularProgress, Divider, Paper, Grid, AppBar, Toolbar, Typography, Cs
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 
 import { inject, observer } from 'mobx-react'
-import Navigation from '../../components/main/Menu/Navigation';
-import Background from '../../components/app/help/background/background';
+import BackgroundImg from '../../components/OtherComponents/Background/BackgroundImg'
+import Loading from './../../components/OtherComponents/Loading/Loading';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -139,8 +139,9 @@ const Email = inject('store')(observer((props) => {
                     Ξ Регистрация
                 </title>
             </Head>
+            {store.loading["/email"] && <Loading />}
             <div className={classes.root}>
-                <Background src={wallpapers()} />
+                <BackgroundImg src="/wallpapers/hp4.jpg" />
                 <Grid container direction="column" justifyContent="flex-start" alignItems="center" className={classes.gridroot}>
                     <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelMain}>
                         <Typography className={classes.labelMain}> Подтверждение почты </Typography>

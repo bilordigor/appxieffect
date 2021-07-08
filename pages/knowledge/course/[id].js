@@ -4,8 +4,8 @@ import Head from 'next/head'
 import { useRouter } from "next/router";
 
 import { Divider, Paper, Grid, FormControlLabel, makeStyles, useTheme, Menu, Hidden, IconButton, InputBase, Switch, Typography } from '@material-ui/core'
-import SearchIcon from '@material-ui/icons/Search';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+// import SearchIcon from '@material-ui/icons/Search';
+// import MoreVertIcon from '@material-ui/icons/MoreVert';
 //import CoursesList from '../../../components/app/EducationPage/CoursesList';
 // import Chipper from '../../../components/app/EducationPage/Chipper';
 

@@ -12,7 +12,7 @@ import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import { inject, observer } from 'mobx-react'
 
 import NavigationAll from '../../components/OtherComponents/Navigation/NavigationAll'
-import Background from '../../components/OtherComponents/Background/Background.js'
+//import Background from '../../components/OtherComponents/Background/Background.js'
 import Courses from './../../components/PagesComponents/Knowledge/Courses';
 import CourseEditor from './../../components/PagesComponents/Knowledge/CourseEditor';
 //import Moderate from '../../components/PagesComponents/Knowledge/Moderate';
