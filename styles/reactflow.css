@@ -1,0 +1,32 @@
+.react-flow__edge {
+    background-color: blue;
+    color: rgb(255, 0, 0);
+}
+
+.react-flow__edge-text {
+    background-color: blue;
+    color: rgb(255, 0, 0);
+}
+
+.react-flow__selection {
+    background-color: blue;
+    color: rgb(255, 0, 0);
+}
+
+.react-flow__edge.selected {
+    background-color: blue;
+    color: rgb(255, 0, 0);
+}
+
+.react-flow__node {
+    background: blue;
+}
+
+
+.react-flow__node-default {
+    background: blue;
+}
+
+.react-flow__nodesselection-rect{
+    background: blue;
+}

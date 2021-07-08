@@ -1,0 +1,52 @@
+@import "./typography.css";
+@import "./elements.css";
+
+/* :root {
+  --black: #000000 !important;
+  --white: #ffffff !important;
+  --transparent: rgba(0, 0, 0, 0) !important;
+  --fullBlack: rgba(0, 0, 0, 1) !important;
+  --darkBlack: rgba(0, 0, 0, 0.87) !important;
+  --lightBlack: rgba(0, 0, 0, 0.54) !important;
+  --minBlack: rgba(0, 0, 0, 0.26) !important;
+  --faintBlack: rgba(0, 0, 0, 0.12) !important;
+  --fullWhite: rgba(255, 255, 255, 1) !important;
+  --darkWhite: rgba(255, 255, 255, 0.87) !important;
+  --lightWhite: rgba(255, 255, 255, 0.54) !important;
+  --minWhite: rgba(72, 9, 245, 0.26) !important;
+  --faintWhite: rgba(255, 255, 255, 0.12) !important;
+  --grey300: #e0e0e0 !important;
+  --grey900: #212121 !important;
+} */
+/* body {
+  margin: 0px;
+
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 28px;
+
+  font-family: 'Open Sans', serif;
+} */
+
+/* p {
+  margin: 0 0 28px;
+}
+
+
+
+a {
+  color: #c73036;
+  font-family: Georgia, serif;
+  text-decoration: underline;
+} */
+
+/* a:hover {
+  color: #333333;
+  text-decoration: underline;
+} */
+
+.react-page-cell-inner-leaf {
+  padding: 20px;
+}
+
+
