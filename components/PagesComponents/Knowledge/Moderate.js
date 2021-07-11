@@ -236,7 +236,7 @@ const coursesImgList = {
 
 const useStylesDialogAboutCourses = makeStyles((theme) => ({
     button: {
-        color: theme.main.palette.buttons.text,
+        color: theme.palette.primary.main,
     }
 }));
 

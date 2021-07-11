@@ -130,7 +130,7 @@ const Email = inject('store')(observer(({ store }) => {
                     {!ok && <Button color="primary" variant="contained" onClick={acceptButtonClicked} className={classes.acceptButton}>
                         Подтвердить
                     </Button>}
-                    {/* {!props.store.emailCheck.serverAnswer && <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelSecondary}>
+                    {/* {!props.store.emailCheck.serverAnswer && <Grid container direction="row" justify="center" alignItems="center" className={classes.gridLabelSecondary}>
                         <CircularProgress className={classes.circularProgress} />
                     </Grid>} */}
                     {ok && <Grid container direction="row" justify="center" alignItems="center" className={classes.gridLabelSecondary}>

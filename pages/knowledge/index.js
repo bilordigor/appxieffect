@@ -60,7 +60,7 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   main: {
     width: '100%',
-    zIndex: 1,
+    zIndex: "-10",
   },
   appBar: {
     backgroundColor: theme.palette.blueGrey["0"]

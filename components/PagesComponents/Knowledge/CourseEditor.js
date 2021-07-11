@@ -21,8 +21,8 @@ import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import Image from 'next/image'
-//import DialogCourseList from './CourseEditor/DialogCourseList';
-//import DialogCourseCreation from './CourseEditor/DialogCourseCreation';
+import DialogCourseList from './CourseEditor/DialogCourseList';
+import DialogCourseCreation from './CourseEditor/DialogCourseCreation';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -219,26 +219,40 @@ const coursesImgList = {
 
 const useStylesDialogAboutCourses = makeStyles((theme) => ({
     button: {
-        color: theme.main.palette.buttons.text,
-    }
+        color: theme.palette.primary.main,
+    },
+    dialogTitle: {
+        backgroundColor: theme.palette.blueGrey["6"],
+        color: theme.palette.primary.contrastText,
+    },
+    dialogContent: {
+        backgroundColor: theme.palette.blueGrey["6"],
+    },
+    dialogContentText: {
+        color: theme.palette.primary.contrastText,
+    },
+    dialogActions: {
+        backgroundColor: theme.palette.blueGrey["6"],
+    },
 }));
 
-const DialogAboutCourses = inject('store')(observer(({ store }) => {
+const DialogAboutCourses = inject('store')(observer(({ store, openDialogAboutCourses, setOpenDialogAboutCourses }) => {
     const classes = useStylesDialogAboutCourses();
     const theme = useTheme();
 
 
     return (
         <Dialog
-            open={store.openDialogAboutCourses}
-            onClose={() => store.setOpenDialogAboutCourses(false)}
+            open={openDialogAboutCourses}
+            onClose={() => setOpenDialogAboutCourses(false)}
             scroll='paper'
             aria-labelledby="scroll-dialog-title"
             aria-describedby="scroll-dialog-description"
         >
-            <DialogTitle id="scroll-dialog-title">Подробнее о курсах</DialogTitle>
-            <DialogContent dividers={true}>
+            <DialogTitle className={classes.dialogTitle} id="scroll-dialog-title">Подробнее о курсах</DialogTitle>
+            <DialogContent className={classes.dialogContent} dividers={true}>
                 <DialogContentText
+                    className={classes.dialogContentText}
                     id="scroll-dialog-description"
                     // ref={descriptionElementRef}
                     tabIndex={-1}
@@ -253,8 +267,8 @@ Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`,
                         .join('\n')}
                 </DialogContentText>
             </DialogContent>
-            <DialogActions>
-                <Button className={classes.button} onClick={() => store.setOpenDialogAboutCourses(false)}>Закрыть</Button>
+            <DialogActions className={classes.dialogActions}>
+                <Button className={classes.button} onClick={() => setOpenDialogAboutCourses(false)}>Закрыть</Button>
             </DialogActions>
         </Dialog>
     )
@@ -263,6 +277,9 @@ Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`,
 const CourseEditor = inject('store')(observer(({ store }) => {
     const classes = useStyles();
     const theme = useTheme();
+
+    const [openDialogAboutCourses, setOpenDialogAboutCourses] = React.useState(false)
+    const [openDialogCourseList, setOpenDialogCourseList] = React.useState(false)
 
     // const options = [
     //     'Скрыть курс',
@@ -325,8 +342,6 @@ const CourseEditor = inject('store')(observer(({ store }) => {
             });
     }
 
-
-
     return (
 
         <Grid container className={classes.container}>
@@ -350,7 +365,7 @@ const CourseEditor = inject('store')(observer(({ store }) => {
                                 <AddIcon className={classes.AddIcon} />
                             </Grid>
                         </Button>
-                        <Button onClick={() => store.setOpenDialogAboutCourses(true)} className={classes.moreAboutCourses}>
+                        <Button onClick={() => setOpenDialogAboutCourses(true)} className={classes.moreAboutCourses}>
                             Подробнее об устройстве курсов
                         </Button>
                     </Grid>
@@ -377,16 +392,16 @@ const CourseEditor = inject('store')(observer(({ store }) => {
                                 <ListIcon className={classes.ListIcon} />
                             </Grid>
                         </Button>
-                        <Button onClick={() => store.setOpenDialogAboutCourses(true)} className={classes.moreAboutCourses}>
+                        <Button onClick={() => setOpenDialogAboutCourses(true)} className={classes.moreAboutCourses}>
                             Подробнее об устройстве курсов
                         </Button>
                     </Grid>
 
                 </Card>
             </Grid >
-            {/* <DialogCourseList />
-            <DialogAboutCourses />
-            <DialogCourseCreation /> */}
+            <DialogAboutCourses openDialogAboutCourses={openDialogAboutCourses} setOpenDialogAboutCourses={setOpenDialogAboutCourses} />
+            <DialogCourseList openDialogCourseList={openDialogCourseList} setOpenDialogCourseList={setOpenDialogCourseList}/>
+            <DialogCourseCreation />
             {
                 store.ownCoursesList.length != 0 && store.ownCoursesList.map((course) => (
                     <Grid xs={12} sm={12} md={6} lg={4} xl={3} item className={classes.gridCard} container key={course.id}>

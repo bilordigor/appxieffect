@@ -50,7 +50,7 @@ class Store {
 
   @action counterZero = () => {
     this.counterCourses = 0
-  } 
+  }
 
   @observable openDialogCourseList = false
 
@@ -161,7 +161,7 @@ class Store {
     //console.log("loading new courses")
     this.setIsLoading(true)
     //this.collectFilters()
-    
+
     this.postDataScr(`${this.url}/courses/`, this.filters)
       .then((data) => {
         console.log("courses:", data)
@@ -260,6 +260,192 @@ class Store {
       return true
     });
   }
+
+
+
+  @action getNewCourses = () => {
+    // this.getDataScr(`${this.url}/courses/`)
+    //   .then((data) => {
+    //     //console.log("courses:", data)
+    //     if (data != undefined) {
+    //       this.newCoursesList.push(...data.elements)
+    //     }
+    //   });
+    const courses = [
+      { name: 'Математика' },
+      { name: 'Физика' },
+      { name: 'История' },
+
+    ]
+    this.newCoursesList.push(...courses)
+  }
+
+  @action deleteCourse = (name) => {
+    // this.getDataScr(`${this.url}/courses/`)
+    //   .then((data) => {
+    //     //console.log("courses:", data)
+    //     if (data != undefined) {
+    //       this.newCoursesList.push(...data.elements)
+    //     }
+    //   });
+    const names = this.newCoursesList.map(el => el.name);
+    this.newCoursesList.splice(names.indexOf(name), 1)
+    //console.log("newCoursesList", this.newCoursesList)
+  }
+
+  @observable newCoursesList = []
+
+
+  
+
+
+
+
+  @action setNowEditCourse = (title, value) => {
+    this.nowEditCourse[title] = value
+  }
+
+  @action addNewModule = (value) => {
+    this.nowEditCourse.modules.push({ 'name': value })
+  }
+
+  @action deleteModule = (name) => {
+    const names = this.nowEditCourse.modules.map(el => el.name);
+    this.nowEditCourse.modules.splice(names.indexOf(name), 1)
+  }
+
+  @action setMapElements = (newNode) => {
+    this.nowEditCourse.map.push(newNode)
+    //console.log(this.nowEditCourse.map)
+  }
+
+
+  // @action setMap = (newMap) => {
+  //   this.modulesMap = newMap
+  //   console.log("mobx map", this.modulesMap)
+  // }
+
+  @action updateMap = (value) => {
+    this.nowEditCourse.map = value
+    //console.log("statemap", this.nowEditCourse.map)
+  }
+
+  @action isElementOnMap = (name) => {
+    for (let i = 0; i < this.nowEditCourse.map.length; i++) {
+      if (this.nowEditCourse.map[i].data.label == name) return true
+    }
+    return false
+  }
+
+  // @action pushMap = (value) => {
+  //   this.modulesMap.push(value)
+  //   console.log(this.modulesMap)
+  // }
+
+  @action setAllSelectedFalse = () => {
+    for (let i = 0; i < this.nowEditCourse.menu.length; i++) {
+      this.nowEditCourse.menu[i].isSelect = false
+      for (let j = 0; j < this.nowEditCourse.menu[i].pointList.length; j++) {
+        this.nowEditCourse.menu[i].pointList[j].isSelect = false
+        for (let k = 0; k < this.nowEditCourse.menu[i].pointList[j].pageList.length; k++) {
+          this.nowEditCourse.menu[i].pointList[j].pageList[k].isSelect = false
+        }
+      }
+    }
+  }
+
+  @action pushNewModuleToMenu = (name, type, threshold, points) => {
+    const newModule = {
+      name,
+      type,
+      threshold,
+      points,
+      isOpen: false,
+      isSelect: false,
+      pointList: []
+    }
+    this.nowEditCourse.menu.push(newModule)
+  }
+
+  @action pushNewPointToMenu = (name, type, iM) => {
+    const newPoint = {
+      name,
+      type,
+      isOpen: false,
+      isSelect: false,
+      pageList: []
+    }
+    this.nowEditCourse.menu[iM].pointList.push(newPoint)
+  }
+
+  @action pushNewPageToMenu = (name, iM, iP) => {
+    const newPage = {
+      id: "",
+      name,
+      isSelect: false,
+    }
+    this.nowEditCourse.menu[iM].pointList[iP].push(newPage)
+  }
+
+  @action deleteModuleInMap = (name) => {
+    const newArr = this.nowEditCourse.map.filter(n => {
+      if (n?.data?.label != undefined) return n.data.label !== name
+      if (n.source === name || n.target === name) return false
+      return true
+    });
+    this.nowEditCourse.map = newArr
+  }
+
+  @action deleteModuleInMenu = (name) => {
+    this.nowEditCourse.menu = this.nowEditCourse.menu.filter((el) => {
+      return el.name != name
+    })
+  }
+
+  @action deletePointInMenu = (name, index) => {
+    this.nowEditCourse.menu[index].pointList = this.nowEditCourse.menu[index].pointList.filter((el) => {
+      return el.name != name
+    })
+  }
+
+  @action setIsOpenModule = (indexM, value) => {
+    this.nowEditCourse.menu[indexM].isOpen = value
+  }
+
+  @action setIsSelectModule = (indexM, value) => {
+    this.nowEditCourse.menu[indexM].isSelect = value
+  }
+
+  @action setIsOpenPoint = (indexM, indexP, value) => {
+    this.nowEditCourse.menu[indexM].pointList[indexP].isOpen = value
+  }
+
+  @action setIsSelectPoint = (indexM, indexP, value) => {
+    this.nowEditCourse.menu[indexM].pointList[indexP].isSelect = value
+  }
+
+  @observable nowEditCourse = {
+    name: '',
+    title: '',
+    difficulty: '',
+    category: '',
+    theme: '',
+    modules: [],
+    map: [
+      {
+        id: '1',
+        type: 'input',
+        data: { label: 'Введение' },
+        position: { x: 250, y: 5 },
+        style: { background: "#3f50b5", color: "#e0e0e0", cursor: "pointer", border: '1px solid #777', }
+      },
+    ],
+    menu: [],
+  }
+
+
+
+
 
   @action async getCookie(name) {
     const value = `; ${document.cookie}`;
