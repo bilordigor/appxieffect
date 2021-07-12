@@ -12,7 +12,6 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
 import PushPinIcon from '@material-ui/icons/PushPin';
 import PushPinOutlinedIcon from '@material-ui/icons/PushPinOutlined';
-import Page from 'react-page-loading'
 
 import { SnackbarProvider, useSnackbar } from 'notistack';
 

@@ -37,16 +37,21 @@ const useStyles = makeStyles((theme) => ({
     },
     appBar: {
         position: 'relative',
+        zIndex: 1,
     },
     title: {
         marginLeft: theme.spacing(2),
         flex: 1,
     },
     gridMain: {
+        margin: 0,
+        padding: 0,
         //height: '100vh',
         // width: 'calc(100vw-48px)',
     },
     gridMainStepFour: {
+        margin: 0,
+        padding: 0,
         // width: '100vw',
         // marginTop: "-20px",
         // marginLeft: "-24px",
@@ -101,20 +106,28 @@ const useStyles = makeStyles((theme) => ({
         height: '2px',
     },
     dialog: {
-        zIndex: "-10",
+        zIndex: "10 !important",
+        width: '100vw',
+        height: '100vh',
     },
     dialogTitle: {
         backgroundColor: theme.palette.blueGrey["6"],
         color: theme.palette.primary.contrastText,
+        zIndex: 1,
     },
     dialogContent: {
+        margin: 0,
+        padding: 0,
         backgroundColor: theme.palette.blueGrey["6"],
+        zIndex: 1,
     },
     dialogContentText: {
         color: theme.palette.primary.contrastText,
     },
     dialogActions: {
         backgroundColor: theme.palette.blueGrey["6"],
+        zIndex: 1,
+
     },
 }));
 
@@ -154,7 +167,7 @@ const DialogCourseCreation = inject('store')(observer(({ store }) => {
                         alignItems="center"
                     >
                         <Grid>
-                            <Typography className={classes.mainLabel}> Создание курса </Typography>
+                            <Typography className={classes.mainLabel}> Создание модуля </Typography>
                         </Grid>
                         <Grid>
                             <Tooltip title="Сохранить">
@@ -175,7 +188,7 @@ const DialogCourseCreation = inject('store')(observer(({ store }) => {
             {/* <DialogTitle id="scroll-dialog-title">
 
             </DialogTitle> */}
-            <DialogContent className={classes.dialogContent} dividers={true}>
+            <DialogContent className={classes.dialogContent}>
                 <Grid
                     container
                     direction="row"
@@ -191,7 +204,7 @@ const DialogCourseCreation = inject('store')(observer(({ store }) => {
 
                 </Grid>
             </DialogContent>
-            <DialogActions className={classes.dialogActions }>
+            <DialogActions className={classes.dialogActions}>
                 <Grid
                     container
                     direction="row"

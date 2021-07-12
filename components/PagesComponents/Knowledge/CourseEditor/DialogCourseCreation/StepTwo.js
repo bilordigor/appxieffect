@@ -14,6 +14,9 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import CloseIcon from '@material-ui/icons/Close';
 import { inject, observer } from 'mobx-react'
+import Page from './../../../../OtherComponents/Page/Page'
+import Sortable from './../../../../OtherComponents/Page/Sortable'
+
 
 import {
     Menu,
@@ -33,15 +36,30 @@ const MENU_ID = "menu-id";
 
 const useStyles = makeStyles((theme) => ({
     gridRoot: {
-        //width: "100%",
-        height: "calc(100vh - 168px)",
+        margin: 0,
+        padding: 0,
+        width: "100vw",
+        //height: "calc(100vh - 136px)",
     },
-    gridReactPage: {
-        height: "calc(100vh - 168px)",
+    gridMain: {
+        margin: 0,
+        padding: 0,
+        //height: "calc(100vh - 0px)",
+        display: "block",
+        overflow: "auto",
+        '&::-webkit-scrollbar': {
+            width: "0! important",
+            height: 0,
+            display: "none !important",
+            background: "transparent",
+        }
     },
     gridSidebar: {
-        //width: 300,
-        height: "calc(100vh - 168px)",
+        margin: 0,
+        padding: 0,
+    },
+    gridWrapper: {
+        height: "calc(100vh - 158px)",
         display: "block",
         overflow: "auto",
         '&::-webkit-scrollbar': {
@@ -58,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
     },
     PaperItem: {
         borderRadius: 16,
-        margin: 16,
+        margin: 8,
         //height: 128,
         //width: 256,
         backgroundColor: theme.palette.primary.main,
@@ -85,6 +103,20 @@ const useStyles = makeStyles((theme) => ({
     },
     icon: {
         color: theme.palette.primary.contrastText,
+    },
+    treeLabal: {
+        marginLeft: 16,
+    },
+    Divider: {
+        backgroundColor: theme.palette.primary.contrastText,
+        height: 1,
+        width: "calc(100% - 32px)",
+        marginLeft: 16,
+        marginRight: 16,
+    },
+    gridSubtitle: {
+        marginLeft: 8,
+        marginTop: 4,
     }
 }));
 
@@ -94,6 +126,18 @@ const StepTwo = inject('store')(observer(({ store }) => {
 
     const [openSideMenu, setOpenSideMenu] = React.useState(true)
 
+    const components = [
+        { label: "Текст", type: "text" },
+        { label: "Заголовок 1", type: "h1" },
+        { label: "Заголовок 2", type: "h2" },
+        { label: "Заголовок 3", type: "h3" },
+        { label: "Заголовок 4", type: "h4" },
+        { label: "Заголовок 5", type: "h5" },
+        { label: "Заголовок 6", type: "h6" },
+
+        {},
+    ]
+
     return (
         <Grid
             className={classes.gridRoot}
@@ -102,119 +146,208 @@ const StepTwo = inject('store')(observer(({ store }) => {
             justify="flex-start"
             alignItems="center"
         >
+            {/* Дерево */}
             <Grid
-                xs={12} sm={12} md={3} lg={3} xl={2}
+                item
                 className={classes.gridSidebar}
+                xs={12} sm={12} md={3} lg={2} xl={1}
                 container
                 direction="column"
-                justify="flex-start"
-                alignItems="center"
+                justify="center"
+                alignItems="flex-start"
             >
-                {[...new Array(50)].map((item, id) =>
-                    <Paper className={classes.PaperItem} key={id}>
-                        <Grid
-                            className={classes.PaperItemGrid}
-                            container
-                            direction="column"
-                            justify="flex-start"
-                            alignItems="flex-start"
-                        >
-                            <Grid
-                                className={classes.appbarPoint}
-                                container
-                                direction="row"
-                                justify="space-between"
-                                alignItems="center"
-                            >
-                                <Grid item>
-                                    <Typography className={classes.pointLabel}> {`Точка ${id}`} </Typography>
-                                </Grid>
-                                <Grid item>
-                                    <IconButton>
-                                        <CloseIcon className={classes.icon} />
-                                    </IconButton>
-                                </Grid>
-                            </Grid>
-                            <Grid
-                                container
-                                direction="column"
-                                justify="flex-start"
-                                alignItems="flex-end"
-                            >
-                                {[...new Array(3)].map((item, id) =>
-                                    <Paper className={classes.PaperPage} key={id}>
-                                        <Grid
-                                            className={classes.PaperItemGrid}
-                                            container
-                                            direction="column"
-                                            justify="flex-start"
-                                            alignItems="flex-start"
-                                        >
-                                            <Grid
-                                                className={classes.appbarPoint}
-                                                container
-                                                direction="row"
-                                                justify="space-between"
-                                                alignItems="center"
-                                            >
-                                                <Grid item>
-                                                    <Typography className={classes.pointLabel}> {`Страница ${id}`} </Typography>
-                                                </Grid>
-                                                <Grid item>
-                                                    <IconButton>
-                                                        <CloseIcon className={classes.icon} />
-                                                    </IconButton>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                    </Paper>)}
-                            </Grid>
-                            <Grid
-                                container
-                                direction="row"
-                                justifyContent="center"
-                                alignItems="center"
-                            >
-
-                            </Grid>
-                        </Grid>
-                        <Grid
-                            className={classes.gridAction}
-                            container
-                            direction="row"
-                            justify="center"
-                            alignItems="center"
-                        >
-                            <Button>
-                                <AddIcon className={classes.icon} />
-                                <Typography className={classes.pointLabel}> Добавить страницу </Typography>
-                            </Button>
-                        </Grid>
-                    </Paper>
-
-                )}
+                <Typography className={classes.treeLabal}> Дерево модуля </Typography>
+                <Divider className={classes.Divider} />
                 <Grid
-                    className={classes.gridAction}
+                    item
+                    className={classes.gridWrapper}
                     container
                     direction="column"
                     justify="flex-start"
                     alignItems="center"
                 >
-                    <Button>
-                        <AddIcon className={classes.icon} />
-                        <Typography className={classes.pointLabel}> Добавить точку </Typography>
-                    </Button>
+                    {[...new Array(50)].map((item, id) =>
+                        <Paper elevation={3} className={classes.PaperItem} key={id}>
+                            <Grid
+                                className={classes.PaperItemGrid}
+                                container
+                                direction="column"
+                                justify="flex-start"
+                                alignItems="flex-start"
+                            >
+                                <Grid
+                                    className={classes.appbarPoint}
+                                    container
+                                    direction="row"
+                                    justify="space-between"
+                                    alignItems="center"
+                                    wrap="nowrap"
+                                >
+                                    <Grid item xs zeroMinWidth>
+                                        <Typography noWrap variant="subtitle2" className={classes.pointLabel}> {`Точка ${id}`} </Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <IconButton>
+                                            <CloseIcon className={classes.icon} />
+                                        </IconButton>
+                                    </Grid>
+                                </Grid>
+                                <Grid
+                                    container
+                                    direction="column"
+                                    justify="flex-start"
+                                    alignItems="flex-end"
+                                >
+                                    {[...new Array(3)].map((item, id) =>
+                                        <Paper className={classes.PaperPage} key={id}>
+                                            <Grid
+                                                className={classes.PaperItemGrid}
+                                                container
+                                                direction="column"
+                                                justify="flex-start"
+                                                alignItems="flex-start"
+                                            >
+                                                <Grid
+                                                    className={classes.appbarPoint}
+                                                    container
+                                                    direction="row"
+                                                    justify="space-between"
+                                                    alignItems="center"
+                                                    wrap="nowrap"
+                                                >
+                                                    <Grid item xs zeroMinWidth>
+                                                        <Typography noWrap variant="subtitle2" className={classes.pointLabel}> {`Страница ${id}`} </Typography>
+                                                    </Grid>
+                                                    <Grid item>
+                                                        <IconButton>
+                                                            <CloseIcon className={classes.icon} />
+                                                        </IconButton>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Paper>)}
+                                </Grid>
+                                <Grid
+                                    container
+                                    direction="row"
+                                    justify="center"
+                                    alignItems="center"
+                                >
+
+                                </Grid>
+                            </Grid>
+                            <Grid
+                                className={classes.gridAction}
+                                container
+                                direction="row"
+                                justify="center"
+                                alignItems="center"
+                            >
+                                <Button>
+                                    <Tooltip title="Добавить точку">
+                                        <AddIcon className={classes.icon} />
+                                    </Tooltip>
+                                </Button>
+                            </Grid>
+                        </Paper>
+
+                    )}
+                    <Grid
+                        className={classes.gridAction}
+                        container
+                        direction="column"
+                        justify="flex-start"
+                        alignItems="center"
+                    >
+                        <Button>
+                            <Tooltip title="Добавить точку">
+                                <AddIcon className={classes.icon} />
+                            </Tooltip>
+                            {/* <Typography className={classes.pointLabel}>  </Typography> */}
+                        </Button>
+                    </Grid>
                 </Grid>
             </Grid>
+
+            {/* Контент */}
+
             <Grid
-                xs={12} sm={12} md={9} lg={9} xl={10}
-                className={classes.gridReactPage}
+                xs={12} sm={12} md={6} lg={8} xl={10}
+                item
                 container
                 direction="column"
                 justify="flex-start"
                 alignItems="center"
+                className={classes.gridMain}
             >
-                <ReactPage />
+                {/* <Page/> */}
+                <Sortable handle />
+            </Grid>
+
+            {/* Компоненты */}
+
+            <Grid
+                item
+                className={classes.gridSidebar}
+                xs={12} sm={12} md={3} lg={2} xl={1}
+                container
+                direction="column"
+                justify="center"
+                alignItems="flex-start"
+            >
+                <Typography className={classes.treeLabal}> Компоненты </Typography>
+                <Divider className={classes.Divider} />
+                <Grid
+                    item
+                    className={classes.gridWrapper}
+                    container
+                    direction="column"
+                    justify="flex-start"
+                    alignItems="center"
+                >
+                    {components.map((item, id) =>
+                        <Paper elevation={3} className={classes.PaperItem} key={id}>
+                            <Grid
+                                className={classes.PaperItemGrid}
+                                container
+                                direction="column"
+                                justify="flex-start"
+                                alignItems="flex-start"
+                            >
+                                <Grid
+                                    className={classes.appbarPoint}
+                                    container
+                                    direction="row"
+                                    justify="space-between"
+                                    alignItems="center"
+                                    wrap="nowrap"
+                                >
+                                    <Grid item xs zeroMinWidth>
+                                        <Typography noWrap variant="subtitle2" className={classes.pointLabel}> {item.label} </Typography>
+                                    </Grid>
+                                </Grid>
+                                <Divider className={classes.Divider} />
+                                <Grid className={classes.gridSubtitle} item xs>
+                                    <Typography variant="subtitle2" className={classes.pointLabel}> {`Точка ${id}`} </Typography>
+                                </Grid>
+                                <Grid
+                                    className={classes.gridAction}
+                                    container
+                                    direction="row"
+                                    justify="center"
+                                    alignItems="center"
+                                >
+                                    <Button>
+                                        <Tooltip title="Добавить Компонент">
+                                            <AddIcon className={classes.icon} />
+                                        </Tooltip>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Paper>
+
+                    )}
+                </Grid>
             </Grid>
         </Grid>
 

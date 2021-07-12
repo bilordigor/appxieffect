@@ -13,6 +13,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles((theme) => ({
     drawer: {
+        zIndex: 1,
         width: 72,
         flexShrink: 0,
     },

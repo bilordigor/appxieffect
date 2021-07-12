@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import clsx from 'clsx'
 import { inject, observer } from 'mobx-react'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { Drawer, AppBar, Toolbar, List, Typography, Divider, IconButton } from '@material-ui/core'
+import { Drawer } from '@material-ui/core'
 
 import Sidebar from './Sidebar'
 import Helpbar from './Helpbar'
@@ -12,17 +12,13 @@ import Loading from '../Loading/Loading'
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        zIndex: 0,
         display: 'flex',
         backgroundColor: theme.palette.blueGrey["1"],
         minHeight: "100vh",
     },
-    AppBar: {
-        height: 32,
-        backgroundColor: theme.palette.blueGrey["0"],
-        padding: 0,
-        margin: 0,
-    },
     content: {
+        zIndex: 0,
         margin: 0,
         // height: "100%",
         width: "100%",
