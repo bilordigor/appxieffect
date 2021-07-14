@@ -14,7 +14,6 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import CloseIcon from '@material-ui/icons/Close';
 import { inject, observer } from 'mobx-react'
-import Page from './../../../../OtherComponents/Page/Page'
 import Sortable from './../../../../OtherComponents/Page/Sortable'
 
 

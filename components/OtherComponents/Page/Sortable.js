@@ -98,7 +98,7 @@ export default function Sortable({ adjustScale = false, collisionDetection = clo
         }}
         onDragEnd={({ over }) => {
             setActiveId(null);
-
+            console.log("over", over)
             if (over) {
                 const overIndex = getIndex(over.id);
                 if (activeIndex !== overIndex) {
