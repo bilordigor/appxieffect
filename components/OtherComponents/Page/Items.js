@@ -1,45 +1,10 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, ButtonGroup, Input, AppBar, Toolbar, Dialog, InputLabel, NativeSelect, FormControl, DialogContent, MobileStepper, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip } from '@material-ui/core';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
-function Action({ active, className, cursor, ...props }) {
-    return (
-        <button
-            {...props}
-            //className={classNames(styles.Action, className)}
-            tabIndex={0}
-        // style={
-        //   {
-        //     ...style,
-        //     cursor,
-        //     '--fill': active?.fill,
-        //     '--background': active?.background,
-        //   }
-        // }
-        />
-    );
-}
+import Header from './Modules/Header';
+import Text from './Modules/Text';
 
-function Remove(props) {
-    return (
-        <Action
-            {...props}
-            active={{
-                fill: 'rgba(255, 70, 70, 0.95)',
-                background: 'rgba(255, 70, 70, 0.1)',
-            }}
-        >
-            <DragIndicatorIcon />
-        </Action>
-    );
-}
 
-function Handle(props) {
-    return (
-        <Action cursor="grab" data-cypress="draggable-handle" {...props}>
-            <DragIndicatorIcon />
-        </Action>
-    );
-}
 
 const useStyles = makeStyles((theme) => ({
     rootPaper: {
@@ -47,30 +12,43 @@ const useStyles = makeStyles((theme) => ({
         border: 0,
         borderRadius: 3,
         //boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-        color: 'blue',
-        height: 64,
         //width: "calc(100% - 8px)",
         margin: 4,
         padding: 0,
-        backgroundColor: theme.palette.blueGrey["7"]
+        backgroundColor: theme.palette.blueGrey["7"],
+        position: "relative",
     },
     rootGrid: {
         // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
         border: 0,
-        color: 'blue',
-        height: 64,
         width: "calc(100% - 8px)",
         margin: 4,
-        padding: 0,
+        padding: 8,
     },
     icon: {
+        position: "absolute",
+        top: 2,
+        right: 0,
         cursor: 'grab',
         color: theme.palette.primary.contrastText,
     }
 }));
 
-// eslint-disable-next-line react/display-name
-export const Items = React.memo(
+
+const ModuleSelect = (store, value) => {
+    if (store.pageContent[value].type === "h") return (
+        <>
+            <Header values={store.pageContent[value]} />
+        </>
+    )
+    if (store.pageContent[value].type === "text") return (
+        <>
+            <Text values={store.pageContent[value]} />
+        </>
+    )
+}
+
+const Items = React.memo(
     React.forwardRef(
         (
             {
@@ -90,6 +68,7 @@ export const Items = React.memo(
                 transform,
                 value,
                 wrapperStyle,
+                store,
                 ...props
             },
             ref
@@ -106,6 +85,8 @@ export const Items = React.memo(
                 };
             }, [dragOverlay]);
 
+            console.log("Items render")
+
             const classes = useStyles();
 
             return (
@@ -118,26 +99,18 @@ export const Items = React.memo(
                     {...props}
                     tabIndex={!handle ? 0 : undefined}
                 >
+                    <DragIndicatorIcon className={classes.icon} {...listeners} />
                     <Grid
                         container
-                        direction="row"
-                        justify="space-between"
-                        alignItems="center"
                         className={classes.rootGrid}
-
                     >
-                        <Grid item>
-                            <Typography> {value} </Typography>
-                        </Grid>
-                        <Grid item>
-                            {/* {onRemove ? (
-                                <Remove onClick={onRemove} />
-                            ) : null} */}
-                            {handle ? <DragIndicatorIcon className={classes.icon} {...listeners} /> : null}
-                        </Grid>
+                        {ModuleSelect(store, value)}
                     </Grid>
                 </Paper>
             );
         }
-    )
-);
+    ))
+
+
+Items.displayName = 'Items';
+export default Items

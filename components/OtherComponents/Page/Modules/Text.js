@@ -5,13 +5,12 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-// eslint-disable-next-line react/display-name
-const Text = ({ value }) => {
+const Text = ({ values }) => {
     const classes = useStyles();
 
     return (
         <>
-            <Typography variant={value.variant} align={value.align}>{value.label}</Typography>
+            <Typography variant={values.variant} align={values.align}>{values.label}</Typography>
         </>
     );
 }

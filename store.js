@@ -296,7 +296,7 @@ class Store {
   @observable newCoursesList = []
 
 
-  
+
 
 
 
@@ -442,6 +442,31 @@ class Store {
     ],
     menu: [],
   }
+
+
+
+
+
+
+
+
+
+
+  //Page
+
+  @observable pageContent = [
+    { type: "h", variant: "h2", label: "Заголовок 1", align: "center" },
+    { type: "text", variant: "body1", label: "Текст 1", align: "center" },
+    { type: "h", variant: "h4", label: "Заголовок 2", align: "justify" },
+    { type: "text", variant: "body2", label: "Текст 2", align: "center" },
+  ]
+
+  @action pushNewItemToPageContent = (type) => {
+    if (type === "h") this.pageContent = [ ...this.pageContent, { type: "h", variant: "h1", label: "", align: "center" }]
+    if (type === "text") this.pageContent.push({ type: "text", variant: "body1", label: "", align: "center" })
+    console.log("pageContent", this.pageContent)
+  }
+
 
 
 

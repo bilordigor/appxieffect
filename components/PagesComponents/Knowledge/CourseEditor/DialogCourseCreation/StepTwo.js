@@ -16,7 +16,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import { inject, observer } from 'mobx-react'
 import Sortable from './../../../../OtherComponents/Page/Sortable'
 
-
 import {
     Menu,
     Item,
@@ -27,8 +26,6 @@ import {
 } from "react-contexify";
 
 import "react-contexify/dist/ReactContexify.css";
-import ReactPage from '../../../../OtherComponents/ContentEditor/ReactPage';
-
 
 const MENU_ID = "menu-id";
 
@@ -56,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
     gridSidebar: {
         margin: 0,
         padding: 0,
+        //backgroundColor: theme.palette.blueGrey["0"],
     },
     gridWrapper: {
         height: "calc(100vh - 158px)",
@@ -119,22 +117,25 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+const defaultInitializer = (index) => index;
+function createRange(length, initializer = defaultInitializer) {
+    return [...new Array(length)].map((_, index) => initializer(index));
+}
+
 const StepTwo = inject('store')(observer(({ store }) => {
     const classes = useStyles();
     const theme = useTheme();
-
     const [openSideMenu, setOpenSideMenu] = React.useState(true)
+    const [items, setItems] = useState(() => createRange(store.pageContent.length, (index) => (index).toString()));
+
+    const Clicked = (type) => {
+        setItems([...items, store.pageContent.length.toString()])
+        store.pushNewItemToPageContent(type)
+    }
 
     const components = [
         { label: "Текст", type: "text" },
-        { label: "Заголовок 1", type: "h1" },
-        { label: "Заголовок 2", type: "h2" },
-        { label: "Заголовок 3", type: "h3" },
-        { label: "Заголовок 4", type: "h4" },
-        { label: "Заголовок 5", type: "h5" },
-        { label: "Заголовок 6", type: "h6" },
-
-        {},
+        { label: "Заголовок", type: "h" },
     ]
 
     return (
@@ -280,7 +281,7 @@ const StepTwo = inject('store')(observer(({ store }) => {
                 className={classes.gridMain}
             >
                 {/* <Page/> */}
-                <Sortable handle />
+                <Sortable items={items} setItems={setItems} store={store} handle />
             </Grid>
 
             {/* Компоненты */}
@@ -327,7 +328,7 @@ const StepTwo = inject('store')(observer(({ store }) => {
                                 </Grid>
                                 <Divider className={classes.Divider} />
                                 <Grid className={classes.gridSubtitle} item xs>
-                                    <Typography variant="subtitle2" className={classes.pointLabel}> {`Точка ${id}`} </Typography>
+                                    <Typography variant="subtitle2" className={classes.pointLabel}> {`Описание ${id}`} </Typography>
                                 </Grid>
                                 <Grid
                                     className={classes.gridAction}
@@ -336,7 +337,7 @@ const StepTwo = inject('store')(observer(({ store }) => {
                                     justify="center"
                                     alignItems="center"
                                 >
-                                    <Button>
+                                    <Button onClick={() => Clicked(item.type)}>
                                         <Tooltip title="Добавить Компонент">
                                             <AddIcon className={classes.icon} />
                                         </Tooltip>
@@ -344,7 +345,6 @@ const StepTwo = inject('store')(observer(({ store }) => {
                                 </Grid>
                             </Grid>
                         </Paper>
-
                     )}
                 </Grid>
             </Grid>

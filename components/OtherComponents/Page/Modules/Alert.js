@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-// eslint-disable-next-line react/display-name
+
 const Alert = ({ value }) => {
     const classes = useStyles();
 

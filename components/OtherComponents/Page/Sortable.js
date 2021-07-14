@@ -7,6 +7,9 @@ import { DraggableSyntheticListeners } from '@dnd-kit/core';
 import { Transform } from '@dnd-kit/utilities';
 import { Items } from './Items';
 import { Tabs, Tab, ButtonGroup, Input, AppBar, Toolbar, Dialog, InputLabel, NativeSelect, FormControl, DialogContent, MobileStepper, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip } from '@material-ui/core';
+import { inject, observer } from 'mobx-react'
+
+
 
 const defaultDropAnimationConfig = Object.assign(Object.assign({}, defaultDropAnimation), { dragSourceOpacity: 0.5 });
 const screenReaderInstructions = {
@@ -18,47 +21,18 @@ const screenReaderInstructions = {
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function Wrapper({ children }) {
-    return (
-        <div>
-            {children}
-        </div>
-    );
-}
-
-
-
-
-
-
-
 const defaultInitializer = (index) => index;
 function createRange(length, initializer = defaultInitializer) {
     return [...new Array(length)].map((_, index) => initializer(index));
 }
 
 
-
-
 const useStyles = makeStyles((theme) => ({
     Container: {
-        height: "calc(100vh - 138px)",
+        marginTop: 8,
+        marginLeft: 8,
+        marginRight: 8,
+        height: "calc(100vh - 140px)",
         display: "block",
         overflow: "auto",
         '&::-webkit-scrollbar': {
@@ -71,16 +45,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-
-export default function Sortable({ adjustScale = false, collisionDetection = closestCenter, dropAnimation = defaultDropAnimationConfig, getItemStyles = () => ({}), handle = false, itemCount = 16, items: initialItems, isDisabled = () => false, removable, strategy = rectSortingStrategy, useDragOverlay = true, wrapperStyle = () => ({}), }) {
+const Sortable = ({ items, setItems, store, adjustScale = false, collisionDetection = closestCenter, dropAnimation = defaultDropAnimationConfig, getItemStyles = () => ({}), handle = false, itemCount, isDisabled = () => false, removable, strategy = rectSortingStrategy, useDragOverlay = true, wrapperStyle = () => ({}), }) => {
     const classes = useStyles();
+    console.log("Sortable render")
 
-
-    const [items, setItems] = useState(() => initialItems !== null && initialItems !== void 0 ? initialItems : createRange(itemCount, (index) => (index + 1).toString()));
+    console.log("Sortable render items", items)
     const [activeId, setActiveId] = useState(null);
     const getIndex = items.indexOf.bind(items);
-    const getPosition = (id) => getIndex(id) + 1;
     const activeIndex = activeId ? getIndex(activeId) : -1;
     const handleRemove = removable
         ? (id) => setItems((items) => items.filter((item) => item !== id))
@@ -113,6 +84,7 @@ export default function Sortable({ adjustScale = false, collisionDetection = clo
             <div className={classes.Container}>
                 {items.map((value, index) => (
                     <SortableItem
+                        store={store}
                         key={value}
                         id={value}
                         handle={handle}
@@ -134,6 +106,7 @@ export default function Sortable({ adjustScale = false, collisionDetection = clo
                 >
                     {activeId ? (
                         <Items
+                            store={store}
                             value={items[activeIndex]}
                             handle={handle}
                             wrapperStyle={wrapperStyle({
@@ -156,8 +129,10 @@ export default function Sortable({ adjustScale = false, collisionDetection = clo
                 document.body
             )
             : null}
-    </DndContext>);
+    </DndContext>)
 }
+
+export default Sortable
 
 export function SortableItem({
     disabled,
@@ -168,6 +143,7 @@ export function SortableItem({
     style,
     useDragOverlay,
     wrapperStyle,
+    store,
 }) {
     const {
         attributes,
@@ -185,6 +161,7 @@ export function SortableItem({
 
     return (
         <Items
+            store={store}
             ref={setNodeRef}
             value={id}
             disabled={disabled}
