@@ -35,15 +35,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const ModuleSelect = (store, value) => {
+const ModuleSelect = ( store, value, listeners) => {
     if (store.pageContent[value].type === "h") return (
         <>
-            <Header values={store.pageContent[value]} />
+            <Header listeners={listeners} values={store.pageContent[value]} />
         </>
     )
     if (store.pageContent[value].type === "text") return (
         <>
-            <Text values={store.pageContent[value]} />
+            <Text listeners={listeners} values={store.pageContent[value]} />
         </>
     )
 }
@@ -99,12 +99,11 @@ const Items = React.memo(
                     {...props}
                     tabIndex={!handle ? 0 : undefined}
                 >
-                    <DragIndicatorIcon className={classes.icon} {...listeners} />
                     <Grid
                         container
                         className={classes.rootGrid}
                     >
-                        {ModuleSelect(store, value)}
+                        {ModuleSelect(store, value, listeners)}
                     </Grid>
                 </Paper>
             );

@@ -5,7 +5,7 @@ import { arrayMove, useSortable, SortableContext, sortableKeyboardCoordinates, r
 //import { Item } from '../../components';
 import { DraggableSyntheticListeners } from '@dnd-kit/core';
 import { Transform } from '@dnd-kit/utilities';
-import { Items } from './Items';
+import Items from './Items';
 import { Tabs, Tab, ButtonGroup, Input, AppBar, Toolbar, Dialog, InputLabel, NativeSelect, FormControl, DialogContent, MobileStepper, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip } from '@material-ui/core';
 import { inject, observer } from 'mobx-react'
 
@@ -134,7 +134,7 @@ const Sortable = ({ items, setItems, store, adjustScale = false, collisionDetect
 
 export default Sortable
 
-export function SortableItem({
+function SortableItem({
     disabled,
     id,
     index,
@@ -187,3 +187,4 @@ export function SortableItem({
         />
     );
 }
+

@@ -456,14 +456,14 @@ class Store {
 
   @observable pageContent = [
     { type: "h", variant: "h2", label: "Заголовок 1", align: "center" },
-    { type: "text", variant: "body1", label: "Текст 1", align: "center" },
+    { type: "text", variant: "body1", label: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.", align: "center" },
     { type: "h", variant: "h4", label: "Заголовок 2", align: "justify" },
-    { type: "text", variant: "body2", label: "Текст 2", align: "center" },
+    { type: "text", variant: "body2", label: "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain.", align: "center" },
   ]
 
   @action pushNewItemToPageContent = (type) => {
-    if (type === "h") this.pageContent = [ ...this.pageContent, { type: "h", variant: "h1", label: "", align: "center" }]
-    if (type === "text") this.pageContent.push({ type: "text", variant: "body1", label: "", align: "center" })
+    if (type === "h") this.pageContent = [ ...this.pageContent, { type: "h", variant: "h1", label: "заголовок", align: "center" }]
+    if (type === "text") this.pageContent.push({ type: "text", variant: "body1", label: "текст", align: "center" })
     console.log("pageContent", this.pageContent)
   }
 
