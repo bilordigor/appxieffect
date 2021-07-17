@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from "next/link";
 import clsx from 'clsx';
 import { Tabs, Tab, ButtonGroup, Input, AppBar, Toolbar, Dialog, InputLabel, NativeSelect, FormControl, DialogContent, MobileStepper, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip } from '@material-ui/core';
 
 import { SnackbarProvider, useSnackbar } from 'notistack';
 
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
@@ -15,6 +15,8 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import CloseIcon from '@material-ui/icons/Close';
 import { inject, observer } from 'mobx-react'
 import Sortable from './../../../../OtherComponents/Page/Sortable'
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 
 import {
     Menu,
@@ -40,7 +42,8 @@ const useStyles = makeStyles((theme) => ({
     gridMain: {
         margin: 0,
         padding: 0,
-        //height: "calc(100vh - 0px)",
+        width: "100%",
+        height: "100%",
         display: "block",
         overflow: "auto",
         '&::-webkit-scrollbar': {
@@ -49,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
             display: "none !important",
             background: "transparent",
         }
+    },
+    gridMainImgWrapper: {
+        width: "100%",
+        height: "100%",
     },
     gridSidebar: {
         margin: 0,
@@ -67,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     gridAction: {
-        height: 48,
+        //height: 48,
         paddingBottom: 12,
         cursor: "pointer"
     },
@@ -79,9 +86,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.primary.main,
     },
     PaperPage: {
-        margin: 8,
+        margin: 6,
         borderRadius: 16,
-        width: "calc(100% - 16px)",
+        width: "calc(100% - 12px)",
         backgroundColor: theme.palette.secondary.main
     },
     pointLabel: {
@@ -89,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.contrastText,
     },
     appbarPoint: {
-        padding: 8,
+        padding: 4,
         // width: "100%",
         // height: "48",
         //backgroundColor: "blue"
@@ -143,7 +150,7 @@ const StepTwo = inject('store')(observer(({ store }) => {
             className={classes.gridRoot}
             container
             direction="row"
-            justify="flex-start"
+            justify="center"
             alignItems="center"
         >
             {/* Дерево */}
@@ -166,8 +173,8 @@ const StepTwo = inject('store')(observer(({ store }) => {
                     justify="flex-start"
                     alignItems="center"
                 >
-                    {[...new Array(50)].map((item, id) =>
-                        <Paper elevation={3} className={classes.PaperItem} key={id}>
+                    {store.nowEditCourse.points.map((item, idpnt) =>
+                        <Paper elevation={3} className={classes.PaperItem} key={idpnt}>
                             <Grid
                                 className={classes.PaperItemGrid}
                                 container
@@ -184,22 +191,26 @@ const StepTwo = inject('store')(observer(({ store }) => {
                                     wrap="nowrap"
                                 >
                                     <Grid item xs zeroMinWidth>
-                                        <Typography noWrap variant="subtitle2" className={classes.pointLabel}> {`Точка ${id}`} </Typography>
+                                        <Typography noWrap variant="subtitle2" className={classes.pointLabel}> {item.label} {idpnt}</Typography>
                                     </Grid>
                                     <Grid item>
-                                        <IconButton>
+                                        <IconButton onClick={() => store.setOpenPages(idpnt)}>
+                                            {item.openPages && <ArrowDropDownIcon className={classes.icon} />}
+                                            {!item.openPages && <ArrowDropUpIcon className={classes.icon} />}
+                                        </IconButton>
+                                        <IconButton onClick={() => store.deletePoint(idpnt)}>
                                             <CloseIcon className={classes.icon} />
                                         </IconButton>
                                     </Grid>
                                 </Grid>
-                                <Grid
+                                {item.openPages && <Grid
                                     container
                                     direction="column"
                                     justify="flex-start"
                                     alignItems="flex-end"
                                 >
-                                    {[...new Array(3)].map((item, id) =>
-                                        <Paper className={classes.PaperPage} key={id}>
+                                    {item.pages.map((item, idpgs) =>
+                                        <Paper className={classes.PaperPage} key={idpgs}>
                                             <Grid
                                                 className={classes.PaperItemGrid}
                                                 container
@@ -216,56 +227,57 @@ const StepTwo = inject('store')(observer(({ store }) => {
                                                     wrap="nowrap"
                                                 >
                                                     <Grid item xs zeroMinWidth>
-                                                        <Typography noWrap variant="subtitle2" className={classes.pointLabel}> {`Страница ${id}`} </Typography>
+                                                        <Typography noWrap variant="subtitle2" className={classes.pointLabel}> {`Страница ${idpgs}`} </Typography>
                                                     </Grid>
                                                     <Grid item>
-                                                        <IconButton>
+                                                        <IconButton onClick={() => store.deletePage(idpnt, idpgs)}>
                                                             <CloseIcon className={classes.icon} />
                                                         </IconButton>
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
                                         </Paper>)}
-                                </Grid>
-                                <Grid
-                                    container
-                                    direction="row"
-                                    justify="center"
-                                    alignItems="center"
-                                >
-
-                                </Grid>
+                                </Grid>}
                             </Grid>
-                            <Grid
+                            {item.openPages && <Grid
                                 className={classes.gridAction}
                                 container
                                 direction="row"
                                 justify="center"
                                 alignItems="center"
                             >
-                                <Button>
-                                    <Tooltip title="Добавить точку">
+                                <Button onClick={() => store.pushNewPage(idpnt)}>
+                                    <Tooltip title="Добавить страницу">
                                         <AddIcon className={classes.icon} />
                                     </Tooltip>
                                 </Button>
-                            </Grid>
+                            </Grid>}
                         </Paper>
 
                     )}
-                    <Grid
-                        className={classes.gridAction}
-                        container
-                        direction="column"
-                        justify="flex-start"
-                        alignItems="center"
-                    >
-                        <Button>
-                            <Tooltip title="Добавить точку">
+                    <Tooltip title="Добавить точку">
+                        <Grid
+                            className={classes.gridAction}
+                            onClick={() => store.pushNewPoint()}
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center"
+                        >
+                            <Image
+                                quality={100}
+                                alt="howtocreateamodule"
+                                src="/illustrations/HowCreateCourse.png"
+                                //layout='fill'
+                                width={196}
+                                height={196}
+                            />
+                            <Button>
                                 <AddIcon className={classes.icon} />
-                            </Tooltip>
-                            {/* <Typography className={classes.pointLabel}>  </Typography> */}
-                        </Button>
-                    </Grid>
+                                {/* <Typography className={classes.pointLabel}>  </Typography> */}
+                            </Button>
+                        </Grid>
+                    </Tooltip>
                 </Grid>
             </Grid>
 
@@ -276,12 +288,31 @@ const StepTwo = inject('store')(observer(({ store }) => {
                 item
                 container
                 direction="column"
-                justify="flex-start"
+                justify="center"
                 alignItems="center"
                 className={classes.gridMain}
             >
                 {/* <Page/> */}
-                <Sortable items={items} setItems={setItems} store={store} handle />
+                {store.pageContent.length != 0 && <Sortable items={items} setItems={setItems} store={store} handle />}
+                {store.pageContent.length === 0 &&
+                    <Grid
+                        item
+                        container
+                        direction="column"
+                        className={classes.gridMainImgWrapper}
+                        justify="center"
+                        alignItems="center"
+                    >
+                        <Image
+                            quality={100}
+                            alt="howtocreateamodule"
+                            src="/illustrations/mathTeacher.png"
+                            //layout='fill'
+                            width={320}
+                            height={320}
+                        />
+                    </Grid>
+                }
             </Grid>
 
             {/* Компоненты */}
@@ -346,6 +377,24 @@ const StepTwo = inject('store')(observer(({ store }) => {
                             </Grid>
                         </Paper>
                     )}
+                    <Tooltip title="Компоненты - небольшие строительные блоки для создания страниц">
+                        <Grid
+                            className={classes.gridAction}
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center"
+                        >
+                            <Image
+                                quality={100}
+                                alt="howtocreateamodule"
+                                src="/illustrations/HowCoursesWork.png"
+                                //layout='fill'
+                                width={196}
+                                height={196}
+                            />
+                        </Grid>
+                    </Tooltip>
                 </Grid>
             </Grid>
         </Grid>

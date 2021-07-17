@@ -20,25 +20,9 @@ import Looks5Icon from '@material-ui/icons/Looks5';
 import Looks6Icon from '@material-ui/icons/Looks6';
 import ClearIcon from '@material-ui/icons/Clear';
 
-// const useStyles = makeStyles((theme) => ({
-//     // style rule
-//     foo: props => ({
-//         backgroundColor: props.backgroundColor,
-//     }),
-//     bar: {
-//         // CSS property
-//         color: props => props.color,
-//     },
-//     root: {
-//         color: theme.palette.primary.contrastText,
-//         fontSize: props => props.fontSize,
-//     }
-// }));
-
 const useStyles = makeStyles((theme) => ({
     paper: {
         display: 'flex',
-        //border: `1px solid ${theme.palette.divider}`,
         flexWrap: 'wrap',
     },
     divider: {
@@ -50,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1, 0.5),
     },
     gridTextWrapper: {
-        //textAlign: "center !important",
         width: "100%",
     },
     text: {
@@ -62,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: props => props.fontWeight,
         textDecoration: props => props.textDecoration,
         lineHeight: "normal",
-
     }
 }));
 
@@ -80,10 +62,6 @@ const StyledToggleButtonGroup = withStyles((theme) => ({
 }))(ToggleButtonGroup);
 
 const Text = ({ values, listeners }) => {
-
-
-
-    const [edit, setEdit] = React.useState(true)
 
     const [fontSize, setFontSize] = React.useState(30);
     const handleFontSize = (event, newFormats) => {
@@ -112,17 +90,6 @@ const Text = ({ values, listeners }) => {
         if (textDecoration === "none") return setTextDecoration("underline");
         return setTextDecoration("none");
     };
-
-    
-    const [alignment, setAlignment] = React.useState('left');
-    const [formats, setFormats] = React.useState(() => ['italic']);
-
-
-
-    const handleFormat = (event, newFormats) => {
-        setFormats(newFormats);
-    };
-
 
 
     // Simulated props for the purpose of the example

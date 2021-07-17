@@ -297,132 +297,7 @@ class Store {
 
 
 
-
-
-
-
-  @action setNowEditCourse = (title, value) => {
-    this.nowEditCourse[title] = value
-  }
-
-  @action addNewModule = (value) => {
-    this.nowEditCourse.modules.push({ 'name': value })
-  }
-
-  @action deleteModule = (name) => {
-    const names = this.nowEditCourse.modules.map(el => el.name);
-    this.nowEditCourse.modules.splice(names.indexOf(name), 1)
-  }
-
-  @action setMapElements = (newNode) => {
-    this.nowEditCourse.map.push(newNode)
-    //console.log(this.nowEditCourse.map)
-  }
-
-
-  // @action setMap = (newMap) => {
-  //   this.modulesMap = newMap
-  //   console.log("mobx map", this.modulesMap)
-  // }
-
-  @action updateMap = (value) => {
-    this.nowEditCourse.map = value
-    //console.log("statemap", this.nowEditCourse.map)
-  }
-
-  @action isElementOnMap = (name) => {
-    for (let i = 0; i < this.nowEditCourse.map.length; i++) {
-      if (this.nowEditCourse.map[i].data.label == name) return true
-    }
-    return false
-  }
-
-  // @action pushMap = (value) => {
-  //   this.modulesMap.push(value)
-  //   console.log(this.modulesMap)
-  // }
-
-  @action setAllSelectedFalse = () => {
-    for (let i = 0; i < this.nowEditCourse.menu.length; i++) {
-      this.nowEditCourse.menu[i].isSelect = false
-      for (let j = 0; j < this.nowEditCourse.menu[i].pointList.length; j++) {
-        this.nowEditCourse.menu[i].pointList[j].isSelect = false
-        for (let k = 0; k < this.nowEditCourse.menu[i].pointList[j].pageList.length; k++) {
-          this.nowEditCourse.menu[i].pointList[j].pageList[k].isSelect = false
-        }
-      }
-    }
-  }
-
-  @action pushNewModuleToMenu = (name, type, threshold, points) => {
-    const newModule = {
-      name,
-      type,
-      threshold,
-      points,
-      isOpen: false,
-      isSelect: false,
-      pointList: []
-    }
-    this.nowEditCourse.menu.push(newModule)
-  }
-
-  @action pushNewPointToMenu = (name, type, iM) => {
-    const newPoint = {
-      name,
-      type,
-      isOpen: false,
-      isSelect: false,
-      pageList: []
-    }
-    this.nowEditCourse.menu[iM].pointList.push(newPoint)
-  }
-
-  @action pushNewPageToMenu = (name, iM, iP) => {
-    const newPage = {
-      id: "",
-      name,
-      isSelect: false,
-    }
-    this.nowEditCourse.menu[iM].pointList[iP].push(newPage)
-  }
-
-  @action deleteModuleInMap = (name) => {
-    const newArr = this.nowEditCourse.map.filter(n => {
-      if (n?.data?.label != undefined) return n.data.label !== name
-      if (n.source === name || n.target === name) return false
-      return true
-    });
-    this.nowEditCourse.map = newArr
-  }
-
-  @action deleteModuleInMenu = (name) => {
-    this.nowEditCourse.menu = this.nowEditCourse.menu.filter((el) => {
-      return el.name != name
-    })
-  }
-
-  @action deletePointInMenu = (name, index) => {
-    this.nowEditCourse.menu[index].pointList = this.nowEditCourse.menu[index].pointList.filter((el) => {
-      return el.name != name
-    })
-  }
-
-  @action setIsOpenModule = (indexM, value) => {
-    this.nowEditCourse.menu[indexM].isOpen = value
-  }
-
-  @action setIsSelectModule = (indexM, value) => {
-    this.nowEditCourse.menu[indexM].isSelect = value
-  }
-
-  @action setIsOpenPoint = (indexM, indexP, value) => {
-    this.nowEditCourse.menu[indexM].pointList[indexP].isOpen = value
-  }
-
-  @action setIsSelectPoint = (indexM, indexP, value) => {
-    this.nowEditCourse.menu[indexM].pointList[indexP].isSelect = value
-  }
+  // Course Creation
 
   @observable nowEditCourse = {
     name: '',
@@ -430,19 +305,47 @@ class Store {
     difficulty: '',
     category: '',
     theme: '',
-    modules: [],
-    map: [
-      {
-        id: '1',
-        type: 'input',
-        data: { label: 'Введение' },
-        position: { x: 250, y: 5 },
-        style: { background: "#3f50b5", color: "#e0e0e0", cursor: "pointer", border: '1px solid #777', }
-      },
+    points: [
+     
     ],
-    menu: [],
   }
 
+  // Работа с деревом 
+
+  @action setOpenPages = (point) => {
+    this.nowEditCourse.points[point].openPages = !this.nowEditCourse.points[point].openPages
+  }
+
+  @action pushNewPoint = () => {
+    const newPoint = {
+      label: "Новая точка",
+      openPages: true,
+      pages: []
+    }
+    this.nowEditCourse.points.push(newPoint)
+  }
+
+  @action pushNewPage = (point) => {
+    const newPage = {
+      label: "Новая страница",
+      id: "",
+    }
+    this.nowEditCourse.points[point].pages.push(newPage)
+  }
+
+  @action deletePoint = (itemId) => {
+    this.nowEditCourse.points = this.nowEditCourse.points.filter((n, id) => {
+      if (id == itemId) return false
+      return true
+    });
+  }
+
+  @action deletePage = (point, itemId) => {
+    this.nowEditCourse.points[point].pages = this.nowEditCourse.points[point].pages.filter((n, id) => {
+      if (id == itemId) return false
+      return true
+    });
+  }
 
 
 
@@ -455,14 +358,14 @@ class Store {
   //Page
 
   @observable pageContent = [
-    { type: "h", variant: "h2", label: "Заголовок 1", align: "center" },
-    { type: "text", variant: "body1", label: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.", align: "center" },
-    { type: "h", variant: "h4", label: "Заголовок 2", align: "justify" },
-    { type: "text", variant: "body2", label: "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain.", align: "center" },
+    // { type: "h", variant: "h2", label: "Заголовок 1", align: "center" },
+    // { type: "text", variant: "body1", label: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.", align: "center" },
+    // { type: "h", variant: "h4", label: "Заголовок 2", align: "justify" },
+    // { type: "text", variant: "body2", label: "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain.", align: "center" },
   ]
 
   @action pushNewItemToPageContent = (type) => {
-    if (type === "h") this.pageContent = [ ...this.pageContent, { type: "h", variant: "h1", label: "заголовок", align: "center" }]
+    if (type === "h") this.pageContent = [...this.pageContent, { type: "h", variant: "h1", label: "заголовок", align: "center" }]
     if (type === "text") this.pageContent.push({ type: "text", variant: "body1", label: "текст", align: "center" })
     console.log("pageContent", this.pageContent)
   }

@@ -114,6 +114,7 @@ const StepOne = inject('store')(observer(({ store }) => {
                     Название модуля
                 </InputLabel>
                 <Input
+                    required
                     className={classes.input}
                     value={store.nowEditCourse.name}
                     onChange={(event) => store.setNowEditCourse("name", event.target.value)}
@@ -127,6 +128,7 @@ const StepOne = inject('store')(observer(({ store }) => {
                     Описание модуля
                 </InputLabel>
                 <Input
+                    required
                     className={classes.input}
                     value={store.nowEditCourse.title}
                     onChange={(event) => store.setNowEditCourse("title", event.target.value)}
