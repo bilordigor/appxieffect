@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 8,
         marginLeft: 8,
         marginRight: 8,
-        height: "calc(100vh - 140px)",
+        height: "calc(100vh - 220px)",
         display: "block",
         overflow: "auto",
         '&::-webkit-scrollbar': {

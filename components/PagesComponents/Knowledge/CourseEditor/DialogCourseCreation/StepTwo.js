@@ -17,6 +17,7 @@ import { inject, observer } from 'mobx-react'
 import Sortable from './../../../../OtherComponents/Page/Sortable'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 import {
     Menu,
@@ -63,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
         //backgroundColor: theme.palette.blueGrey["0"],
     },
     gridWrapper: {
-        height: "calc(100vh - 158px)",
+        height: "calc(100vh - 166px)",
         display: "block",
         overflow: "auto",
         '&::-webkit-scrollbar': {
@@ -79,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
         cursor: "pointer"
     },
     PaperItem: {
+        cursor: "pointer",
         borderRadius: 16,
         margin: 8,
         //height: 128,
@@ -121,6 +123,28 @@ const useStyles = makeStyles((theme) => ({
     gridSubtitle: {
         marginLeft: 8,
         marginTop: 4,
+    },
+    iconButton: {
+        width: "24px",
+        height: "24px",
+    },
+    InputLabel: {
+        color: theme.palette.primary.contrastText,
+    },
+    NativeSelect: {
+        color: theme.palette.primary.main
+    },
+    FormControl: {
+        width: "100%",
+        maxWidth: "320px",
+        color: theme.palette.primary.contrastText,
+        // height: "32px",
+        margin: 16,
+    },
+    helplabelTree: {
+        padding: 16,
+        fontSize: 14,
+        textAlign: "justify",
     }
 }));
 
@@ -132,6 +156,27 @@ function createRange(length, initializer = defaultInitializer) {
 const StepTwo = inject('store')(observer(({ store }) => {
     const classes = useStyles();
     const theme = useTheme();
+
+    const [idPage, setIdPage] = React.useState(null)
+    const [idPoint, setIdPoint] = React.useState(null)
+    const [mainWindowType, setMainWindowType] = React.useState('none')
+
+    const handlePoint = (idpnt) => {
+        setMainWindowType("point")
+        setIdPage(undefined)
+        setIdPoint(idpnt)
+        console.log("Point")
+    }
+
+    const handlePage = (e, idpnt, idpgs) => {
+        e.stopPropagation();
+        e.cancelBubble = true;
+        setMainWindowType("page")
+        setIdPage(idpgs)
+        setIdPoint(idpnt)
+        console.log("Page", mainWindowType, idPoint, idPage)
+    }
+
     const [openSideMenu, setOpenSideMenu] = React.useState(true)
     const [items, setItems] = useState(() => createRange(store.pageContent.length, (index) => (index).toString()));
 
@@ -163,7 +208,14 @@ const StepTwo = inject('store')(observer(({ store }) => {
                 justify="center"
                 alignItems="flex-start"
             >
-                <Typography className={classes.treeLabal}> Дерево модуля </Typography>
+                <Grid item container direction="row" justify="space-between" style={{padding: 4}}>
+                    <Typography className={classes.treeLabal}> Дерево модуля </Typography>
+                    <Tooltip title="Модули разделены на логические еденицы - точки, которые содержат страницы с контентом.
+                        Создайте несколько точек и наполните их страницами. Выше находиться &quot;дерево модуля&quot;, которое позволит вам быстро переключаться между точками и страницами.
+                        Не забудьте дать названия точкам и модулям. Просто нажмите и отредактируйте текст.">
+                            <HelpOutlineIcon style={{marginRight: 12}} className={classes.icon}/>
+                    </Tooltip>
+                </Grid>
                 <Divider className={classes.Divider} />
                 <Grid
                     item
@@ -174,7 +226,7 @@ const StepTwo = inject('store')(observer(({ store }) => {
                     alignItems="center"
                 >
                     {store.nowEditCourse.points.map((item, idpnt) =>
-                        <Paper elevation={3} className={classes.PaperItem} key={idpnt}>
+                        <Paper onClick={() => handlePoint(idpnt)} elevation={3} className={classes.PaperItem} key={idpnt}>
                             <Grid
                                 className={classes.PaperItemGrid}
                                 container
@@ -191,14 +243,24 @@ const StepTwo = inject('store')(observer(({ store }) => {
                                     wrap="nowrap"
                                 >
                                     <Grid item xs zeroMinWidth>
-                                        <Typography noWrap variant="subtitle2" className={classes.pointLabel}> {item.label} {idpnt}</Typography>
+                                        <ClickAwayListener onClickAway={() => store.setReadOnlyPoint(idpnt, true)}>
+                                            <Input
+                                                placeholder="Название точки"
+                                                className={classes.pointLabel}
+                                                onClick={() => store.setReadOnlyPoint(idpnt, false)}
+                                                onChange={(event) => store.setLabelPoint(idpnt, event.target.value)}
+                                                readOnly={item.readOnly}
+                                                disableUnderline
+                                                value={item.label}
+                                            />
+                                        </ClickAwayListener>
                                     </Grid>
                                     <Grid item>
-                                        <IconButton onClick={() => store.setOpenPages(idpnt)}>
+                                        <IconButton className={classes.iconButton} onClick={() => store.setOpenPages(idpnt)}>
                                             {item.openPages && <ArrowDropDownIcon className={classes.icon} />}
                                             {!item.openPages && <ArrowDropUpIcon className={classes.icon} />}
                                         </IconButton>
-                                        <IconButton onClick={() => store.deletePoint(idpnt)}>
+                                        <IconButton className={classes.iconButton} onClick={() => store.deletePoint(idpnt)}>
                                             <CloseIcon className={classes.icon} />
                                         </IconButton>
                                     </Grid>
@@ -210,7 +272,7 @@ const StepTwo = inject('store')(observer(({ store }) => {
                                     alignItems="flex-end"
                                 >
                                     {item.pages.map((item, idpgs) =>
-                                        <Paper className={classes.PaperPage} key={idpgs}>
+                                        <Paper onClick={(e) => handlePage(e, idpnt, idpgs)} className={classes.PaperPage} key={idpgs}>
                                             <Grid
                                                 className={classes.PaperItemGrid}
                                                 container
@@ -227,10 +289,20 @@ const StepTwo = inject('store')(observer(({ store }) => {
                                                     wrap="nowrap"
                                                 >
                                                     <Grid item xs zeroMinWidth>
-                                                        <Typography noWrap variant="subtitle2" className={classes.pointLabel}> {`Страница ${idpgs}`} </Typography>
+                                                        <ClickAwayListener onClickAway={() => store.setReadOnlyPage(idpnt, idpgs, true)}>
+                                                            <Input
+                                                                placeholder="Название страницы"
+                                                                className={classes.pointLabel}
+                                                                onClick={() => store.setReadOnlyPage(idpnt, idpgs, false)}
+                                                                onChange={(event) => store.setLabelPage(idpnt, idpgs, event.target.value)}
+                                                                readOnly={item.readOnly}
+                                                                disableUnderline
+                                                                value={item.label}
+                                                            />
+                                                        </ClickAwayListener>
                                                     </Grid>
                                                     <Grid item>
-                                                        <IconButton onClick={() => store.deletePage(idpnt, idpgs)}>
+                                                        <IconButton className={classes.iconButton} onClick={() => store.deletePage(idpnt, idpgs)}>
                                                             <CloseIcon className={classes.icon} />
                                                         </IconButton>
                                                     </Grid>
@@ -255,6 +327,11 @@ const StepTwo = inject('store')(observer(({ store }) => {
                         </Paper>
 
                     )}
+                    {/* <Typography className={classes.helplabelTree}>
+                        Модули разделены на логические еденицы - точки, которые содержат страницы с контентом.
+                        Создайте несколько точек и наполните их страницами. Выше находиться &quot;дерево модуля&quot;, которое позволит вам быстро переключаться между точками и страницами.
+                        Не забудьте дать названия точкам и модулям. Просто нажмите и отредактируйте текст.
+                    </Typography> */}
                     <Tooltip title="Добавить точку">
                         <Grid
                             className={classes.gridAction}
@@ -264,6 +341,7 @@ const StepTwo = inject('store')(observer(({ store }) => {
                             justify="center"
                             alignItems="center"
                         >
+
                             <Image
                                 quality={100}
                                 alt="howtocreateamodule"
@@ -274,7 +352,6 @@ const StepTwo = inject('store')(observer(({ store }) => {
                             />
                             <Button>
                                 <AddIcon className={classes.icon} />
-                                {/* <Typography className={classes.pointLabel}>  </Typography> */}
                             </Button>
                         </Grid>
                     </Tooltip>
@@ -293,26 +370,84 @@ const StepTwo = inject('store')(observer(({ store }) => {
                 className={classes.gridMain}
             >
                 {/* <Page/> */}
-                {store.pageContent.length != 0 && <Sortable items={items} setItems={setItems} store={store} handle />}
-                {store.pageContent.length === 0 &&
-                    <Grid
-                        item
-                        container
-                        direction="column"
-                        className={classes.gridMainImgWrapper}
-                        justify="center"
-                        alignItems="center"
-                    >
-                        <Image
-                            quality={100}
-                            alt="howtocreateamodule"
-                            src="/illustrations/mathTeacher.png"
-                            //layout='fill'
-                            width={320}
-                            height={320}
-                        />
-                    </Grid>
-                }
+                <Grid
+                    item
+                    container
+                    direction="column"
+                    className={classes.gridMainImgWrapper}
+                    justify="flex-start"
+                    alignItems="center"
+                >
+                    {mainWindowType === "point" &&
+                        <Grid
+                            item
+                            container
+                            direction="column"
+                            justify="flex-start"
+                            alignItems="center"
+                        >
+                            <Typography> Мета информация для точки. </Typography>
+                            <FormControl className={classes.FormControl}>
+                                <InputLabel className={classes.InputLabel} variant="standard" htmlFor="uncontrolled-native">
+                                    Тип точки
+                                </InputLabel>
+                                <NativeSelect
+                                    className={classes.NativeSelect}
+                                    value={store.nowEditCourse.points[idPoint].type}
+                                    onChange={(event) => store.setPointType(idPoint, event.target.value)}
+                                    inputProps={{
+                                        name: 'age',
+                                        id: 'uncontrolled-native',
+                                    }}
+                                >
+                                    <option className={classes.option} value={'not selected'}>Не выбрано</option>
+                                    <option value={'theory'}> Теория</option>
+                                    <option value={'practice'}> Практика </option>
+                                    <option value={'test'}> Тест</option>
+                                </NativeSelect>
+                            </FormControl>
+
+                        </Grid>}
+                    {(mainWindowType === "none" || mainWindowType === "point") && <Image
+                        quality={100}
+                        alt="howtocreateamodule"
+                        src="/illustrations/mathTeacher.png"
+                        //layout='fill'
+                        width={480}
+                        height={480}
+                    />}
+                    {mainWindowType === "page" &&
+                        <Grid
+                            item
+                            container
+                            direction="column"
+                            justify="flex-start"
+                            alignItems="flex-start"
+                        >
+                            {/* <Typography> Мета информация для точки. </Typography> */}
+                            <FormControl className={classes.FormControl}>
+                                <InputLabel className={classes.InputLabel} variant="standard" htmlFor="uncontrolled-native">
+                                    Тип страницы
+                                </InputLabel>
+                                <NativeSelect
+                                    className={classes.NativeSelect}
+                                    value={store.nowEditCourse.points[idPoint].type}
+                                    onChange={(event) => store.setPointType(idPoint, event.target.value)}
+                                    inputProps={{
+                                        name: 'age',
+                                        id: 'uncontrolled-native',
+                                    }}
+                                >
+                                    <option className={classes.option} value={'page'}> Страница </option>
+                                    <option value={'drawing'}> Чертёж </option>
+                                </NativeSelect>
+                            </FormControl>
+
+                        </Grid>}
+                </Grid>
+                {mainWindowType === 'page' && store.pageContent.length != 0 && <Sortable items={items} setItems={setItems} store={store} handle />}
+                {mainWindowType === 'page' && store.pageContent.length == 0 && <Typography> Страница пока пуста. Добавьте компоненты </Typography>}
+
             </Grid>
 
             {/* Компоненты */}
@@ -326,7 +461,12 @@ const StepTwo = inject('store')(observer(({ store }) => {
                 justify="center"
                 alignItems="flex-start"
             >
-                <Typography className={classes.treeLabal}> Компоненты </Typography>
+                <Grid item container direction="row" justify="space-between" style={{padding: 4}}>
+                    <Typography className={classes.treeLabal}> Компоненты </Typography>
+                    <Tooltip title="Компоненты - небольшие строительные блоки для создания страниц. Добавьте на текущую страницу, нажав на '+' на нужном компоненте.">
+                            <HelpOutlineIcon style={{marginRight: 12}} className={classes.icon}/>
+                    </Tooltip>
+                </Grid>
                 <Divider className={classes.Divider} />
                 <Grid
                     item

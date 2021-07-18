@@ -316,21 +316,52 @@ class Store {
     this.nowEditCourse.points[point].openPages = !this.nowEditCourse.points[point].openPages
   }
 
+  @action setReadOnlyPoint = (point, value) => {
+    this.nowEditCourse.points[point].readOnly = value
+  }
+
+  @action setLabelPoint = (point, value) => {
+    this.nowEditCourse.points[point].label = value
+  }
+
+  @action setReadOnlyPage = (point, page, value) => {
+    this.nowEditCourse.points[point].pages[page].readOnly = value
+  }
+
+  @action setLabelPage = (point, page, value) => {
+    this.nowEditCourse.points[point].pages[page].label = value
+  }
+
   @action pushNewPoint = () => {
     const newPoint = {
       label: "Новая точка",
+      type: "not selected",
+      readOnly: true,
       openPages: true,
       pages: []
     }
     this.nowEditCourse.points.push(newPoint)
   }
 
+  @action setPointType = (pnt, value) => {
+    this.nowEditCourse.points[pnt].type = value
+  }
+
   @action pushNewPage = (point) => {
-    const newPage = {
+    const newPageModuls = {
       label: "Новая страница",
-      id: "",
+      readOnly: true,
+      id: this.newPages.length,
     }
-    this.nowEditCourse.points[point].pages.push(newPage)
+    this.nowEditCourse.points[point].pages.push(newPageModuls)
+    const newPageList = {
+      label: "Новая страница",
+      id: this.newPages.length,
+      type: "page",
+      list: [],
+      components: [],
+    }
+    this.newPages.push(newPageList)
   }
 
   @action deletePoint = (itemId) => {
@@ -347,21 +378,33 @@ class Store {
     });
   }
 
+  // LoadedPages
 
+  // @observable loadedPages = [
+  //   {id, type, label, list: [], components: [{type, label, }]}
 
+  // ]
 
+  // NewPages 
 
-
+  @observable newPages = [
+    
+  ]
 
 
 
   //Page
 
   @observable pageContent = [
-    // { type: "h", variant: "h2", label: "Заголовок 1", align: "center" },
-    // { type: "text", variant: "body1", label: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.", align: "center" },
-    // { type: "h", variant: "h4", label: "Заголовок 2", align: "justify" },
-    // { type: "text", variant: "body2", label: "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain.", align: "center" },
+    { type: "h", variant: "h2", label: "Заголовок 1", align: "center" },
+    { type: "text", variant: "body1", label: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.", align: "center" },
+    { type: "h", variant: "h4", label: "Заголовок 2", align: "justify" },
+    { type: "text", variant: "body2", label: "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain.", align: "center" },
+    { type: "h", variant: "h2", label: "Заголовок 1", align: "center" },
+    { type: "text", variant: "body1", label: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.", align: "center" },
+    { type: "h", variant: "h4", label: "Заголовок 2", align: "justify" },
+    { type: "text", variant: "body2", label: "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain.", align: "center" },
+    
   ]
 
   @action pushNewItemToPageContent = (type) => {
