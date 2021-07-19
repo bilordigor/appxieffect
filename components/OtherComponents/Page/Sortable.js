@@ -45,14 +45,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Sortable = ({ items, setItems, store, adjustScale = false, collisionDetection = closestCenter, dropAnimation = defaultDropAnimationConfig, getItemStyles = () => ({}), handle = false, itemCount, isDisabled = () => false, removable, strategy = rectSortingStrategy, useDragOverlay = true, wrapperStyle = () => ({}), }) => {
+const Sortable = ({ items, store, adjustScale = false, collisionDetection = closestCenter, dropAnimation = defaultDropAnimationConfig, getItemStyles = () => ({}), handle = false, itemCount, isDisabled = () => false, removable, strategy = rectSortingStrategy, useDragOverlay = true, wrapperStyle = () => ({}), }) => {
     const classes = useStyles();
-    console.log("Sortable render")
-
     console.log("Sortable render items", items)
     const [activeId, setActiveId] = useState(null);
-    const getIndex = items.indexOf.bind(items);
-    const activeIndex = activeId ? getIndex(activeId) : -1;
+    //const getIndex = items.indexOf.bind(items);
+    const activeIndex = activeId ? activeId : -1;
     const handleRemove = removable
         ? (id) => setItems((items) => items.filter((item) => item !== id))
         : undefined;
@@ -68,15 +66,17 @@ const Sortable = ({ items, setItems, store, adjustScale = false, collisionDetect
             setActiveId(active.id);
         }}
         onDragEnd={({ over }) => {
-            setActiveId(null);
-            console.log("over", over)
+            //setActiveId(null);
+            //console.log("activeId", activeId)
+            //console.log("over", over)
+            //console.log("over", over.id)
             if (over) {
-                const overIndex = getIndex(over.id);
-                if (activeIndex !== overIndex) {
-                    setItems((items) => arrayMove(items, activeIndex, overIndex));
+                //const overIndex = getIndex(over.id);
+                if (activeId !== over.id) {
+                    store.setComponentsPages(arrayMove(store[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components, activeId, over.id));
                 }
             }
-            console.log(items)
+            //console.log(items)
         }}
         onDragCancel={() => setActiveId(null)}
     >
@@ -85,8 +85,9 @@ const Sortable = ({ items, setItems, store, adjustScale = false, collisionDetect
                 {items.map((value, index) => (
                     <SortableItem
                         store={store}
-                        key={value}
-                        id={value}
+                        value={value}
+                        key={index.toString()}
+                        id={index.toString()}
                         handle={handle}
                         index={index}
                         // style={getItemStyles}
@@ -143,6 +144,7 @@ function SortableItem({
     style,
     useDragOverlay,
     wrapperStyle,
+    value,
     store,
 }) {
     const {
@@ -161,9 +163,9 @@ function SortableItem({
 
     return (
         <Items
-            store={store}
             ref={setNodeRef}
-            value={id}
+            value={value}
+            store={store}
             disabled={disabled}
             dragging={isDragging}
             sorting={isSorting}

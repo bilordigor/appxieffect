@@ -306,7 +306,7 @@ class Store {
     category: '',
     theme: '',
     points: [
-     
+
     ],
   }
 
@@ -351,17 +351,16 @@ class Store {
     const newPageModuls = {
       label: "Новая страница",
       readOnly: true,
-      id: this.newPages.length,
+      id: "-" + Object.keys(this.newPages).length,
     }
     this.nowEditCourse.points[point].pages.push(newPageModuls)
     const newPageList = {
       label: "Новая страница",
-      id: this.newPages.length,
       type: "page",
       list: [],
       components: [],
     }
-    this.newPages.push(newPageList)
+    this.newPages["-" + Object.keys(this.newPages).length] = newPageList
   }
 
   @action deletePoint = (itemId) => {
@@ -385,13 +384,34 @@ class Store {
 
   // ]
 
+  @observable nowEditPageMeta = {
+    id: "",
+    type: "",
+  }
+
+  @action setNowEditPageMeta = (type, value) => {
+    this.nowEditPageMeta[type] = value
+  }
+
   // NewPages 
 
-  @observable newPages = [
-    
-  ]
+  @observable newPages = {
 
+  }
 
+  @action pushNewItemToPages = (type) => {
+    if (type === "h") this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.push({ type: "h", variant: "h1", label: "заголовок", align: "center" })
+    if (type === "text") this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.push({ type: "text", variant: "body1", label: "текст", align: "center" })
+    console.log("components", this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components)
+  }
+
+  @action setComponentsPages = (value) => {
+    this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components = value
+  }
+
+  @action setComponentsPagesValues = (type, index, value) => {
+    this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components[index][type] = value
+  }
 
   //Page
 
@@ -404,14 +424,10 @@ class Store {
     { type: "text", variant: "body1", label: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.", align: "center" },
     { type: "h", variant: "h4", label: "Заголовок 2", align: "justify" },
     { type: "text", variant: "body2", label: "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain.", align: "center" },
-    
+
   ]
 
-  @action pushNewItemToPageContent = (type) => {
-    if (type === "h") this.pageContent = [...this.pageContent, { type: "h", variant: "h1", label: "заголовок", align: "center" }]
-    if (type === "text") this.pageContent.push({ type: "text", variant: "body1", label: "текст", align: "center" })
-    console.log("pageContent", this.pageContent)
-  }
+
 
 
 

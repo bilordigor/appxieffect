@@ -168,22 +168,26 @@ const StepTwo = inject('store')(observer(({ store }) => {
         console.log("Point")
     }
 
-    const handlePage = (e, idpnt, idpgs) => {
+    const handlePage = (e, id, idpnt, idpgs) => {
         e.stopPropagation();
         e.cancelBubble = true;
+        store.setNowEditPageMeta("id", id)
+        if (id <= 0) {
+            store.setNowEditPageMeta("type", "newPages")
+        }
+        if (id > 0) {
+            store.setNowEditPageMeta("type", "loadPages")
+        }
         setMainWindowType("page")
         setIdPage(idpgs)
         setIdPoint(idpnt)
         console.log("Page", mainWindowType, idPoint, idPage)
+        console.log("Page1", store.nowEditPageMeta, store.newPages)
     }
 
     const [openSideMenu, setOpenSideMenu] = React.useState(true)
     const [items, setItems] = useState(() => createRange(store.pageContent.length, (index) => (index).toString()));
 
-    const Clicked = (type) => {
-        setItems([...items, store.pageContent.length.toString()])
-        store.pushNewItemToPageContent(type)
-    }
 
     const components = [
         { label: "Текст", type: "text" },
@@ -208,12 +212,12 @@ const StepTwo = inject('store')(observer(({ store }) => {
                 justify="center"
                 alignItems="flex-start"
             >
-                <Grid item container direction="row" justify="space-between" style={{padding: 4}}>
+                <Grid item container direction="row" justify="space-between" style={{ padding: 4 }}>
                     <Typography className={classes.treeLabal}> Дерево модуля </Typography>
                     <Tooltip title="Модули разделены на логические еденицы - точки, которые содержат страницы с контентом.
                         Создайте несколько точек и наполните их страницами. Выше находиться &quot;дерево модуля&quot;, которое позволит вам быстро переключаться между точками и страницами.
                         Не забудьте дать названия точкам и модулям. Просто нажмите и отредактируйте текст.">
-                            <HelpOutlineIcon style={{marginRight: 12}} className={classes.icon}/>
+                        <HelpOutlineIcon style={{ marginRight: 12 }} className={classes.icon} />
                     </Tooltip>
                 </Grid>
                 <Divider className={classes.Divider} />
@@ -272,7 +276,7 @@ const StepTwo = inject('store')(observer(({ store }) => {
                                     alignItems="flex-end"
                                 >
                                     {item.pages.map((item, idpgs) =>
-                                        <Paper onClick={(e) => handlePage(e, idpnt, idpgs)} className={classes.PaperPage} key={idpgs}>
+                                        <Paper onClick={(e) => handlePage(e, item.id, idpnt, idpgs)} className={classes.PaperPage} key={idpgs}>
                                             <Grid
                                                 className={classes.PaperItemGrid}
                                                 container
@@ -445,8 +449,8 @@ const StepTwo = inject('store')(observer(({ store }) => {
 
                         </Grid>}
                 </Grid>
-                {mainWindowType === 'page' && store.pageContent.length != 0 && <Sortable items={items} setItems={setItems} store={store} handle />}
-                {mainWindowType === 'page' && store.pageContent.length == 0 && <Typography> Страница пока пуста. Добавьте компоненты </Typography>}
+                {mainWindowType === 'page' && store[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.length != 0 && <Sortable store={store} items={store[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components} handle />}
+                {mainWindowType === 'page' && store[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.length == 0 && <Typography> Страница пока пуста. Добавьте компоненты </Typography>}
 
             </Grid>
 
@@ -461,10 +465,10 @@ const StepTwo = inject('store')(observer(({ store }) => {
                 justify="center"
                 alignItems="flex-start"
             >
-                <Grid item container direction="row" justify="space-between" style={{padding: 4}}>
+                <Grid item container direction="row" justify="space-between" style={{ padding: 4 }}>
                     <Typography className={classes.treeLabal}> Компоненты </Typography>
                     <Tooltip title="Компоненты - небольшие строительные блоки для создания страниц. Добавьте на текущую страницу, нажав на '+' на нужном компоненте.">
-                            <HelpOutlineIcon style={{marginRight: 12}} className={classes.icon}/>
+                        <HelpOutlineIcon style={{ marginRight: 12 }} className={classes.icon} />
                     </Tooltip>
                 </Grid>
                 <Divider className={classes.Divider} />
@@ -508,7 +512,7 @@ const StepTwo = inject('store')(observer(({ store }) => {
                                     justify="center"
                                     alignItems="center"
                                 >
-                                    <Button onClick={() => Clicked(item.type)}>
+                                    <Button onClick={() => store.pushNewItemToPages(item.type)}>
                                         <Tooltip title="Добавить Компонент">
                                             <AddIcon className={classes.icon} />
                                         </Tooltip>
