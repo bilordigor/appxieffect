@@ -109,7 +109,7 @@ const MyApp = (observer(({ Component, pageProps }) => {
           Ξ Effect
         </title> */}
         <meta name="Keywords" content="Образованиие, Эффект, Кси Эффект, Xi Effect, Effect" />
-        <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=3.2" />
+        <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=3.2" />
         <meta name="yandex-verification" content="5fa082e60959bf8b" />
         <meta
           name="description"
