@@ -4,11 +4,12 @@ import { useRouter } from 'next/router'
 import clsx from 'clsx'
 import { inject, observer } from 'mobx-react'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { Drawer } from '@material-ui/core'
+import { Drawer, Hidden } from '@material-ui/core'
 
 import Sidebar from './Sidebar'
 import Helpbar from './Helpbar'
 import Loading from '../Loading/Loading'
+import SideDownbar from './SideDownbar'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
 const NavigationAll = inject('store')(observer(({ store, children }) => {
     const classes = useStyles();
     const theme = useTheme();
-    const [openSideMenu, setOpenSideMenu] = React.useState(false);
     const [openHelpMenu, setOpenHelpMenu] = React.useState(false);
 
     const router = useRouter()
@@ -75,7 +75,12 @@ const NavigationAll = inject('store')(observer(({ store, children }) => {
         <>
             {store.loading["/"] && <Loading />}
             {!store.loading["/"] && <div className={classes.root}>
-                <Sidebar openSideMenu={openSideMenu} setOpenSideMenu={setOpenSideMenu} />
+                <Hidden only="xs"> 
+                    <Sidebar />
+                </Hidden>
+                <Hidden smUp>
+                    <SideDownbar />
+                </Hidden>
                 <Helpbar openHelpMenu={openHelpMenu} setOpenHelpMenu={setOpenHelpMenu} />
                 <main
                     className={classes.content}
