@@ -11,7 +11,7 @@ import Helpbar from './Helpbar'
 import Loading from '../Loading/Loading'
 import SideDownbar from './SideDownbar'
 
-import { useSwipeable } from 'react-swipeable';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,26 +34,6 @@ const NavigationAll = inject('store')(observer(({ store, children }) => {
     const classes = useStyles();
     const theme = useTheme();
     const [openHelpMenu, setOpenHelpMenu] = React.useState(false);
-
-    const router = useRouter()
-
-    const config = {
-        delta: 2,
-    }
-
-    const handlers = useSwipeable({
-        onSwipedLeft: (eventData) => {
-            if (router.pathname === "/") router.push("/knowledge")
-            if (router.pathname === "/knowledge") router.push("/settings")
-            // console.log("User Swiped!", eventData)
-        },
-        onSwipedRight: (eventData) => {
-            if (router.pathname === "/knowledge") router.push("/")
-            if (router.pathname === "/settings") router.push("/knowledge")
-            // console.log("User Swiped!", eventData)
-        },
-        ...config,
-    });
 
     React.useEffect(() => {
         store.getDataScr(`${store.url}/settings/main/`)
@@ -103,7 +83,6 @@ const NavigationAll = inject('store')(observer(({ store, children }) => {
                 </Hidden>
                 <Helpbar openHelpMenu={openHelpMenu} setOpenHelpMenu={setOpenHelpMenu} />
                 <main
-                    {...handlers}
                     className={classes.content}
                 >
                     {children}

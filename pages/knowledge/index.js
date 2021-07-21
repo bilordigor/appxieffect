@@ -162,11 +162,11 @@ const Knowledge = inject('store')(observer(({ store }) => {
               <Tab label={<Typography className={classes.tabLabel}>Другое</Typography>} {...a11yProps(2)} />
             </AntTabs>
           </AppBar>
-          {/* <Tabs
+          <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-            //index={value}
-            //onChangeIndex={handleChangeIndex}
-          > */}
+            index={value}
+            onChangeIndex={handleChangeIndex}
+          >
             <TabPanel value={value} index={0} dir={theme.direction}>
               <Courses courses={courses} />
             </TabPanel>
@@ -179,7 +179,7 @@ const Knowledge = inject('store')(observer(({ store }) => {
             <TabPanel value={value} index={2} dir={theme.direction}>
               <Other/>
             </TabPanel>
-          {/* </Tabs> */}
+          </SwipeableViews>
         </Grid>
       </NavigationAll>
 

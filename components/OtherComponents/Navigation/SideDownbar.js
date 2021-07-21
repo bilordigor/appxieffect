@@ -11,6 +11,9 @@ import HomeIcon from '@material-ui/icons/Home';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SettingsIcon from '@material-ui/icons/Settings';
 
+import { useRouter } from 'next/router'
+import { useSwipeable } from 'react-swipeable';
+
 const useStyles = makeStyles((theme) => ({
     appBar: {
         top: 'auto',
@@ -93,9 +96,30 @@ const SideDownbar = inject('store')(observer(({ store, openSideMenu, setOpenSide
         }
     ])
 
+    const router = useRouter()
+
+    const config = {
+        delta: 2,
+    }
+
+    const handlers = useSwipeable({
+        onSwipedLeft: (eventData) => {
+            if (router.pathname === "/") router.push("/knowledge")
+            if (router.pathname === "/knowledge") router.push("/settings")
+            // console.log("User Swiped!", eventData)
+        },
+        onSwipedRight: (eventData) => {
+            if (router.pathname === "/knowledge") router.push("/")
+            if (router.pathname === "/settings") router.push("/knowledge")
+            // console.log("User Swiped!", eventData)
+        },
+        ...config,
+    });
+
     return (
         <>
             <AppBar
+                {...handlers}
                 position="fixed"
                 // classes={{
                 //     //paper: classes.drawerPaper,
