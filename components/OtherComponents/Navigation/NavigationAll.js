@@ -39,16 +39,15 @@ const NavigationAll = inject('store')(observer(({ store, children }) => {
 
     const handlers = useSwipeable({
         onSwipedLeft: (eventData) => {
-            if (router.pathname === "/") router.push("/knowleage")
-            if (router.pathname === "/knowleage") router.push("/settings")
+            if (router.pathname === "/") router.push("/knowledge")
+            if (router.pathname === "/knowledge") router.push("/settings")
             console.log("User Swiped!", eventData)
         },
         onSwipedRight: (eventData) => {
-            if (router.pathname === "/knowleage") router.push("/")
-            if (router.pathname === "/settings") router.push("/knowleage")
+            if (router.pathname === "/knowledge") router.push("/")
+            if (router.pathname === "/settings") router.push("/knowledge")
             console.log("User Swiped!", eventData)
-        }
-        ,
+        },
         // ...config,
     });
 
