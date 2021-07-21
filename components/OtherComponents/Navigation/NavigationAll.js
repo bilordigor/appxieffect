@@ -37,20 +37,22 @@ const NavigationAll = inject('store')(observer(({ store, children }) => {
 
     const router = useRouter()
 
+    const config = {
+        delta: 4,
+    }
+
     const handlers = useSwipeable({
         onSwipedLeft: (eventData) => {
-            eventData.stopPropagation()
             if (router.pathname === "/") router.push("/knowledge")
             if (router.pathname === "/knowledge") router.push("/settings")
-            console.log("User Swiped!", eventData)
+            // console.log("User Swiped!", eventData)
         },
         onSwipedRight: (eventData) => {
-            eventData.stopPropagation()
             if (router.pathname === "/knowledge") router.push("/")
             if (router.pathname === "/settings") router.push("/knowledge")
-            console.log("User Swiped!", eventData)
+            // console.log("User Swiped!", eventData)
         },
-        // ...config,
+        ...config,
     });
 
     React.useEffect(() => {
