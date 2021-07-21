@@ -35,6 +35,8 @@ const NavigationAll = inject('store')(observer(({ store, children }) => {
     const theme = useTheme();
     const [openHelpMenu, setOpenHelpMenu] = React.useState(false);
 
+    const router = useRouter()
+
     React.useEffect(() => {
         store.getDataScr(`${store.url}/settings/main/`)
             .then((data) => {

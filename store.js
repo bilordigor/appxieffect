@@ -12,8 +12,9 @@ class Store {
   constructor() {
     makeObservable(this)
   }
-
   @observable url = 'https://xieffect.pythonanywhere.com'
+
+  //@observable url = 'https://qwert45hi.pythonanywhere.com'
   //xieffect.pythonanywhere.com
 
   //Loading Screen

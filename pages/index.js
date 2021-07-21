@@ -9,6 +9,7 @@ import { inject, observer } from 'mobx-react'
 import NavigationAll from './../components/OtherComponents/Navigation/NavigationAll'
 import Background from './../components/OtherComponents/Background/Background'
 import QuiсkButtons from './../components/PagesComponents/Main/QuiсkButtons';
+import QuiсkWidgets from '../components/PagesComponents/Main/QuiсkWidgets';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -34,6 +35,9 @@ const Home = inject('store')(observer(({ store }) => {
         <Grid container direction="column" className={classes.main}>
           <Grid item>
             <QuiсkButtons />
+          </Grid>
+          <Grid item>
+            <QuiсkWidgets />
           </Grid>
           <Box className={classes.space}>
 
