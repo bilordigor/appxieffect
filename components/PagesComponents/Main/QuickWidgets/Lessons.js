@@ -2,11 +2,13 @@ import React from 'react';
 import { inject, observer } from 'mobx-react'
 import { Typography, Paper, Grid, Divider, List, ListItem, } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import clsx from 'clsx';
 
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 const useStyles = makeStyles((theme) => ({
     paperGrid: {
@@ -35,6 +37,11 @@ const useStyles = makeStyles((theme) => ({
         height: 36,
         width: 36,
         color: theme.palette.primary.contrastText,
+        transition: "all 0.4s",
+    },
+    arrowIconOpen: {
+        transition: "all 0.4s",
+        transform: "rotate(-0.25turn)"
     },
     divider: {
         height: 1,
@@ -54,12 +61,14 @@ const Lessons = inject('store')(observer(({ store }) => {
     const theme = useTheme();
 
     const menuList = [
-        { label: "Урок 0" },
-        { label: "Урок 1" },
-        { label: "Урок 2" },
-        { label: "Урок 3" },
-        { label: "Урок 4" },
+        { label: "Урок 0", open: false },
+        { label: "Урок 1", open: false },
+        { label: "Урок 2", open: false },
+        { label: "Урок 3", open: false },
+        { label: "Урок 4", open: false },
     ]
+
+    const [open, setOpen] = React.useState(false)
 
     return (
         <Grid
@@ -94,10 +103,19 @@ const Lessons = inject('store')(observer(({ store }) => {
                         direction="column"
                         justify="flex-start"
                         alignItems="flex-start"
+                        className={classes.labelGrid}
                     >
                         {menuList.map((item, index) =>
-                            <Grid className={classes.itemGrid} key={index}>
+                            <Grid
+                                container
+                                className={classes.itemGrid}
+                                key={index}
+                                direction="row"
+                                justify="space-between"
+                                alignItems="center"
+                            >
                                 <Typography> {item.label} </Typography>
+                                <ArrowBackIosIcon onClick={() => setOpen(!open)} className={clsx(classes.arrowIcon, {[classes.arrowIconOpen]: open })}/>
                             </Grid>
                         )}
                     </Grid>

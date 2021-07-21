@@ -79,7 +79,7 @@ const DialogHiddenList = inject('store')(observer(({ store, open, setOpen }) => 
 
     const deleteCourseFromHiddenList = (id) => {
         let answer = { "a": "show" }
-        store.postDataScr(`${store.url}/courses/${id}/preference/`, answer)
+        store.postDataScr(`${store.url}/modules/${id}/preference/`, answer)
             .then((data) => {
                 console.log(data)
                 if (data != undefined) {

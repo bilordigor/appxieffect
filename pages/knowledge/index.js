@@ -101,7 +101,7 @@ const Knowledge = inject('store')(observer(({ store }) => {
   //     "sort": "popularity",
   //     "counter": 0
   //   }
-  //   store.postDataScr(`${store.url}/courses/`, filters)
+  //   store.postDataScr(`${store.url}/modules/`, filters)
   //     .then((data) => {
   //       console.log("data", data)
   //       store.pushCoursesList(data)

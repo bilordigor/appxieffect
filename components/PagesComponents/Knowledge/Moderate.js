@@ -301,7 +301,7 @@ const Moderate = inject('store')(observer(({ store }) => {
             value = true
         }
         console.log(answer)
-        store.postDataScr(`${store.url}/courses/${id}/preference/`, answer)
+        store.postDataScr(`${store.url}/modules/${id}/preference/`, answer)
             .then((data) => {
                 //console.log(data)
                 if (data != undefined) {

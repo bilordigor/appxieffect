@@ -98,7 +98,7 @@ class Store {
     }
     let lnght = 0
     do {
-      this.postDataScr(`${this.url}/courses/`, filters)
+      this.postDataScr(`${this.url}/modules/`, filters)
         .then((data) => {
           //console.log("courses:", data)
           if (data != undefined) {
@@ -163,7 +163,7 @@ class Store {
     this.setIsLoading(true)
     //this.collectFilters()
 
-    this.postDataScr(`${this.url}/courses/`, this.filters)
+    this.postDataScr(`${this.url}/modules/`, this.filters)
       .then((data) => {
         console.log("courses:", data)
         if (data != undefined) {
@@ -242,7 +242,7 @@ class Store {
 
   @action loadingMoreHiddenCourses = () => {
     //console.log("loading new courses")
-    this.postDataScr(`${this.url}/courses/hidden/`, { "counter": this.hiddenCoursesCounter })
+    this.postDataScr(`${this.url}/modules/hidden/`, { "counter": this.hiddenCoursesCounter })
       .then((data) => {
         //console.log("courses:", data)
         if (data != undefined) {
@@ -265,7 +265,7 @@ class Store {
 
 
   @action getNewCourses = () => {
-    // this.getDataScr(`${this.url}/courses/`)
+    // this.getDataScr(`${this.url}/modules/`)
     //   .then((data) => {
     //     //console.log("courses:", data)
     //     if (data != undefined) {
@@ -282,7 +282,7 @@ class Store {
   }
 
   @action deleteCourse = (name) => {
-    // this.getDataScr(`${this.url}/courses/`)
+    // this.getDataScr(`${this.url}/modules/`)
     //   .then((data) => {
     //     //console.log("courses:", data)
     //     if (data != undefined) {
