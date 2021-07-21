@@ -14,7 +14,7 @@ class Store {
   }
 
   @observable url = 'https://qwert45hi.pythonanywhere.com'
-
+  //xieffect.pythonanywhere.com
 
   //Loading Screen
 
@@ -310,6 +310,19 @@ class Store {
     ],
   }
 
+  @action clearNowEditCourse = () => {
+    this.nowEditCourse = {
+      name: '',
+      title: '',
+      difficulty: '',
+      category: '',
+      theme: '',
+      points: [
+
+      ],
+    }
+  }
+
   // Работа с деревом 
 
   @action setOpenPages = (point) => {
@@ -389,6 +402,13 @@ class Store {
     type: "",
   }
 
+  @action clearNowEditPageMeta = () => {
+    this.nowEditPageMeta = {
+      id: "",
+      type: "",
+    }
+  }
+
   @action setNowEditPageMeta = (type, value) => {
     this.nowEditPageMeta[type] = value
   }
@@ -397,6 +417,10 @@ class Store {
 
   @observable newPages = {
 
+  }
+
+  @action clearNewPages = () => {
+    this.newPages = {}
   }
 
   @action pushNewItemToPages = (type) => {

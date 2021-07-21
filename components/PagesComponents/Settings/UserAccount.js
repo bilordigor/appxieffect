@@ -250,8 +250,6 @@ const UserAccount = inject('store')(observer(({ store }) => {
 
     const [files, selectFiles] = useFileUpload();
 
-    const [pr, selectPr] = useFileUpload();
-
     const [f, setF] = React.useState(undefined);
 
     const setEditorRef = React.useRef(null);

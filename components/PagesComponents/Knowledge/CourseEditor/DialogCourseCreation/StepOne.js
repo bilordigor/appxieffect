@@ -8,31 +8,9 @@ import { SnackbarProvider, useSnackbar } from 'notistack';
 import { inject, observer } from 'mobx-react'
 
 const useStyles = makeStyles((theme) => ({
-    button: {
-        marginLeft: 4,
-        marginRight: 4,
-        color: theme.palette.primary.contrastText,
-    },
-    mobileStepper: {
-        // width: "100%",
-        // backgroundColor: theme.main.palette.content.background,
-    },
-    icon: {
-        color: theme.palette.primary.contrastText,
-    },
-    mainLabel: {
-        fontSize: 20,
-    },
-    appBar: {
-        position: 'relative',
-    },
     title: {
         marginLeft: theme.spacing(2),
         flex: 1,
-    },
-    gridMain: {
-        //height: '100vh',
-        width: 'calc(100vw-48px)',
     },
     stepLabel: {
         fontSize: 24,
@@ -59,32 +37,6 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: 12,
         fontSize: 20,
         color: theme.palette.primary.contrastText,
-    },
-    inputAddModule: {
-        minWidth: "256px",
-        // height: "32px",
-        margin: 16,
-    },
-    noOneModuleLabel: {
-        paddingTop: 8,
-        paddingLeft: 20,
-    },
-    gridListItem: {
-        paddingTop: 12,
-        paddingLeft: 16,
-        paddingRight: 16,
-        paddingBottom: 4,
-        // borderRadius: 8,
-        // border: `${theme.main.palette.content.border} solid 2px`,
-        // '&:hover': {
-        //     border: `${theme.main.palette.content.border} solid 2px`,
-        // },
-    },
-    divider: {
-        marginTop: '-4px',
-        color: theme.palette.primary.contrastText,
-        width: '100%',
-        height: '2px',
     },
     InputLabel: {
         color: theme.palette.primary.contrastText,

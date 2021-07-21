@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import cx from 'clsx';
-import { Input, AppBar, Toolbar, Dialog, InputLabel, NativeSelect, FormControl, DialogContent, MobileStepper, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Menu, MenuItem, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip } from '@material-ui/core';
+import { Slider, Input, AppBar, Toolbar, Dialog, InputLabel, NativeSelect, FormControl, DialogContent, MobileStepper, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Menu, MenuItem, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip } from '@material-ui/core';
 
 import { SnackbarProvider, useSnackbar } from 'notistack';
 
@@ -12,237 +12,214 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import AvatarEditor from 'react-avatar-editor'
+import { useFileUpload } from "use-file-upload"
 
 const useStyles = makeStyles((theme) => ({
-    button: {
-        marginLeft: 4,
-        marginRight: 4,
-        // color: theme.main.palette.buttons.text,
-    },
-    mobileStepper: {
-        // width: "100%",
-        // backgroundColor: theme.main.palette.content.background,
-    },
-    icon: {
-        // color: theme.main.palette.buttons.icon,
-    },
-    mainLabel: {
-        fontSize: 20,
-    },
-    appBar: {
-        position: 'relative',
-    },
-    title: {
-        marginLeft: theme.spacing(2),
-        flex: 1,
-    },
-    gridMain: {
-        //height: '100vh',
-        width: 'calc(100vw-48px)',
-    },
     stepLabel: {
+        marginLeft: 16,
         fontSize: 24,
         cursor: 'default',
     },
     stepSecondLabel: {
+        marginLeft: 16,
         fontSize: 20,
+        cursor: 'default',
         // color: theme.main.palette.content.border,
     },
-    input: {
-        width: "calc(100% - 64px)",
-        // height: "32px",
-        margin: 16,
+    slider: {
+        width: "250px",
+        padding: 16,
     },
-    FormControl: {
-        width: "calc(100% - 64px)",
-        // height: "32px",
-        margin: 16,
+    gridDialogAv: {
+        height: '100%',
+        padding: 16,
+        //width: "550px",
     },
-    categoryLabel: {
-        paddingTop: 12,
-        fontSize: 20,
-        // color: theme.main.palette.content.border,
+    uploadButton: {
+        marginTop: 8,
     },
-    inputAddModule: {
-        minWidth: "256px",
-        // height: "32px",
-        margin: 16,
+    wrapperGrid: {
+        margin: 0,
     },
-    noOneModuleLabel: {
-        paddingTop: 8,
-        paddingLeft: 20,
-    },
-    gridListItem: {
-        paddingTop: 12,
-        paddingLeft: 16,
-        paddingRight: 16,
-        paddingBottom: 4,
-        // borderRadius: 8,
-        // border: `${theme.main.palette.content.border} solid 2px`,
-        // '&:hover': {
-        //     border: `${theme.main.palette.content.border} solid 2px`,
-        // },
-    },
-    divider: {
-        marginTop: '-4px',
-        // color: theme.main.palette.content.border,
-        width: '100%',
-        height: '2px',
-    },
-    gridInput: {
-        padding: "0px 0px",
-        width: '100%'
-    },
-    gridAddButton: {
-        paddingLeft: 24,
-        paddingBottom: 24,
+    changeLabel: {
+        marginTop: 16,
     }
 }));
 
 const StepThree = inject('store')(observer(({ store }) => {
     const classes = useStyles();
-    const theme = useTheme();
+    const options = ['Участник', 'Ученик', 'Преподаватель', 'Автор', 'Родитель'];
 
-    const [moduleLabel, setModuleLabel] = React.useState('')
-    const [moduleType, setModuleType] = React.useState('standard')
-    const [moduleThreshold, setModuleThreshold] = React.useState('')
-    const [modulePoints, setModulePoints] = React.useState('')
+    const { enqueueSnackbar } = useSnackbar();
 
+    const [value, setValue] = React.useState(10);
 
-    const deleteModule = (name) => {
-        store.deleteModuleInMenu(name)
-        store.deleteModuleInMap(name)
+    const handleChangeValue = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    const [files, selectFiles] = useFileUpload();
+
+    const setEditorRef = React.useRef(null);
+
+    const saveNewAvatar = () => {
+        const canvas = setEditorRef.current.getImage()
+        const img = canvas.toDataURL()
+        console.log(img)
+        //setF(i)
+        store.setSettings('avatar', img)
+        store.postDataScr(`${store.url}/avatar/`, img)
+            .then((data) => {
+                console.log(data)
+                // if (data.message != undefined) {
+                //   console.log(data.message)
+                // }
+                if (data != undefined) {
+                    //console.log(data.a)
+                    //store.setSettings("avatar", data)
+                } else {
+                    console.log("Проблемы с сервером")
+                }
+
+            });
+        //selectPr(canvas)
+        setOpen1(false);
     }
 
-    const AddModule = () => {
-        if (moduleLabel != '' && moduleThreshold != '') {
-            store.pushNewModuleToMenu(moduleLabel, moduleType, moduleThreshold, modulePoints)
-            setModuleLabel('')
-            setModuleType('standard')
-            setModuleThreshold('')
-            setModulePoints('')
-        }
+    const saveNewUsername = () => {
+        store.postDataScr(`${store.url}/settings/`, {
+            "changed": { "username": store.settings.username }
+        })
+            .then((data) => {
+                if (data.a) {
+                    enqueueSnackbar('Успешно', {
+                        variant: 'success',
+                    });
+                } else {
+                    enqueueSnackbar('Ошибка', {
+                        variant: 'error',
+                    });
+                }
+            })
     }
 
     return (
-        <Grid
-            xs={12} sm={12} md={6} lg={6} xl={6}
-            container
-            item
-            direction="column"
-            justify="flex-start"
-            alignItems="flex-start"
-        >
-            <Typography className={classes.stepLabel}> Шаг 2. Создание модулей </Typography>
-            <Typography className={classes.stepSecondLabel}> Создайте Модули вашего курса </Typography>
+        <>
             <Grid
+                xs={12} sm={12} md={6} lg={6} xl={6}
                 container
+                item
                 direction="column"
                 justify="flex-start"
                 alignItems="flex-start"
             >
-                <Grid className={classes.gridInput}>
-                    <Input
-                        className={classes.input}
-                        placeholder="Название модуля"
-                        value={moduleLabel}
-                        onChange={(event) => setModuleLabel(event.target.value)}
-                        fullWidth={true}
-                    />
-                </Grid>
-                <Grid className={classes.gridInput}>
-                    <FormControl className={classes.FormControl} fullWidth>
-                        <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                            Тип модуля
-                        </InputLabel>
-                        <NativeSelect
-                            // defaultValue={'Не выбрано'}
-                            value={moduleType}
-                            onChange={(event) => setModuleType(event.target.value)}
-                            inputProps={{
-                                name: 'age',
-                                id: 'uncontrolled-native',
-                            }}
-                        >
-                            <option value={'standard'}> Стандартный </option>
-                            <option value={'theory'} > Теоретический </option>
-                            <option value={'practice'}> Практический </option>
-                            <option value={'test'}> Тестовый </option>
-
-                        </NativeSelect>
-                    </FormControl>
-                </Grid>
-                <Grid className={classes.gridInput}>
-                    <Input
-                        className={classes.input}
-                        placeholder="Порог (целое число)"
-                        value={moduleThreshold}
-                        onChange={(event) => setModuleThreshold(event.target.value)}
-                        fullWidth={true}
-                    />
-                </Grid>
-                {moduleType === "standard" && <Grid className={classes.gridInput}>
-                    <Input
-                        className={classes.input}
-                        placeholder="Очки (целое число)"
-                        value={modulePoints}
-                        onChange={(event) => setModulePoints(event.target.value)}
-                        fullWidth={true}
-                    />
-                </Grid>}
-                <Grid className={classes.gridAddButton}>
-                    <Button onClick={AddModule} variant="contained">
-                        Добавить
-                    </Button>
-                </Grid>
-
-            </Grid>
-
-
-            {store.nowEditCourse.menu.length === 0 && <Typography className={classes.noOneModuleLabel}> Не создано ни одного модуля </Typography>}
-            {
-                store.nowEditCourse.menu.length != 0 && <Grid
+                <Typography className={classes.stepLabel}> Шаг 3. </Typography>
+                <Typography className={classes.stepSecondLabel}> Добавьте изображение для вашего модуля </Typography>
+                <Grid
+                    className={classes.wrapperGrid}
                     container
                     direction="column"
-                    justify="center"
-                    alignItems="center"
+                    justify="flex-start"
+                    alignItems="flex-start"
                 >
-                    {
-                        store.nowEditCourse.menu.map((module, id) => (
-                            <Grid
-                                container
-                                direction="column"
-                                justify="center"
-                                alignItems="center"
-                                className={classes.gridListItem}
-                                key={id}
+                    <Grid
+                        container
+                        direction="column"
+                        justify="flex-start"
+                        alignItems="center"
+                        className={classes.gridDialogAv}
+                    >
+
+                        <Grid
+                            container
+                            direction="row"
+                            justify="flex-start"
+                            alignItems="center"
+                        >
+                            <AvatarEditor
+                                ref={setEditorRef}
+                                image={files?.source == undefined ? "/illustrations/defaultModuleImg.png" : files.source}
+                                width={320}
+                                height={180}
+                                border={25}
+                                borderRadius={0}
+                                color={[114, 137, 218, 0.6]} // RGBA
+                                scale={value / 10}
+                                rotate={0}
+                            />
+                        </Grid>
+                        <Grid
+                            container
+                            direction="row"
+                            justify="flex-start"
+                            alignItems="center"
+                        >
+                            <Button
+                                onClick={() =>
+                                    selectFiles({ accept: "image/*" }, ({ name, size, source, file }) => {
+                                        console.log("Files Selected", { name, size, source, file });
+                                    })
+                                }
+                                className={classes.uploadButton}
+                                variant="contained"
+                                color="primary"
                             >
-                                <Grid
-                                    container
-                                    direction="row"
-                                    justify="space-between"
-                                    alignItems="center"
-                                >
-                                    <Grid>
-                                        <Typography className={classes.listMainLabel}> {module.name} </Typography>
-                                    </Grid>
-                                    <Grid>
+                                Загрузить изображение
+                            </Button>
+                        </Grid>
+                        <Grid
+                            container
+                            direction="row"
+                            justify="flex-start"
+                            alignItems="center"
+                        >
+                            <Typography className={classes.changeLabel}> Изменить масштаб изображения </Typography>
+                        </Grid>
+                        <Grid
+                            container
+                            direction="row"
+                            justify="flex-start"
+                            alignItems="center"
+                        >
+                            <Slider
+                                className={classes.slider}
+                                value={value}
+                                min={10}
+                                max={30}
+                                onChange={handleChangeValue}
+                                aria-labelledby="continuous-slider"
+                            />
+                        </Grid>
+                    </Grid>
 
-                                        <IconButton onClick={() => deleteModule(module.name)}>
-                                            <Tooltip title="удалить безвозвратно">
-                                                <DeleteForeverIcon className={classes.DeleteForeverIcon} />
-                                            </Tooltip>
-                                        </IconButton>
-                                    </Grid>
-                                </Grid>
-                                <Divider className={classes.divider} />
-                            </Grid>
-
-                        ))
-                    }
                 </Grid>
-            }
-        </Grid >
+
+            </Grid >
+            <Grid
+                className={classes.stepWrapper}
+                xs={12} sm={12} md={6} lg={6} xl={6}
+                container
+                item
+                direction="column"
+                justify="flex-start"
+                alignItems="flex-start"
+            >
+                <Typography className={classes.stepLabel}> Шаг 4. </Typography>
+                <Typography className={classes.stepSecondLabel}> Теперь осталось только опубликовать модуль.  Прежде чем модуль станет доступен, он пройдёт модерацию. Это займёт некоторое время </Typography>
+                <Grid
+                    className={classes.wrapperGrid}
+                    container
+                    direction="column"
+                    justify="flex-start"
+                    alignItems="flex-start"
+                >
+                    
+
+                </Grid>
+
+            </Grid >
+        </>
     )
 }))
 
