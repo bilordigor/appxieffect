@@ -8,7 +8,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { inject, observer } from 'mobx-react'
 import NavigationAll from './../components/OtherComponents/Navigation/NavigationAll'
 import Background from './../components/OtherComponents/Background/Background'
-import LessonSlider from './../components/PagesComponents/Main/LessonSlider';
+import QuiсkButtons from './../components/PagesComponents/Main/QuiсkButtons';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -33,7 +33,7 @@ const Home = inject('store')(observer(({ store }) => {
       <NavigationAll>
         <Grid container direction="column" className={classes.main}>
           <Grid item>
-            <LessonSlider />
+            <QuiсkButtons />
           </Grid>
           <Box className={classes.space}>
 
