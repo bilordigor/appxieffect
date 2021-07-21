@@ -11,7 +11,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SettingsIcon from '@material-ui/icons/Settings';
 
-import { useRouter } from 'next/router'
 import { useSwipeable } from 'react-swipeable';
 
 const useStyles = makeStyles((theme) => ({
@@ -95,8 +94,6 @@ const SideDownbar = inject('store')(observer(({ store, openSideMenu, setOpenSide
             href: '/settings',
         }
     ])
-
-    const router = useRouter()
 
     const config = {
         delta: 2,
