@@ -38,7 +38,7 @@ const NavigationAll = inject('store')(observer(({ store, children }) => {
     const router = useRouter()
 
     const config = {
-        delta: 4,
+        delta: 2,
     }
 
     const handlers = useSwipeable({
