@@ -35,20 +35,30 @@ const NavigationAll = inject('store')(observer(({ store, children }) => {
     const theme = useTheme();
     const [openHelpMenu, setOpenHelpMenu] = React.useState(false);
 
+    const router = useRouter()
+
     const handlers = useSwipeable({
         onSwipedLeft: (eventData) => {
-            alert("left")
+            SwipeLeft()
             console.log("User Swiped!", eventData)
         },
         onSwipedRight: (eventData) => {
-            alert("right")
+            SwipeRight()
             console.log("User Swiped!", eventData)
         }
         ,
         // ...config,
     });
 
-    const router = useRouter()
+    const SwipeLeft = () => {
+        if (router.pathname === "/") router.push("/knowleage")
+        if (router.pathname === "/knowleage") router.push("/settings")
+    }
+
+    const SwipeRight = () => {
+        if (router.pathname === "/knowleage") router.push("/")
+        if (router.pathname === "/settings") router.push("/knowleage")
+    }
 
     React.useEffect(() => {
         store.getDataScr(`${store.url}/settings/main/`)
