@@ -83,7 +83,7 @@ const NavigationAll = inject('store')(observer(({ store, children }) => {
                 <Hidden smUp>
                     <SideDownbar />
                 </Hidden>
-                <Helpbar openHelpMenu={openHelpMenu} setOpenHelpMenu={setOpenHelpMenu} />
+                {/* <Helpbar openHelpMenu={openHelpMenu} setOpenHelpMenu={setOpenHelpMenu} /> */}
                 <main
                     className={classes.content}
                 >
