@@ -10,16 +10,16 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 
 const useStyles = makeStyles((theme) => ({
     paperGrid: {
-        width: "100%",
-        padding: 16,
+        width: "calc(100% - 32px)",
+        margin: 16,
     },
     labelGrid: {
-        paddingTop: 12,
+        marginTop: 12,
         //height: 64,
         width: "100%",
     },
     paper: {
-        minWidth: "100%",
+        width: "100%",
         borderRadius: 16,
         //height: 64,
         backgroundColor: theme.palette.blueGrey["4"],
@@ -32,9 +32,15 @@ const useStyles = makeStyles((theme) => ({
     },
     arrowIcon: {
         marginRight: 8,
-        height: 36,
-        width: 36,
+        height: 24,
+        width: 24,
         color: theme.palette.primary.contrastText,
+        transition: "all 0.4s",
+        cursor: "pointer",
+    },
+    arrowIconOpen: {
+        transition: "all 0.4s",
+        transform: "rotate(-0.25turn)"
     },
     divider: {
         height: 1,
@@ -44,8 +50,11 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.primary.contrastText,
     },
     itemGrid: {
-        padding: 16,
-        width: "100%",
+        '&:hover': {
+            backgroundColor: theme.palette.blueGrey["3"],
+        },
+        margin: 16,
+        width: "calc(100% - 32px)",
     }
 }));
 

@@ -10,37 +10,51 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 
 const useStyles = makeStyles((theme) => ({
     paperGrid: {
-        width: "100%",
-        padding: 16,
+        width: "calc(100% - 32px)",
+        margin: 16,
     },
-    paperInsideGrid: {
-        paddingTop: 4,
-        height: 64,
+    labelGrid: {
+        marginTop: 12,
+        //height: 64,
         width: "100%",
     },
     paper: {
-        minWidth: "100%",
+        width: "100%",
         borderRadius: 16,
-        height: 64,
+        //height: 64,
         backgroundColor: theme.palette.blueGrey["4"],
-        cursor: "pointer",
+        cursor: "default",
     },
     mainLabel: {
-        marginLeft: 8,
+        marginLeft: 16,
         marginRight: "auto",
-        color: theme.palette.primary.contrastText,
-    },
-    firstIcon: {
-        marginLeft: 8,
-        height: 36,
-        width: 36,
         color: theme.palette.primary.contrastText,
     },
     arrowIcon: {
         marginRight: 8,
-        height: 36,
-        width: 36,
+        height: 24,
+        width: 24,
         color: theme.palette.primary.contrastText,
+        transition: "all 0.4s",
+        cursor: "pointer",
+    },
+    arrowIconOpen: {
+        transition: "all 0.4s",
+        transform: "rotate(-0.25turn)"
+    },
+    divider: {
+        height: 1,
+        marginTop: 4,
+        marginBottom: 4,
+        width: "100%",
+        backgroundColor: theme.palette.primary.contrastText,
+    },
+    itemGrid: {
+        '&:hover': {
+            backgroundColor: theme.palette.blueGrey["3"],
+        },
+        margin: 16,
+        width: "calc(100% - 32px)",
     }
 }));
 

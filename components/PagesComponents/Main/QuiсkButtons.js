@@ -10,10 +10,11 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        padding: 16,
+        margin: 8,
+        width: "calc(100% - 16px)",
     },
     paperGrid: {
-        width: "100%",
+        width: "calc(100% - 32px)",
         padding: 16,
     },
     paperInsideGrid: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
     },
     paper: {
-        minWidth: "100%",
+        width: "100%",
         borderRadius: 16,
         height: 64,
         backgroundColor: theme.palette.blueGrey["4"],

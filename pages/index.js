@@ -36,9 +36,9 @@ const Home = inject('store')(observer(({ store }) => {
           <Grid item>
             <QuiсkButtons />
           </Grid>
-          <Grid item>
+          {/* <Grid item>
             <QuiсkWidgets />
-          </Grid>
+          </Grid> */}
           <Box className={classes.space}>
 
           </Box>

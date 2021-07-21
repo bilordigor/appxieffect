@@ -10,7 +10,7 @@ import Profile from './QuickWidgets/Profile';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        padding: 16,
+        padding: 8,
     }
 }));
 
