@@ -39,26 +39,18 @@ const NavigationAll = inject('store')(observer(({ store, children }) => {
 
     const handlers = useSwipeable({
         onSwipedLeft: (eventData) => {
-            SwipeLeft()
+            if (router.pathname === "/") router.push("/knowleage")
+            if (router.pathname === "/knowleage") router.push("/settings")
             console.log("User Swiped!", eventData)
         },
         onSwipedRight: (eventData) => {
-            SwipeRight()
+            if (router.pathname === "/knowleage") router.push("/")
+            if (router.pathname === "/settings") router.push("/knowleage")
             console.log("User Swiped!", eventData)
         }
         ,
         // ...config,
     });
-
-    const SwipeLeft = () => {
-        if (router.pathname === "/") router.push("/knowleage")
-        if (router.pathname === "/knowleage") router.push("/settings")
-    }
-
-    const SwipeRight = () => {
-        if (router.pathname === "/knowleage") router.push("/")
-        if (router.pathname === "/settings") router.push("/knowleage")
-    }
 
     React.useEffect(() => {
         store.getDataScr(`${store.url}/settings/main/`)
