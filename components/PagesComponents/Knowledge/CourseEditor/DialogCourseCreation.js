@@ -218,7 +218,7 @@ const DialogCourseCreation = inject('store')(observer(({ store }) => {
                         activeStep={activeStep}
                         className={classes.mobileStepper}
                         nextButton={
-                            <Button className={classes.button} onClick={handleNext} disabled={activeStep === 5}>
+                            <Button className={classes.button} onClick={handleNext} disabled={activeStep === 2}>
                                 Вперёд
                                 {theme.direction === 'rtl' ? (
                                     <KeyboardArrowLeft />

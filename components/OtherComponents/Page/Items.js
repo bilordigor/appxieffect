@@ -35,15 +35,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const ModuleSelect = (value, listeners, index) => {
+const ModuleSelect = (value, listeners, index, store) => {
     if (value.type === "h") return (
         <>
-            <Header listeners={listeners} values={value} index={index} />
+            <Header listeners={listeners} values={value} index={index}/>
         </>
     )
     if (value.type === "text") return (
         <>
-            <Text listeners={listeners} values={value} index={index} />
+            <Text listeners={listeners} values={value} index={index}/>
         </>
     )
 }

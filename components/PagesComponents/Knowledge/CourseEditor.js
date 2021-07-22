@@ -58,12 +58,12 @@ const useStyles = makeStyles((theme) => ({
             marginBottom: 0,
         }
     },
-    media:
-    {
-        height: 180,
-        width: 320,
-        paddingTop: '56.25%', // 16:9
-    },
+    // media:
+    // {
+    //     height: 180,
+    //     width: 320,
+    //     paddingTop: '56.25%', // 16:9
+    // },
     boxCardHeader: {
         paddingTop: -8,
     },
@@ -146,6 +146,12 @@ const useStyles = makeStyles((theme) => ({
     popper: {
         zIndex: 1000,
         //position: 'fixed',
+    },
+    createCourseAC: {
+        border: `1px solid ${theme.palette.primary.contrastText}`,
+        borderRadius: 8,
+        padding: 32,
+        width: '99%',
     },
     gridCreateCourseAC: {
         padding: 32,
@@ -341,8 +347,13 @@ const CourseEditor = inject('store')(observer(({ store }) => {
             });
     }
 
-    return (
+    const createCourse = () => {
+        store.setOpenDialogCourseCreation(true)
+        store.clearNowEditCourse()
+        store.clearNowEditPageMeta()
+    }
 
+    return (
         <Grid container className={classes.container}>
             <Grid xs={12} sm={12} md={6} lg={4} xl={3} item className={classes.gridCard} container>
                 <Card className={classes.card}>
@@ -353,7 +364,7 @@ const CourseEditor = inject('store')(observer(({ store }) => {
                         justify="center"
                         alignItems="center"
                     >
-                        <Button onClick={() => store.setOpenDialogCourseCreation(true)} className={classes.createCourseAC}>
+                        <Button onClick={() => createCourse()} className={classes.createCourseAC}>
                             <Grid
                                 container
                                 direction="column"

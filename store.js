@@ -311,6 +311,10 @@ class Store {
     ],
   }
 
+  @action setNowEditCourse = (title, value) => {
+    this.nowEditCourse[title] = value
+  }
+
   @action clearNowEditCourse = () => {
     this.nowEditCourse = {
       name: '',
@@ -420,13 +424,17 @@ class Store {
 
   }
 
+  @action setComponentsValues = (index, type, value) => {
+    this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components[index][type] = value
+  }
+
   @action clearNewPages = () => {
     this.newPages = {}
   }
 
   @action pushNewItemToPages = (type) => {
-    if (type === "h") this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.push({ type: "h", variant: "h1", label: "заголовок", align: "center" })
-    if (type === "text") this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.push({ type: "text", variant: "body1", label: "текст", align: "center" })
+    if (type === "h") this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.push({ type: "h", fontSize: 30, textAlign: "left", fontWeight: "normal",  fontStyle: "normal", textDecoration: "none",  label: "заголовок"})
+    if (type === "text") this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.push({ type: "text", fontSize: 30, textAlign: "left", fontWeight: "normal",  fontStyle: "normal", textDecoration: "none",  label: "текст"})
     console.log("components", this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components)
   }
 

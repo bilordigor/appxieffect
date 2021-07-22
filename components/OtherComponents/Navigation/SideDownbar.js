@@ -127,7 +127,7 @@ const SideDownbar = inject('store')(observer(({ store, openSideMenu, setOpenSide
                     <Grid
                         container
                         direction="row"
-                        justify="flex-start"
+                        justify="center"
                         alignItems="center"
                     >
                         {menuList.map((item, index) =>

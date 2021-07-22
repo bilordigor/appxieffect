@@ -128,6 +128,7 @@ const MyApp = (observer(({ Component, pageProps }) => {
       <Provider store={store}>
         <ThemeProvider theme={store.settings.darkTheme ? themeDark : themeWhite}>
           <SnackbarProvider
+            autoHideDuration={800}
             anchorOrigin={{
               vertical: 'bottom',
               horizontal: 'right',

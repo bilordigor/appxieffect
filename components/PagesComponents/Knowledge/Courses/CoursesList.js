@@ -47,12 +47,12 @@ const useStyles = makeStyles((theme) => ({
             marginBottom: 0,
         }
     },
-    media:
-    {
-        height: 180,
-        width: 320,
-        paddingTop: '56.25%', // 16:9
-    },
+    // media:
+    // {
+    //     height: 180,
+    //     width: 320,
+    //     paddingTop: '56.25%', // 16:9
+    // },
     boxCardHeader: {
         paddingTop: -8,
     },
@@ -93,9 +93,6 @@ const useStyles = makeStyles((theme) => ({
     CardContentSmallActionButtom: {
         marginTop: "8px",
     },
-    gridDivider: {
-        marginTop: 100,
-    },
     icons: {
         color: theme.palette.primary.contrastText,
     },
@@ -104,9 +101,6 @@ const useStyles = makeStyles((theme) => ({
     },
     iconsPinPush: {
         color: "#8bc34a",
-    },
-    Menu: {
-        color: theme.palette.primary.contrastText,
     },
     media: {
         height: 320,

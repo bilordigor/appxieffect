@@ -502,9 +502,9 @@ const StepTwo = inject('store')(observer(({ store }) => {
                                     </Grid>
                                 </Grid>
                                 <Divider className={classes.Divider} />
-                                <Grid className={classes.gridSubtitle} item xs>
+                                {/* <Grid className={classes.gridSubtitle} item xs>
                                     <Typography variant="subtitle2" className={classes.pointLabel}> {`Описание ${id}`} </Typography>
-                                </Grid>
+                                </Grid> */}
                                 <Grid
                                     className={classes.gridAction}
                                     container
