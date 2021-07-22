@@ -20,6 +20,8 @@ import Looks5Icon from '@material-ui/icons/Looks5';
 import Looks6Icon from '@material-ui/icons/Looks6';
 import ClearIcon from '@material-ui/icons/Clear';
 
+import { inject, observer } from 'mobx-react'
+
 const useStyles = makeStyles((theme) => ({
     paper: {
         display: 'flex',
@@ -61,40 +63,36 @@ const StyledToggleButtonGroup = withStyles((theme) => ({
     },
 }))(ToggleButtonGroup);
 
-const Text = ({ values, listeners }) => {
+const Text = inject('store')(observer(({ store, values, listeners, index }) => {
 
-    const [fontSize, setFontSize] = React.useState(30);
     const handleFontSize = (event, newFormats) => {
-        setFontSize(newFormats);
+        //console.log(index, "fontSize", newFormats)
+        store.setComponentsValues(index, "fontSize", newFormats)
     };
 
-    const [textAlign, setTextAlign] = React.useState('left');
     const handleTextAlign = (event, newAlignment) => {
-        setTextAlign(newAlignment);
+        store.setComponentsValues(index, "textAlign", newAlignment)
     };
 
-    const [fontStyle, setFontStyle] = React.useState('normal');
     const handleFontStyle = (event, newAlignment) => {
-        if (fontStyle === "normal") return setFontStyle("italic");
-        return setFontStyle("normal");
+        if (values.fontStyle === "normal") return store.setComponentsValues(index, "fontStyle", "italic")
+        return store.setComponentsValues(index, "fontStyle", "normal");
     };
 
-    const [fontWeight, setFontWeight] = React.useState('normal');
     const handleFontWeight = (event, newAlignment) => {
-        if (fontWeight === "normal") return setFontWeight("bold");
-        return setFontWeight("normal");
+        if (values.fontWeight === "normal") return store.setComponentsValues(index, "fontWeight", "bold");
+        return store.setComponentsValues(index, "fontWeight", "normal");
     };
 
-    const [textDecoration, setTextDecoration] = React.useState('none');
     const handleTextDecoration = (event, newAlignment) => {
-        if (textDecoration === "none") return setTextDecoration("underline");
-        return setTextDecoration("none");
+        if (values.textDecoration === "none") return store.setComponentsValues(index, "textDecoration", "underline");
+        return store.setComponentsValues(index, "textDecoration", "none");
     };
-
 
     // Simulated props for the purpose of the example
-    const props = {  fontSize, textAlign, fontStyle, fontWeight, textDecoration, backgroundColor: 'black', color: 'white' };
+    const props = { fontSize: values.fontSize, textAlign: values.textAlign, fontStyle: values.fontStyle, fontWeight: values.fontWeight, textDecoration: values.textDecoration, backgroundColor: 'black', color: 'white' };
     // Pass the props as the first argument of useStyles()
+    console.log("props", props)
     const classes = useStyles(props);
 
     return (
@@ -109,34 +107,34 @@ const Text = ({ values, listeners }) => {
                     {/* <Paper elevation={0} > */}
                     <StyledToggleButtonGroup
                         size="small"
-                        value={fontSize}
+                        value={values.fontSize}
                         exclusive
                         onChange={handleFontSize}
                         aria-label="text alignment"
                     >
-                        <ToggleButton value={32}>
+                        <ToggleButton value={48}>
                             <LooksOneIcon />
                         </ToggleButton>
-                        <ToggleButton value={28}>
+                        <ToggleButton value={42}>
                             <LooksTwoIcon />
                         </ToggleButton>
-                        <ToggleButton value={24}>
+                        <ToggleButton value={36}>
                             <Looks3Icon />
                         </ToggleButton>
-                        <ToggleButton value={20}>
+                        <ToggleButton value={30}>
                             <Looks4Icon />
                         </ToggleButton>
-                        <ToggleButton value={16}>
+                        <ToggleButton value={24}>
                             <Looks5Icon />
                         </ToggleButton>
-                        <ToggleButton value={12}>
+                        <ToggleButton value={18}>
                             <Looks6Icon />
                         </ToggleButton>
                     </StyledToggleButtonGroup>
                     <Divider flexItem orientation="vertical" className={classes.divider} />
                     <StyledToggleButtonGroup
                         size="small"
-                        value={textAlign}
+                        value={values.textAlign}
                         exclusive
                         onChange={handleTextAlign}
                         aria-label="text alignment"
@@ -161,13 +159,13 @@ const Text = ({ values, listeners }) => {
                         // onChange={handleFormat}
                         aria-label="text formatting"
                     >
-                        <ToggleButton selected={fontWeight === "bold" ? true : false} onClick={handleFontWeight} aria-label="bold">
+                        <ToggleButton selected={values.fontWeight === "bold" ? true : false} onClick={handleFontWeight} aria-label="bold">
                             <FormatBoldIcon />
                         </ToggleButton>
-                        <ToggleButton selected={fontStyle === "italic" ? true : false} onClick={handleFontStyle} aria-label="italic">
+                        <ToggleButton selected={values.fontStyle === "italic" ? true : false} onClick={handleFontStyle} aria-label="italic">
                             <FormatItalicIcon />
                         </ToggleButton>
-                        <ToggleButton selected={textDecoration === "underline" ? true : false} onClick={handleTextDecoration} value="underlined" aria-label="underlined">
+                        <ToggleButton selected={values.textDecoration === "underline" ? true : false} onClick={handleTextDecoration} value="underlined" aria-label="underlined">
                             <FormatUnderlinedIcon />
                         </ToggleButton>
                     </StyledToggleButtonGroup>
@@ -202,13 +200,13 @@ const Text = ({ values, listeners }) => {
                     multiline
                     fullWidth
                     value={values.label}
-                //onChange={ }
+                    onChange={(event) => store.setComponentsValues(index, "label", event.target.value)}
                 />
                 {/* </ClickAwayListener>} */}
             </Grid>
         </>
     );
-}
+}));
 
 // onClickAway={() => setEdit(false)}
 

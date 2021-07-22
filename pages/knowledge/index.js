@@ -63,6 +63,10 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1,
   },
   appBar: {
+    left: 72,
+    [theme.breakpoints.only('xs')]: {
+      left: 0,
+    },
     backgroundColor: theme.palette.blueGrey["0"]
   },
   tab: {
@@ -75,6 +79,9 @@ const useStyles = makeStyles((theme) => ({
   tabPanel: {
     height: "100vh",
   },
+  SwipeableViews: {
+    marginTop: 48,
+  }
 }));
 
 const Knowledge = inject('store')(observer(({ store }) => {
@@ -96,7 +103,7 @@ const Knowledge = inject('store')(observer(({ store }) => {
   // React.useEffect(() => {
   //   let filters = {
   //     "filters": {
-        
+
   //     },
   //     "sort": "popularity",
   //     "counter": 0
@@ -114,7 +121,7 @@ const Knowledge = inject('store')(observer(({ store }) => {
       store.getDataScr(`${store.url}/filters/`)
         .then((data) => {
           console.log("filtersI:", data)
-          if (data != undefined ) {
+          if (data != undefined) {
             //store.setFiltersGlobal(data)
             if (!store.allLoading) store.loadingMoreCourses()
           }
@@ -148,7 +155,7 @@ const Knowledge = inject('store')(observer(({ store }) => {
       {/* <Background/> */}
       <NavigationAll>
         <Grid container direction="column" className={classes.main}>
-          <AppBar className={classes.appBar} position="static" color="default">
+          <AppBar className={classes.appBar} position="fixed" color="default">
             <AntTabs
               value={value}
               onChange={handleChange}
@@ -163,6 +170,7 @@ const Knowledge = inject('store')(observer(({ store }) => {
             </AntTabs>
           </AppBar>
           <SwipeableViews
+            className={classes.SwipeableViews}
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={value}
             onChangeIndex={handleChangeIndex}
@@ -171,13 +179,13 @@ const Knowledge = inject('store')(observer(({ store }) => {
               <Courses courses={courses} />
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
-              <CourseEditor/>
+              <CourseEditor />
             </TabPanel>
             {/* <TabPanel value={value} index={2} dir={theme.direction}> */}
-              {/* <Moderate/> */}
+            {/* <Moderate/> */}
             {/* </TabPanel> */}
             <TabPanel value={value} index={2} dir={theme.direction}>
-              <Other/>
+              <Other />
             </TabPanel>
           </SwipeableViews>
         </Grid>
