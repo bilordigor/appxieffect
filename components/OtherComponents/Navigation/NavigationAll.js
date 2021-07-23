@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 0,
         margin: 0,
         //height: "100vh",
-        //width: "100vw",
+        width: "100%",
         backgroundColor: theme.palette.blueGrey["1"],
     }
 

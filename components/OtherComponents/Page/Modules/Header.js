@@ -175,7 +175,7 @@ const Header = inject('store')(observer(({ store, values, listeners, index }) =>
                         //onChange={handleFormat}
                         aria-label="text formatting"
                     >
-                        <ToggleButton>
+                        <ToggleButton onClick={() => store.deleteComponent(index)}>
                             <ClearIcon />
                         </ToggleButton>
                         <ToggleButton>

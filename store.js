@@ -424,6 +424,13 @@ class Store {
 
   }
 
+  @action deleteComponent = (index) => {
+    this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components = this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.filter((n, id) => {
+      if (id == index) return false
+      return true
+    });
+  }
+
   @action setComponentsValues = (index, type, value) => {
     this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components[index][type] = value
   }
