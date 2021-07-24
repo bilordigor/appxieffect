@@ -96,7 +96,7 @@ const SideDownbar = inject('store')(observer(({ store, openSideMenu, setOpenSide
     ])
 
     const config = {
-        delta: 2,
+        delta: 8,
     }
 
     const handlers = useSwipeable({

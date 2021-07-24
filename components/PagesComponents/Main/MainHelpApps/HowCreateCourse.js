@@ -44,7 +44,7 @@ const HowCreateCourse = inject('store')(observer((props) => {
     };
 
     const config = {
-        delta: 2,
+        delta: 10,
     }
 
     const handlers = useSwipeable({
