@@ -106,7 +106,7 @@ const DialogChangeEmail = inject('store')(observer(({ openEmailChangeDialog, set
             setSymError(true)
         }
         if (!symError) {
-            store.postDataScr(`${store.url}/email-change/`, { "password": Crypto.SHA384(password).toString(), "new-email": newEmail }) // postData /auth //Crypto.SHA384(store.settingsNew.passwordOldChange).toString() //Crypto.SHA384(store.settingsNew.passwordNewChange).toString()
+            store.fetchDataScr(`${store.url}/email-change/`, "POST", { "password": Crypto.SHA384(password).toString(), "new-email": newEmail }) // postData /auth //Crypto.SHA384(store.settingsNew.passwordOldChange).toString() //Crypto.SHA384(store.settingsNew.passwordNewChange).toString()
                 .then((data) => {
                     console.log(data)
                     if (data != undefined) {

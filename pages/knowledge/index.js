@@ -100,25 +100,9 @@ const Knowledge = inject('store')(observer(({ store }) => {
 
   const [courses, setCourses] = React.useState([])
 
-  // React.useEffect(() => {
-  //   let filters = {
-  //     "filters": {
-
-  //     },
-  //     "sort": "popularity",
-  //     "counter": 0
-  //   }
-  //   store.postDataScr(`${store.url}/modules/`, filters)
-  //     .then((data) => {
-  //       console.log("data", data)
-  //       store.pushCoursesList(data)
-  //       console.log("courses", store.coursesList)
-  //     })
-  // }, [])
-
   React.useEffect(() => {
     if (value === 0) {
-      store.getDataScr(`${store.url}/filters/`)
+      store.fetchDataScr(`${store.url}/filters/`, "GET")
         .then((data) => {
           console.log("filtersI:", data)
           if (data != undefined) {

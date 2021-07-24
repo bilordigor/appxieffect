@@ -162,7 +162,7 @@ const Chipper = inject('store')(observer(({ store, loadingMoreCourses }) => {
     const [sortListActive, setSortListActive] = React.useState(0)
 
     useEffect(() => {
-        store.getDataScr(`${store.url}/filters/`)
+        store.fetchDataScr(`${store.url}/filters/`, "GET")
             .then((data) => {
                 console.log("filtersI:", data)
                 // if (data != undefined) {

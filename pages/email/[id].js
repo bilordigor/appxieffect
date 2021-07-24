@@ -105,7 +105,7 @@ const Email = inject('store')(observer(({ store }) => {
     const [ok, setOk] = React.useState(false)
 
     const acceptButtonClicked = () => {
-        store.postData(`${store.url}/email-confirm/`, { "code": id })
+        store.fetchData(`${store.url}/email-confirm/`, { "code": id }, "POST")
             .then((data) => {
                 //console.log(data)
                 if (data.a) { //"Success"

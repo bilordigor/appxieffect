@@ -260,7 +260,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
         console.log(img)
         //setF(i)
         store.setSettings('avatar', img)
-        store.postDataScr(`${store.url}/avatar/`, img)
+        store.fetchDataScr(`${store.url}/avatar/`, "POST", img)
             .then((data) => {
                 console.log(data)
                 // if (data.message != undefined) {
@@ -279,8 +279,8 @@ const UserAccount = inject('store')(observer(({ store }) => {
     }
 
     const saveNewUsername = () => {
-        store.postDataScr(`${store.url}/settings/`, {
-            "changed": {"username": store.settings.username}
+        store.fetchDataScr(`${store.url}/settings/`, "POST", {
+            "changed": { "username": store.settings.username }
         })
             .then((data) => {
                 if (data.a) {

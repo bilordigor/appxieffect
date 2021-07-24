@@ -307,7 +307,7 @@ const CourseEditor = inject('store')(observer(({ store }) => {
             value = true
         }
         console.log(answer)
-        store.postDataScr(`${store.url}/courses/${id}/preference/`, answer)
+        store.fetchDataScr(`${store.url}/courses/${id}/preference/`, "POST", answer, )
             .then((data) => {
                 //console.log(data)
                 if (data != undefined) {
@@ -323,8 +323,8 @@ const CourseEditor = inject('store')(observer(({ store }) => {
     }
 
     const clearHidden = () => {
-        store.getDataScr(`${store.url}/test/`).then(() => {
-        })
+        // store.getDataScr(`${store.url}/test/`).then(() => {
+        // })
     }
 
     // const clickedMoreVertIcon = (id, openMenu, event) => {

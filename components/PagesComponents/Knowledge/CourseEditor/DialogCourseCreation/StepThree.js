@@ -63,46 +63,46 @@ const StepThree = inject('store')(observer(({ store }) => {
 
     const setEditorRef = React.useRef(null);
 
-    const saveNewAvatar = () => {
-        const canvas = setEditorRef.current.getImage()
-        const img = canvas.toDataURL()
-        console.log(img)
-        //setF(i)
-        store.setSettings('avatar', img)
-        store.postDataScr(`${store.url}/avatar/`, img)
-            .then((data) => {
-                console.log(data)
-                // if (data.message != undefined) {
-                //   console.log(data.message)
-                // }
-                if (data != undefined) {
-                    //console.log(data.a)
-                    //store.setSettings("avatar", data)
-                } else {
-                    console.log("Проблемы с сервером")
-                }
+    // const saveNewAvatar = () => {
+    //     const canvas = setEditorRef.current.getImage()
+    //     const img = canvas.toDataURL()
+    //     console.log(img)
+    //     //setF(i)
+    //     store.setSettings('avatar', img)
+    //     store.postDataScr(`${store.url}/avatar/`, img)
+    //         .then((data) => {
+    //             console.log(data)
+    //             // if (data.message != undefined) {
+    //             //   console.log(data.message)
+    //             // }
+    //             if (data != undefined) {
+    //                 //console.log(data.a)
+    //                 //store.setSettings("avatar", data)
+    //             } else {
+    //                 console.log("Проблемы с сервером")
+    //             }
 
-            });
-        //selectPr(canvas)
-        setOpen1(false);
-    }
+    //         });
+    //     //selectPr(canvas)
+    //     setOpen1(false);
+    // }
 
-    const saveNewUsername = () => {
-        store.postDataScr(`${store.url}/settings/`, {
-            "changed": { "username": store.settings.username }
-        })
-            .then((data) => {
-                if (data.a) {
-                    enqueueSnackbar('Успешно', {
-                        variant: 'success',
-                    });
-                } else {
-                    enqueueSnackbar('Ошибка', {
-                        variant: 'error',
-                    });
-                }
-            })
-    }
+    // const saveNewUsername = () => {
+    //     store.postDataScr(`${store.url}/settings/`, {
+    //         "changed": { "username": store.settings.username }
+    //     })
+    //         .then((data) => {
+    //             if (data.a) {
+    //                 enqueueSnackbar('Успешно', {
+    //                     variant: 'success',
+    //                 });
+    //             } else {
+    //                 enqueueSnackbar('Ошибка', {
+    //                     variant: 'error',
+    //                 });
+    //             }
+    //         })
+    // }
 
     return (
         <>

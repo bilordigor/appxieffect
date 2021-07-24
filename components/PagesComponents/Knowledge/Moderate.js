@@ -301,7 +301,7 @@ const Moderate = inject('store')(observer(({ store }) => {
             value = true
         }
         console.log(answer)
-        store.postDataScr(`${store.url}/modules/${id}/preference/`, answer)
+        store.fetchDataScr(`${store.url}/modules/${id}/preference/`, "POST", answer, )
             .then((data) => {
                 //console.log(data)
                 if (data != undefined) {
@@ -316,10 +316,10 @@ const Moderate = inject('store')(observer(({ store }) => {
             });
     }
 
-    const clearHidden = () => {
-        store.getDataScr(`${store.url}/test/`).then(() => {
-        })
-    }
+    // const clearHidden = () => {
+    //     store.getDataScr(`${store.url}/test/`).then(() => {
+    //     })
+    // }
 
     // const clickedMoreVertIcon = (id, openMenu, event) => {
     //     if (openMenu == undefined) {
@@ -335,7 +335,7 @@ const Moderate = inject('store')(observer(({ store }) => {
     // }, []);
 
     const clickedEditCourse = (id) => {
-        store.getDataScr(`${store.url}/modules/${id}/`)
+        store.fetchDataScr(`${store.url}/modules/${id}/`, "GET")
             .then((data) => {
                 console.log(data)
             });

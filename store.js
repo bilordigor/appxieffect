@@ -98,7 +98,7 @@ class Store {
     }
     let lnght = 0
     do {
-      this.postDataScr(`${this.url}/modules/`, filters)
+      this.fetchDataScr(`${this.url}/modules/`, "POST", filters)
         .then((data) => {
           //console.log("courses:", data)
           if (data != undefined) {
@@ -163,7 +163,7 @@ class Store {
     this.setIsLoading(true)
     //this.collectFilters()
 
-    this.postDataScr(`${this.url}/modules/`, this.filters)
+    this.fetchDataScr(`${this.url}/modules/`, "POST", this.filters)
       .then((data) => {
         console.log("courses:", data)
         if (data != undefined) {
@@ -242,7 +242,7 @@ class Store {
 
   @action loadingMoreHiddenCourses = () => {
     //console.log("loading new courses")
-    this.postDataScr(`${this.url}/modules/hidden/`, { "counter": this.hiddenCoursesCounter })
+    this.fetchDataScr(`${this.url}/modules/hidden/`, "POST", { "counter": this.hiddenCoursesCounter },)
       .then((data) => {
         //console.log("courses:", data)
         if (data != undefined) {
@@ -440,8 +440,8 @@ class Store {
   }
 
   @action pushNewItemToPages = (type) => {
-    if (type === "h") this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.push({ type: "h", fontSize: 30, textAlign: "left", fontWeight: "normal",  fontStyle: "normal", textDecoration: "none",  label: "заголовок"})
-    if (type === "text") this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.push({ type: "text", fontSize: 30, textAlign: "left", fontWeight: "normal",  fontStyle: "normal", textDecoration: "none",  label: "текст"})
+    if (type === "h") this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.push({ type: "h", fontSize: 30, textAlign: "left", fontWeight: "normal", fontStyle: "normal", textDecoration: "none", label: "заголовок" })
+    if (type === "text") this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.push({ type: "text", fontSize: 30, textAlign: "left", fontWeight: "normal", fontStyle: "normal", textDecoration: "none", label: "текст" })
     console.log("components", this[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components)
   }
 
@@ -480,11 +480,11 @@ class Store {
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
-  @action async getData(url) { // mode, cache, credentials, redirect, referrerPolicy
+  @action async fetchData(url, method) { // mode, cache, credentials, redirect, referrerPolicy
     // Default options are marked with *
     try {
       const response = await fetch(url, {
-        method: "GET", // *GET, POST, PUT, DELETE, etc.
+        method, // *GET, POST, PUT, DELETE, etc.
         //mode: 'no-cors', // no-cors, *cors, same-origin
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
         credentials: "include", // include, *same-origin, omit
@@ -505,81 +505,42 @@ class Store {
     }
   }
 
-  @action async postData(url, data) { // mode, cache, credentials, redirect, referrerPolicy
-    // Default options are marked with *
-    try {
-      const response = await fetch(url, {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        //mode: 'no-cors', // no-cors, *cors, same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "include", // include, *same-origin, omit
-        headers: {
-          'Content-Type': 'application/json',
-          //   // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        // redirect, // manual, *follow, error
-        // referrerPolicy, // no-referrer, *client
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
-      });
-      //console.log(response.headers)
-      const string = await response.text();
-      const json = string === "" ? {} : JSON.parse(string);
-      return json; // parses JSON response into native JavaScript objects
-    } catch (error) {
-      //console.log(error)
-      console.log('Возникла проблема с вашим fetch запросом: ', error.message);
-    }
-  }
-
-  @action async getDataScr(url) { // mode, cache, credentials, redirect, referrerPolicy
+  @action async fetchDataScr(url, method, data = null) { // mode, cache, credentials, redirect, referrerPolicy
     // Default options are marked with *
     try {
       //console.log("Печенье:", this.getCookie('csrf_access_token'))
-      const response = await fetch(url, {
-        method: "GET", // *GET, POST, PUT, DELETE, etc.
-        //mode: 'no-cors', // no-cors, *cors, same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        //credentials: 'same-origin', // include, *same-origin, omit
-        credentials: "include",
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': this.getCookie('csrf_access_token'),
-        },
-        // headers: {
-        //   'Content-Type': 'application/json'
-        //   //   // 'Content-Type': 'application/x-www-form-urlencoded',
-        // },
-        // redirect, // manual, *follow, error
-        // referrerPolicy, // no-referrer, *client
-      });
-      //console.log(response.headers)
-      const string = await response.text();
-      const json = string === "" ? {} : JSON.parse(string);
-      return json; // parses JSON response into native JavaScript objects
-    } catch (error) {
-      //console.log(error)
-      console.log('Возникла проблема с вашим fetch запросом: ', error.message);
-    }
-  }
-
-  @action async postDataScr(url, data) { // mode, cache, credentials, redirect, referrerPolicy
-    // Default options are marked with *
-    try {
-      //console.log("Печенье:", this.getCookie('csrf_access_token'))
-      const response = await fetch(url, {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        //mode: 'no-cors', // no-cors, *cors, same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "include", // include, *same-origin, omit
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': this.getCookie('csrf_access_token'),
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        // redirect, // manual, *follow, error
-        // referrerPolicy, // no-referrer, *client
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
-      });
+      let response = null
+      if (data != null) {
+        response = await fetch(url, {
+          method: method, // *GET, POST, PUT, DELETE, etc.
+          //mode: 'no-cors', // no-cors, *cors, same-origin
+          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: "include", // include, *same-origin, omit
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': this.getCookie('csrf_access_token'),
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          // redirect, // manual, *follow, error
+          // referrerPolicy, // no-referrer, *client
+          body: JSON.stringify(data) // body data type must match "Content-Type" header
+        });
+      }
+      if (data == null) {
+        response = await fetch(url, {
+          method: method, // *GET, POST, PUT, DELETE, etc.
+          //mode: 'no-cors', // no-cors, *cors, same-origin
+          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: "include", // include, *same-origin, omit
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': this.getCookie('csrf_access_token'),
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          // redirect, // manual, *follow, error
+          // referrerPolicy, // no-referrer, *client
+        });
+      }
       //console.log(response.headers)
       const string = await response.text();
       const json = string === "" ? {} : JSON.parse(string);

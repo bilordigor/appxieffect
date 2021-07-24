@@ -114,7 +114,7 @@ const DialogChangePassword = inject('store')(observer(({ openPasswordChangeDialo
             }
         }
         if (!symError && !lengthError) {
-            store.postDataScr(`${store.url}/password-change/`, { "password": Crypto.SHA384(password).toString(), "new-password": Crypto.SHA384(newPassword).toString() })
+            store.fetchDataScr(`${store.url}/password-change/`, "POST", { "password": Crypto.SHA384(password).toString(), "new-password": Crypto.SHA384(newPassword).toString() }, )
                 .then((data) => {
                     console.log(data)
                     if (data != undefined) {

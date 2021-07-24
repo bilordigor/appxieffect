@@ -203,7 +203,7 @@ const PassResetEmail = inject('store')(observer(({store}) => {
         }
 
         if (!errorEmailReset && !errorEmailNotFounedReset) {
-            store.getData(`${store.url}/password-reset/${emailReset}/`)
+            store.fetchData(`${store.url}/password-reset/${emailReset}/`, "GET")
                 .then((data) => {
                     if (data != undefined) {
                         if (data.a === true) { //true

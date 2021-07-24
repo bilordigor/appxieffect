@@ -38,7 +38,7 @@ const NavigationAll = inject('store')(observer(({ store, children }) => {
     const router = useRouter()
 
     React.useEffect(() => {
-        store.getDataScr(`${store.url}/settings/main/`)
+        store.fetchDataScr(`${store.url}/settings/main/`, "GET")
             .then((data) => {
                 console.log(data)
                 if (data.a != undefined) {
@@ -46,14 +46,14 @@ const NavigationAll = inject('store')(observer(({ store, children }) => {
                         router.push("/login")
                     }
                 } else {
-                    store.getDataScr(`${store.url}/avatar/`)
+                    store.fetchDataScr(`${store.url}/avatar/`, "GET")
                         .then((data) => {
                             console.log("avatar", data)
                             if (data != undefined && data.message != "The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.") {
                                 store.setSettings("avatar", data)
                             }
                         });
-                    store.getDataScr(`${store.url}/settings/`)
+                    store.fetchDataScr(`${store.url}/settings/`, "GET")
                         .then((data) => {
                             console.log(data)
                             if (data != undefined) {

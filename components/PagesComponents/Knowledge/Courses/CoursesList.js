@@ -200,7 +200,7 @@ const CoursesList = inject('store')(observer(({ store }) => {
             value = true
         }
         console.log(answer)
-        store.postDataScr(`${store.url}/modules/${id}/preference/`, answer)
+        store.fetchDataScr(`${store.url}/modules/${id}/preference/`, "POST", answer)
             .then((data) => {
                 //console.log(data)
                 if (data != undefined) {
@@ -227,7 +227,7 @@ const CoursesList = inject('store')(observer(({ store }) => {
             value = true
         }
         console.log(answer)
-        store.postDataScr(`${store.url}/modules/${id}/preference/`, answer)
+        store.fetchDataScr(`${store.url}/modules/${id}/preference/`, "POST", answer, )
             .then((data) => {
                 //console.log(data)
                 if (data != undefined) {
@@ -247,7 +247,7 @@ const CoursesList = inject('store')(observer(({ store }) => {
         store.storeClickedMoreVertIcon(id, false)
         console.log("id", id)
         let answer = { "a": "hide" }
-        store.postDataScr(`${store.url}/modules/${id}/preference/`, answer)
+        store.fetchDataScr(`${store.url}/modules/${id}/preference/`, "POST", answer, )
             .then((data) => {
                 console.log(data)
                 if (data != undefined) {
@@ -268,8 +268,8 @@ const CoursesList = inject('store')(observer(({ store }) => {
     }
 
     const clearHidden = () => {
-        store.getDataScr(`${store.url}/test/`).then(() => {
-        })
+        // store.getDataScr(`${store.url}/test/`).then(() => {
+        // })
     }
 
     const clickedMoreVertIcon = (id, openMenu, event) => {

@@ -34,7 +34,7 @@ const Castomize = inject('store')(observer(({ store }) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const saveNewTheme = () => {
-        store.postDataScr(`${store.url}/settings/`, {
+        store.fetchDataScr(`${store.url}/settings/`, "POST", {
             "changed": { "dark-theme": !store.settings.darkTheme }
         })
             .then((data) => {
