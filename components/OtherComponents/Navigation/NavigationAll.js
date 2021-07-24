@@ -11,8 +11,6 @@ import Helpbar from './Helpbar'
 import Loading from '../Loading/Loading'
 import SideDownbar from './SideDownbar'
 
-
-
 const useStyles = makeStyles((theme) => ({
     root: {
         zIndex: 0,

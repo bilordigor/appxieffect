@@ -223,7 +223,7 @@ const Registration = inject('store')(observer(({ store }) => {
             }
         }
         if (!errorUsername && !errorPasswordLength && !errorSymbols && !errorEmail) {
-            store.fetchData(`${store.url}/reg/`, { "email": email, "password": Crypto.SHA384(password).toString(), "username": username }, "POST") 
+            store.fetchData(`${store.url}/reg/`, "POST", { "email": email, "password": Crypto.SHA384(password).toString(), "username": username }) 
                 .then((data) => {
                     console.log(data)
                     if (data != undefined) {

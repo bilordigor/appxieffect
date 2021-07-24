@@ -368,7 +368,7 @@ class Store {
   @action pushNewPage = (point) => {
     const newPageModuls = {
       label: "Новая страница",
-      readOnly: true,
+      //readOnly: true,
       id: "-" + Object.keys(this.newPages).length,
     }
     this.nowEditCourse.points[point].pages.push(newPageModuls)
@@ -397,10 +397,9 @@ class Store {
 
   // LoadedPages
 
-  // @observable loadedPages = [
-  //   {id, type, label, list: [], components: [{type, label, }]}
+  @observable loadedPages = {
 
-  // ]
+  }
 
   @observable nowEditPageMeta = {
     id: "",
@@ -455,17 +454,45 @@ class Store {
 
   //Page
 
-  @observable pageContent = [
-    { type: "h", variant: "h2", label: "Заголовок 1", align: "center" },
-    { type: "text", variant: "body1", label: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.", align: "center" },
-    { type: "h", variant: "h4", label: "Заголовок 2", align: "justify" },
-    { type: "text", variant: "body2", label: "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain.", align: "center" },
-    { type: "h", variant: "h2", label: "Заголовок 1", align: "center" },
-    { type: "text", variant: "body1", label: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.", align: "center" },
-    { type: "h", variant: "h4", label: "Заголовок 2", align: "justify" },
-    { type: "text", variant: "body2", label: "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain.", align: "center" },
+  @action saveChangeInModuleEditor = () => {
+    // for (const [key, value] of Object.entries(this.newPages)) {
+    // console.log(key, value)
 
-  ]
+    // }
+    for (const [key, value] of Object.entries(this.loadedPages)) {
+      //console.log(key, value)
+      this.fetchDataScr(`${this.url}/wip/pages/${key}`, "PUT", value).then(
+        (data) => {
+          //console.log("data", data)
+        }
+      )
+    }
+    for (let i = 0; i < this.nowEditCourse.points.length; i++) {
+      for (let j = 0; j < this.nowEditCourse.points[i].pages.length; j++) {
+        if (this.nowEditCourse.points[i].pages[j].id <= 0) {
+          let getId = null
+          this.fetchDataScr(`${this.url}/wip/pages/`, "POST").then(
+            (data) => {
+              getId = data.id
+              //console.log("data", data)
+            }
+          )
+          this.fetchDataScr(`${this.url}/wip/pages/${getId}`, "POST", this.newPages[this.nowEditCourse.points[i].pages[j].id]).then(
+            (data) => {
+              //console.log("data", data)
+            }
+          )
+          this.nowEditCourse.points[i].pages[j].id = getId
+        }
+      }
+    }
+    this.fetchDataScr(`${this.url}/wip/pages/`, "POST").then(
+      (data) => {
+        getId = data.id
+        //console.log("data", data)
+      }
+    )
+  }
 
 
 

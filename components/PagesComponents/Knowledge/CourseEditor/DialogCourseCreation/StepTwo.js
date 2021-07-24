@@ -185,10 +185,6 @@ const StepTwo = inject('store')(observer(({ store }) => {
         console.log("Page1", store.nowEditPageMeta, store.newPages)
     }
 
-    const [openSideMenu, setOpenSideMenu] = React.useState(true)
-    const [items, setItems] = useState(() => createRange(store.pageContent.length, (index) => (index).toString()));
-
-
     const components = [
         { label: "Текст", type: "text" },
         { label: "Заголовок", type: "h" },

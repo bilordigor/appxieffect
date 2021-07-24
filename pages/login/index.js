@@ -187,7 +187,7 @@ const Login = inject('store')(observer(({ store }) => {
         setErrorPassword(false)
         setErrorServer(false)
         if (email.length > 0 && password.length > 0) {
-            store.fetchData(`${store.url}/auth/`, { "email": email, "password": Crypto.SHA384(password).toString() }, "POST")
+            store.fetchData(`${store.url}/auth/`, "POST", { "email": email, "password": Crypto.SHA384(password).toString() })
                 .then((data) => {
                     if (data != undefined) {
                         if (data.a == "Success") {

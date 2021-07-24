@@ -222,7 +222,7 @@ const PasswordReset = inject('store')(observer(({store}) => {
             }
         }
         if (!errorSymbolsReset && !errorPasswordLengthReset) {
-            store.fetchData(`${store.url}/password-reset/confirm/`, { "code": id, "password": Crypto.SHA384(passwordReset).toString()}, "POST")
+            store.fetchData(`${store.url}/password-reset/confirm/`, "POST", { "code": id, "password": Crypto.SHA384(passwordReset).toString()}, )
                 .then((data) => {
                     if (data != undefined) {
                         if (data.a == "Success") { //"Success"

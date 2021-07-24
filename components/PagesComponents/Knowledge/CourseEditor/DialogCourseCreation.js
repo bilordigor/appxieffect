@@ -172,7 +172,7 @@ const DialogCourseCreation = inject('store')(observer(({ store }) => {
                         <Grid>
                             <Tooltip title="Сохранить">
                                 <IconButton>
-                                    <SaveIcon className={classes.icon} />
+                                    <SaveIcon onClick={() => store.saveChangeInModuleEditor()} className={classes.icon} />
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Закрыть. Перед закрытием сохраните, иначе прогресс будет потерян">
