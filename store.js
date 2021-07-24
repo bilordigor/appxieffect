@@ -507,21 +507,39 @@ class Store {
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
-  @action async fetchData(url, method) { // mode, cache, credentials, redirect, referrerPolicy
+  @action async fetchData(url, method, data) { // mode, cache, credentials, redirect, referrerPolicy
     // Default options are marked with *
     try {
-      const response = await fetch(url, {
-        method, // *GET, POST, PUT, DELETE, etc.
-        //mode: 'no-cors', // no-cors, *cors, same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "include", // include, *same-origin, omit
-        headers: {
-          'Content-Type': 'application/json',
-          //   // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        // redirect, // manual, *follow, error
-        // referrerPolicy, // no-referrer, *client
-      });
+      let response = null
+      if (data != null) {
+        response = await fetch(url, {
+          method: method, // *GET, POST, PUT, DELETE, etc.
+          //mode: 'no-cors', // no-cors, *cors, same-origin
+          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: "include", // include, *same-origin, omit
+          headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          // redirect, // manual, *follow, error
+          // referrerPolicy, // no-referrer, *client
+          body: JSON.stringify(data) // body data type must match "Content-Type" header
+        });
+      }
+      if (data == null) {
+        response = await fetch(url, {
+          method: method, // *GET, POST, PUT, DELETE, etc.
+          //mode: 'no-cors', // no-cors, *cors, same-origin
+          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: "include", // include, *same-origin, omit
+          headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          // redirect, // manual, *follow, error
+          // referrerPolicy, // no-referrer, *client
+        });
+      }
       //console.log(response.headers)
       const string = await response.text();
       const json = string === "" ? {} : JSON.parse(string);
