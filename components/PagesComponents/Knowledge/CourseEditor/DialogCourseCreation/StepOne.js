@@ -8,6 +8,10 @@ import { SnackbarProvider, useSnackbar } from 'notistack';
 import { inject, observer } from 'mobx-react'
 
 const useStyles = makeStyles((theme) => ({
+    gridWrapper: {
+        margin: 16,
+        width: "calc(100% - 32px)",
+    }, 
     title: {
         marginLeft: theme.spacing(2),
         flex: 1,
@@ -52,6 +56,7 @@ const StepOne = inject('store')(observer(({ store }) => {
 
     return (
         <Grid
+            className={classes.gridWrapper}
             xs={12} sm={12} md={6} lg={6} xl={6}
             container
             item

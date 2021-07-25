@@ -63,46 +63,12 @@ const StepThree = inject('store')(observer(({ store }) => {
 
     const setEditorRef = React.useRef(null);
 
-    // const saveNewAvatar = () => {
-    //     const canvas = setEditorRef.current.getImage()
-    //     const img = canvas.toDataURL()
-    //     console.log(img)
-    //     //setF(i)
-    //     store.setSettings('avatar', img)
-    //     store.postDataScr(`${store.url}/avatar/`, img)
-    //         .then((data) => {
-    //             console.log(data)
-    //             // if (data.message != undefined) {
-    //             //   console.log(data.message)
-    //             // }
-    //             if (data != undefined) {
-    //                 //console.log(data.a)
-    //                 //store.setSettings("avatar", data)
-    //             } else {
-    //                 console.log("Проблемы с сервером")
-    //             }
-
-    //         });
-    //     //selectPr(canvas)
-    //     setOpen1(false);
-    // }
-
-    // const saveNewUsername = () => {
-    //     store.postDataScr(`${store.url}/settings/`, {
-    //         "changed": { "username": store.settings.username }
-    //     })
-    //         .then((data) => {
-    //             if (data.a) {
-    //                 enqueueSnackbar('Успешно', {
-    //                     variant: 'success',
-    //                 });
-    //             } else {
-    //                 enqueueSnackbar('Ошибка', {
-    //                     variant: 'error',
-    //                 });
-    //             }
-    //         })
-    // }
+    const saveNewAvatar = () => {
+        const canvas = setEditorRef.current.getImage()
+        const img = canvas.toDataURL()
+        store.setNowEditCourse('img', img)
+        //console.log("img", store.nowEditCourse.img)
+    }
 
     return (
         <>
@@ -138,6 +104,7 @@ const StepThree = inject('store')(observer(({ store }) => {
                             alignItems="center"
                         >
                             <AvatarEditor
+                                onMouseUp={saveNewAvatar}
                                 ref={setEditorRef}
                                 image={files?.source == undefined ? "/illustrations/defaultModuleImg.png" : files.source}
                                 width={320}
@@ -156,10 +123,12 @@ const StepThree = inject('store')(observer(({ store }) => {
                             alignItems="center"
                         >
                             <Button
-                                onClick={() =>
+                                onClick={() => {
                                     selectFiles({ accept: "image/*" }, ({ name, size, source, file }) => {
                                         console.log("Files Selected", { name, size, source, file });
                                     })
+                                    saveNewAvatar
+                                }
                                 }
                                 className={classes.uploadButton}
                                 variant="contained"
@@ -188,6 +157,7 @@ const StepThree = inject('store')(observer(({ store }) => {
                                 min={10}
                                 max={30}
                                 onChange={handleChangeValue}
+                                onChangeCommitted={saveNewAvatar}
                                 aria-labelledby="continuous-slider"
                             />
                         </Grid>
@@ -214,7 +184,7 @@ const StepThree = inject('store')(observer(({ store }) => {
                     justify="flex-start"
                     alignItems="flex-start"
                 >
-                    
+
 
                 </Grid>
 

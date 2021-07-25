@@ -306,6 +306,8 @@ class Store {
     difficulty: '',
     category: '',
     theme: '',
+    img: null,
+    imgId: null,
     points: [
 
     ],
@@ -322,6 +324,7 @@ class Store {
       difficulty: '',
       category: '',
       theme: '',
+      img: null,
       points: [
 
       ],
@@ -470,25 +473,35 @@ class Store {
     for (let i = 0; i < this.nowEditCourse.points.length; i++) {
       for (let j = 0; j < this.nowEditCourse.points[i].pages.length; j++) {
         if (this.nowEditCourse.points[i].pages[j].id <= 0) {
-          let getId = null
-          this.fetchDataScr(`${this.url}/wip/pages/`, "POST").then(
-            (data) => {
-              getId = data.id
-              //console.log("data", data)
-            }
-          )
-          this.fetchDataScr(`${this.url}/wip/pages/${getId}`, "POST", this.newPages[this.nowEditCourse.points[i].pages[j].id]).then(
+          this.fetchDataScr(`${this.url}/wip/pages/`, "POST", this.newPages[this.nowEditCourse.points[i].pages[j].id]).then(
             (data) => {
               //console.log("data", data)
+              this.nowEditCourse.points[i].pages[j].id = data.id
+              this.loadedPages[data.id] = this.newPages[this.nowEditCourse.points[i].pages[j].id]
             }
           )
-          this.nowEditCourse.points[i].pages[j].id = getId
         }
       }
     }
-    this.fetchDataScr(`${this.url}/wip/pages/`, "POST").then(
+    this.clearNewPages()
+    if (this.nowEditCourse.imgId === null) {
+      this.fetchDataScr(`${this.url}/wip/images/`, "POST", this.nowEditCourse.img).then(
+        (data) => {
+          this.nowEditCourse.imgId = data.id
+          //console.log("data", data)
+        }
+      )
+    } else {
+      this.fetchDataScr(`${this.url}/wip/images/${this.nowEditCourse.imgId}`, "PUT", this.nowEditCourse.img).then(
+        (data) => {
+          this.nowEditCourse.imgId = data.id
+          //console.log("data", data)
+        }
+      )
+    }
+    this.fetchDataScr(`${this.url}/wip/modules/`, "POST", this.nowEditCourse).then(
       (data) => {
-        getId = data.id
+        //this.nowEditCourse.imgId = data.id
         //console.log("data", data)
       }
     )

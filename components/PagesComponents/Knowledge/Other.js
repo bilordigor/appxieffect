@@ -252,7 +252,7 @@ const Other = inject('store')(observer(({ store }) => {
 
     return (
         <Grid container className={classes.container}>
-            <Grid xs={12} sm={12} md={6} lg={6} xl={6} item className={classes.gridCard} container>
+            <Grid xs={12} sm={12} md={6} lg={4} xl={3} item className={classes.gridCard} container>
                 <Card className={classes.card}>
                     <Grid
                         className={classes.gridCreateCourseAC}
