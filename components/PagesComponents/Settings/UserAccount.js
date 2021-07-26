@@ -63,7 +63,11 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.contrastText,
     },
     divider: {
-        paddingTop: 8,
+        marginTop: 8,
+        marginBottom: 8,
+        width: "100%",
+        height: "0.5px",
+        backgroundColor: theme.palette.primary.contrastText,
         //paddingBottom: 8,
     },
     textField: {
@@ -187,6 +191,9 @@ const useStyles = makeStyles((theme) => ({
     },
     changeLabel: {
         paddingTop: 8,
+    },
+    gridUsernameWrapper: {
+        marginTop: 16,
     }
 }));
 
@@ -333,7 +340,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
                             </Badge>
                         </Button>
                     </Grid>
-                    <Grid>
+                    <Grid className={classes.gridUsernameWrapper}>
                         <FormControl className={classes.textField} variant="outlined">
                             <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Имя пользователя</Typography> </InputLabel>
                             <OutlinedInput

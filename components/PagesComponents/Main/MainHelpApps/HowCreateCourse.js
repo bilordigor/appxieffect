@@ -80,7 +80,7 @@ const HowCreateCourse = inject('store')(observer((props) => {
                 justify="flex-start"
                 alignItems="center"
             >
-                <Typography className={classes.mainLabel}> Как создать курс? </Typography>
+                <Typography className={classes.mainLabel}> Как создать модуль? </Typography>
             </Grid>
             <Grid
                 className={classes.content}

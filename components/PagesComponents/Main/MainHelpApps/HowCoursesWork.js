@@ -80,7 +80,7 @@ const HowCoursesWork = inject('store')(observer((props) => {
                 justify="flex-start"
                 alignItems="center"
             >
-                <Typography className={classes.mainLabel}> Как устроены курсы? </Typography>
+                <Typography className={classes.mainLabel}> Как устроены модули? </Typography>
             </Grid>
             <Grid
                 className={classes.content}

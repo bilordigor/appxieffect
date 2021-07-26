@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     gridWrapper: {
         margin: 16,
         width: "calc(100% - 32px)",
-    }, 
+    },
     title: {
         marginLeft: theme.spacing(2),
         flex: 1,
@@ -73,8 +73,8 @@ const StepOne = inject('store')(observer(({ store }) => {
                 <Input
                     required
                     className={classes.input}
-                    value={store.nowEditCourse.name}
-                    onChange={(event) => store.setNowEditCourse("name", event.target.value)}
+                    value={store.nowEditModule.name}
+                    onChange={(event) => store.setnowEditModule("name", event.target.value)}
                 // margin='dense'
                 //multiline={true}
                 // fullWidth={true}
@@ -87,8 +87,8 @@ const StepOne = inject('store')(observer(({ store }) => {
                 <Input
                     required
                     className={classes.input}
-                    value={store.nowEditCourse.title}
-                    onChange={(event) => store.setNowEditCourse("title", event.target.value)}
+                    value={store.nowEditModule.description}
+                    onChange={(event) => store.setnowEditModule("description", event.target.value)}
                     multiline={true}
                 // fullWidth={true}
                 />
@@ -101,8 +101,8 @@ const StepOne = inject('store')(observer(({ store }) => {
                 <NativeSelect
                     className={classes.NativeSelect}
                     // defaultValue={'Не выбрано'}
-                    value={store.nowEditCourse.category}
-                    onChange={(event) => store.setNowEditCourse("category", event.target.value)}
+                    value={store.nowEditModule.category}
+                    onChange={(event) => store.setnowEditModule("category", event.target.value)}
                     inputProps={{
                         name: 'age',
                         id: 'uncontrolled-native',
@@ -127,8 +127,8 @@ const StepOne = inject('store')(observer(({ store }) => {
                 </InputLabel>
                 <NativeSelect
                     className={classes.NativeSelect}
-                    value={store.nowEditCourse.theme}
-                    onChange={(event) => store.setNowEditCourse("theme", event.target.value)}
+                    value={store.nowEditModule.theme}
+                    onChange={(event) => store.setnowEditModule("theme", event.target.value)}
                     inputProps={{
                         name: 'age',
                         id: 'uncontrolled-native',
@@ -160,8 +160,8 @@ const StepOne = inject('store')(observer(({ store }) => {
                 </InputLabel>
                 <NativeSelect
                     className={classes.NativeSelect}
-                    value={store.nowEditCourse.difficulty}
-                    onChange={(event) => store.setNowEditCourse("difficulty", event.target.value)}
+                    value={store.nowEditModule.difficulty}
+                    onChange={(event) => store.setnowEditModule("difficulty", event.target.value)}
                     inputProps={{
                         name: 'age',
                         id: 'uncontrolled-native',
@@ -174,6 +174,26 @@ const StepOne = inject('store')(observer(({ store }) => {
                     <option value={'enthusiast'}> Энтузиаст</option>
                     <option value={'professional'}> Профи</option>
                     <option value={'expert'}> Эксперт</option>
+                </NativeSelect>
+            </FormControl>
+            <FormControl className={classes.FormControl} fullWidth>
+                <InputLabel className={classes.InputLabel} variant="standard" htmlFor="uncontrolled-native">
+                    Тип модуля
+                </InputLabel>
+                <NativeSelect
+                    className={classes.NativeSelect}
+                    value={store.nowEditModule.type}
+                    onChange={(event) => store.setnowEditModule("type", event.target.value)}
+                    inputProps={{
+                        name: 'age',
+                        id: 'uncontrolled-native',
+                    }}
+                >
+                    <option className={classes.option} value={'not selected'}>Не выбрано</option>
+                    <option value={'standard'}> Стандартный</option>
+                    <option value={'practice-block'}> Практика</option>
+                    <option value={'theory-block'}> Теория</option>
+                    <option value={'test'}> Тест</option>
                 </NativeSelect>
             </FormControl>
         </Grid>

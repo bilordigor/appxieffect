@@ -300,31 +300,41 @@ class Store {
 
   // Course Creation
 
-  @observable nowEditCourse = {
+  @observable nowEditModuleMeta = {
+    img: null
+  }
+
+  @action setNowEditModuleMeta = (title, value) => {
+    this.nowEditModuleMeta[title] = value
+  }
+
+
+  @observable nowEditModule = {
     name: '',
     title: '',
     difficulty: '',
     category: '',
     theme: '',
-    img: null,
+    type: '',
     imgId: null,
     points: [
 
     ],
   }
 
-  @action setNowEditCourse = (title, value) => {
-    this.nowEditCourse[title] = value
+  @action setNowEditModule = (title, value) => {
+    this.nowEditModule[title] = value
   }
 
-  @action clearNowEditCourse = () => {
-    this.nowEditCourse = {
+  @action clearnowEditModule = () => {
+    this.nowEditModule = {
       name: '',
-      title: '',
+      description: '',
       difficulty: '',
       category: '',
       theme: '',
-      img: null,
+      type: '',
+      imgId: null,
       points: [
 
       ],
@@ -334,65 +344,64 @@ class Store {
   // Работа с деревом 
 
   @action setOpenPages = (point) => {
-    this.nowEditCourse.points[point].openPages = !this.nowEditCourse.points[point].openPages
+    this.nowEditModule.points[point].openPages = !this.nowEditModule.points[point].openPages
   }
 
   @action setReadOnlyPoint = (point, value) => {
-    this.nowEditCourse.points[point].readOnly = value
+    this.nowEditModule.points[point].readOnly = value
   }
 
   @action setLabelPoint = (point, value) => {
-    this.nowEditCourse.points[point].label = value
+    this.nowEditModule.points[point].label = value
   }
 
   @action setReadOnlyPage = (point, page, value) => {
-    this.nowEditCourse.points[point].pages[page].readOnly = value
+    this.nowEditModule.points[point].pages[page].readOnly = value
   }
 
   @action setLabelPage = (point, page, value) => {
-    this.nowEditCourse.points[point].pages[page].label = value
+    this.nowEditModule.points[point].pages[page].label = value
   }
 
   @action pushNewPoint = () => {
     const newPoint = {
       label: "Новая точка",
       type: "not selected",
-      readOnly: true,
       openPages: true,
+      readOnly: true,
       pages: []
     }
-    this.nowEditCourse.points.push(newPoint)
+    this.nowEditModule.points.push(newPoint)
   }
 
   @action setPointType = (pnt, value) => {
-    this.nowEditCourse.points[pnt].type = value
+    this.nowEditModule.points[pnt].type = value
   }
 
   @action pushNewPage = (point) => {
     const newPageModuls = {
       label: "Новая страница",
-      //readOnly: true,
+      readOnly: true,
       id: "-" + Object.keys(this.newPages).length,
     }
-    this.nowEditCourse.points[point].pages.push(newPageModuls)
+    this.nowEditModule.points[point].pages.push(newPageModuls)
     const newPageList = {
       label: "Новая страница",
       type: "page",
-      list: [],
       components: [],
     }
     this.newPages["-" + Object.keys(this.newPages).length] = newPageList
   }
 
   @action deletePoint = (itemId) => {
-    this.nowEditCourse.points = this.nowEditCourse.points.filter((n, id) => {
+    this.nowEditModule.points = this.nowEditModule.points.filter((n, id) => {
       if (id == itemId) return false
       return true
     });
   }
 
   @action deletePage = (point, itemId) => {
-    this.nowEditCourse.points[point].pages = this.nowEditCourse.points[point].pages.filter((n, id) => {
+    this.nowEditModule.points[point].pages = this.nowEditModule.points[point].pages.filter((n, id) => {
       if (id == itemId) return false
       return true
     });
@@ -470,38 +479,38 @@ class Store {
         }
       )
     }
-    for (let i = 0; i < this.nowEditCourse.points.length; i++) {
-      for (let j = 0; j < this.nowEditCourse.points[i].pages.length; j++) {
-        if (this.nowEditCourse.points[i].pages[j].id <= 0) {
-          this.fetchDataScr(`${this.url}/wip/pages/`, "POST", this.newPages[this.nowEditCourse.points[i].pages[j].id]).then(
+    for (let i = 0; i < this.nowEditModule.points.length; i++) {
+      for (let j = 0; j < this.nowEditModule.points[i].pages.length; j++) {
+        if (this.nowEditModule.points[i].pages[j].id <= 0) {
+          this.fetchDataScr(`${this.url}/wip/pages/`, "POST", this.newPages[this.nowEditModule.points[i].pages[j].id]).then(
             (data) => {
               //console.log("data", data)
-              this.nowEditCourse.points[i].pages[j].id = data.id
-              this.loadedPages[data.id] = this.newPages[this.nowEditCourse.points[i].pages[j].id]
+              this.nowEditModule.points[i].pages[j].id = data.id
+              this.loadedPages[data.id] = this.newPages[this.nowEditModule.points[i].pages[j].id]
             }
           )
         }
       }
     }
     this.clearNewPages()
-    if (this.nowEditCourse.imgId === null) {
-      this.fetchDataScr(`${this.url}/wip/images/`, "POST", this.nowEditCourse.img).then(
+    if (this.nowEditModule.imgId === null) {
+      this.fetchDataScr(`${this.url}/wip/images/`, "POST", this.nowEditModule.img).then(
         (data) => {
-          this.nowEditCourse.imgId = data.id
+          this.nowEditModule.imgId = data.id
           //console.log("data", data)
         }
       )
     } else {
-      this.fetchDataScr(`${this.url}/wip/images/${this.nowEditCourse.imgId}`, "PUT", this.nowEditCourse.img).then(
+      this.fetchDataScr(`${this.url}/wip/images/${this.nowEditModule.imgId}`, "PUT", this.nowEditModuleMeta.img).then(
         (data) => {
-          this.nowEditCourse.imgId = data.id
+          this.nowEditModule.imgId = data.id
           //console.log("data", data)
         }
       )
     }
-    this.fetchDataScr(`${this.url}/wip/modules/`, "POST", this.nowEditCourse).then(
+    this.fetchDataScr(`${this.url}/wip/modules/`, "POST", this.nowEditModule).then(
       (data) => {
-        //this.nowEditCourse.imgId = data.id
+        //this.nowEditModule.imgId = data.id
         //console.log("data", data)
       }
     )

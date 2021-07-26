@@ -66,8 +66,8 @@ const StepThree = inject('store')(observer(({ store }) => {
     const saveNewAvatar = () => {
         const canvas = setEditorRef.current.getImage()
         const img = canvas.toDataURL()
-        store.setNowEditCourse('img', img)
-        //console.log("img", store.nowEditCourse.img)
+        store.setNowEditModuleMeta('img', img)
+        //console.log("img", store.nowEditModule.img)
     }
 
     return (

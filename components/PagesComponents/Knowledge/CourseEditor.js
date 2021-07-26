@@ -307,7 +307,7 @@ const CourseEditor = inject('store')(observer(({ store }) => {
             value = true
         }
         console.log(answer)
-        store.fetchDataScr(`${store.url}/courses/${id}/preference/`, "POST", answer, )
+        store.fetchDataScr(`${store.url}/courses/${id}/preference/`, "POST", answer,)
             .then((data) => {
                 //console.log(data)
                 if (data != undefined) {
@@ -349,7 +349,7 @@ const CourseEditor = inject('store')(observer(({ store }) => {
 
     const createCourse = () => {
         store.setOpenDialogCourseCreation(true)
-        store.clearNowEditCourse()
+        store.clearnowEditModule()
         store.clearNowEditPageMeta()
     }
 
@@ -410,7 +410,7 @@ const CourseEditor = inject('store')(observer(({ store }) => {
                 </Card>
             </Grid >
             <DialogAboutCourses openDialogAboutCourses={openDialogAboutCourses} setOpenDialogAboutCourses={setOpenDialogAboutCourses} />
-            <DialogCourseList openDialogCourseList={openDialogCourseList} setOpenDialogCourseList={setOpenDialogCourseList}/>
+            <DialogCourseList openDialogCourseList={openDialogCourseList} setOpenDialogCourseList={setOpenDialogCourseList} />
             <DialogCourseCreation />
             {
                 store.ownCoursesList.length != 0 && store.ownCoursesList.map((course) => (

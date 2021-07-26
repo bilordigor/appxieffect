@@ -225,7 +225,7 @@ const StepTwo = inject('store')(observer(({ store }) => {
                     justify="flex-start"
                     alignItems="center"
                 >
-                    {store.nowEditCourse.points.map((item, idpnt) =>
+                    {store.nowEditModule.points.map((item, idpnt) =>
                         <Paper onClick={() => handlePoint(idpnt)} elevation={3} className={classes.PaperItem} key={idpnt}>
                             <Grid
                                 className={classes.PaperItemGrid}
@@ -393,7 +393,7 @@ const StepTwo = inject('store')(observer(({ store }) => {
                                 </InputLabel>
                                 <NativeSelect
                                     className={classes.NativeSelect}
-                                    value={store.nowEditCourse.points[idPoint].type}
+                                    value={store.nowEditModule.points[idPoint].type}
                                     onChange={(event) => store.setPointType(idPoint, event.target.value)}
                                     inputProps={{
                                         name: 'age',
@@ -431,7 +431,7 @@ const StepTwo = inject('store')(observer(({ store }) => {
                                 </InputLabel>
                                 <NativeSelect
                                     className={classes.NativeSelect}
-                                    value={store.nowEditCourse.points[idPoint].type}
+                                    value={store.nowEditModule.points[idPoint].type}
                                     onChange={(event) => store.setPointType(idPoint, event.target.value)}
                                     inputProps={{
                                         name: 'age',
