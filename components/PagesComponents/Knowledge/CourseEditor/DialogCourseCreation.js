@@ -17,6 +17,8 @@ import StepOne from './DialogCourseCreation/StepOne';
 import StepTwo from './DialogCourseCreation/StepTwo';
 import StepThree from './DialogCourseCreation/StepThree';
 
+import { useSwipeable } from 'react-swipeable';
+
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -145,8 +147,6 @@ const DialogCourseCreation = inject('store')(observer(({ store }) => {
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
-
-
 
     return (
         <Dialog

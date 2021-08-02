@@ -177,6 +177,9 @@ const StepTwo = inject('store')(observer(({ store }) => {
         }
         if (id > 0) {
             store.setNowEditPageMeta("type", "loadPages")
+            if (store.loadedPages[store.nowEditPageMeta.id] === undefined) {
+                store.downloadLoadedPages(store.nowEditPageMeta.id)
+            }
         }
         setMainWindowType("page")
         setIdPage(idpgs)

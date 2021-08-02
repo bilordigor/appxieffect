@@ -108,7 +108,7 @@ const HowICanTellAboutBug = inject('store')(observer((props) => {
                 {page == 3 && <Typography align="justify" className={classes.labelContent}> Напишите нам на почту: xieffect@yandex.ru Опишите проблему, расскажите нам как она возникает. По возможности прикрепите скриншоты. Спасибо! </Typography>}
             </Grid>
             <Grid
-                className={classes.pagination}
+                className={classes.gridPagination}
                 container
                 direction="row"
                 justify="center"

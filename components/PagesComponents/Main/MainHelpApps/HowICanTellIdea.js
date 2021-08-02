@@ -108,7 +108,7 @@ const HowICanTellIdea = inject('store')(observer((props) => {
                 {page == 3 && <Typography align="justify" className={classes.labelContent}> Также вы можете написать в Telegram: https://t.me/bilord </Typography>}
             </Grid>
             <Grid
-                className={classes.pagination}
+                className={classes.gridPagination}
                 container
                 direction="row"
                 justify="center"

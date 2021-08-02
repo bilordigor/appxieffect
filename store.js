@@ -310,6 +310,7 @@ class Store {
 
 
   @observable nowEditModule = {
+    id: null,
     name: '',
     title: '',
     difficulty: '',
@@ -413,6 +414,14 @@ class Store {
 
   }
 
+  @action downloadLoadedPages = (id) => {
+    this.fetchDataScr(`${this.url}/wip/pages/${id}`, "GET").then(
+      (data) => {
+        this.loadedPages[id] = data
+      }
+    )
+  }
+
   @observable nowEditPageMeta = {
     id: "",
     type: "",
@@ -508,12 +517,21 @@ class Store {
         }
       )
     }
-    this.fetchDataScr(`${this.url}/wip/modules/`, "POST", this.nowEditModule).then(
-      (data) => {
-        //this.nowEditModule.imgId = data.id
-        //console.log("data", data)
-      }
-    )
+    if (this.nowEditModule.id === null) {
+      this.fetchDataScr(`${this.url}/wip/modules/`, "POST", this.nowEditModule).then(
+        (data) => {
+          this.nowEditModule.id = data.id
+          //console.log("data", data)
+        }
+      )
+    } else {
+      this.fetchDataScr(`${this.url}/wip/modules/${this.nowEditModule.id}`, "PUT", this.nowEditModule).then(
+        (data) => {
+          this.nowEditModule.id = data.id
+          //console.log("data", data)
+        }
+      )
+    }
   }
 
 

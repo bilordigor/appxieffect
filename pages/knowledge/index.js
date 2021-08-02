@@ -13,10 +13,10 @@ import { inject, observer } from 'mobx-react'
 
 import NavigationAll from '../../components/OtherComponents/Navigation/NavigationAll'
 //import Background from '../../components/OtherComponents/Background/Background.js'
-import Courses from './../../components/PagesComponents/Knowledge/Courses';
-import CourseEditor from './../../components/PagesComponents/Knowledge/CourseEditor';
+import Courses from '../../components/PagesComponents/Knowledge/Courses';
+import CourseEditor from '../../components/PagesComponents/Knowledge/CourseEditor';
 //import Moderate from '../../components/PagesComponents/Knowledge/Moderate';
-import Other from './../../components/PagesComponents/Knowledge/Other';
+import Other from '../../components/PagesComponents/Knowledge/Other';
 
 const AntTabs = withStyles((theme) => ({
   root: {
@@ -147,7 +147,7 @@ const Knowledge = inject('store')(observer(({ store }) => {
               textColor="primary"
               aria-label="full width tabs example"
             >
-              <Tab label={<Typography className={classes.tabLabel}>Курсы</Typography>} {...a11yProps(0)} />
+              <Tab label={<Typography className={classes.tabLabel}>Модули</Typography>} {...a11yProps(0)} />
               <Tab label={<Typography className={classes.tabLabel}>Редактор</Typography>} {...a11yProps(1)} />
               {/* <Tab label={<Typography className={classes.tabLabel}>Модерация</Typography>} {...a11yProps(2)} /> */}
               <Tab label={<Typography className={classes.tabLabel}>Другое</Typography>} {...a11yProps(2)} />

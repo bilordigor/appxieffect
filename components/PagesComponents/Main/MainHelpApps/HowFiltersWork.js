@@ -101,7 +101,7 @@ const HowFiltersWork = inject('store')(observer((props) => {
                 </div>}
             </Grid>
             <Grid
-                className={classes.pagination}
+                className={classes.gridPagination}
                 container
                 direction="row"
                 justify="center"

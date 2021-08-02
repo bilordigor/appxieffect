@@ -359,8 +359,8 @@ const CoursesList = inject('store')(observer(({ store }) => {
                                             }}
                                             passHref>
                                             <Button variant="contained" color="primary" className={classes.CardActionsCenterButton}>
-                                                {!course.started && <Typography variant="subtitle1">Приступить к курсу</Typography>}
-                                                {course.started && <Typography variant="subtitle1">Продолжить курс</Typography>}
+                                                {!course.started && <Typography variant="subtitle1">Приступить к модулю</Typography>}
+                                                {course.started && <Typography variant="subtitle1">Продолжить модуль</Typography>}
                                             </Button>
                                         </Link>
                                     </Grid>

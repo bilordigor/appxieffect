@@ -391,7 +391,7 @@ const CourseEditor = inject('store')(observer(({ store }) => {
                         justify="center"
                         alignItems="center"
                     >
-                        <Button onClick={() => store.setDialogCourseList(true)} className={classes.createCourseAC}>
+                        <Button onClick={() => setOpenDialogCourseList(true)} className={classes.createCourseAC}>
                             <Grid
                                 container
                                 direction="column"

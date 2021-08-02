@@ -13,6 +13,9 @@ import CloseIcon from '@material-ui/icons/Close';
 
 
 const useStyles = makeStyles((theme) => ({
+    dialog: {
+        zIndex: 100,
+    },
     button: {
         marginLeft: 4,
         marginRight: 4,
@@ -54,8 +57,16 @@ const useStyles = makeStyles((theme) => ({
     DeleteForeverIcon: {
         //color: theme.main.palette.help.redbutton,
 
+    },
+    DialogTitle: {
+        backgroundColor: theme.palette.blueGrey["6"],
+    },
+    DialogContent: {
+        backgroundColor: theme.palette.blueGrey["6"],
+    },
+    DialogActions: {
+        backgroundColor: theme.palette.blueGrey["6"],
     }
-
 }));
 
 const DialogCourseList = inject('store')(observer(({ store, openDialogCourseList, setOpenDialogCourseList }) => {
@@ -71,13 +82,14 @@ const DialogCourseList = inject('store')(observer(({ store, openDialogCourseList
 
     return (
         <Dialog
+            classname={classes.dialog}
             open={openDialogCourseList}
             onClose={() => setOpenDialogCourseList(false)}
             scroll='paper'
             aria-labelledby="scroll-dialog-title"
             aria-describedby="scroll-dialog-description"
         >
-            <DialogTitle id="scroll-dialog-title">
+            <DialogTitle className={classes.DialogTitle} id="scroll-dialog-title">
                 <Grid
                     container
                     direction="row"
@@ -97,7 +109,7 @@ const DialogCourseList = inject('store')(observer(({ store, openDialogCourseList
 
                 </Grid>
             </DialogTitle>
-            <DialogContent dividers={true}>
+            <DialogContent className={classes.DialogContent} dividers={true}>
                 <DialogContentText
                     id="scroll-dialog-description"
                     // ref={descriptionElementRef}
@@ -110,7 +122,7 @@ const DialogCourseList = inject('store')(observer(({ store, openDialogCourseList
                         justify="center"
                         alignItems="center"
                     >
-                        {store.newCoursesList.length === 0 && <Typography> Вы не создали ни одного курса  </Typography>}
+                        {store.newCoursesList.length === 0 && <Typography> Вы не создали ни одного модуля  </Typography>}
                         {
                             store.newCoursesList.length != 0 && store.newCoursesList.map((course) => (
                                 <Grid
@@ -152,7 +164,7 @@ const DialogCourseList = inject('store')(observer(({ store, openDialogCourseList
                     </Grid>}
                 </DialogContentText>
             </DialogContent>
-            <DialogActions>
+            <DialogActions className={classes.DialogActions}>
 
             </DialogActions>
         </Dialog>
