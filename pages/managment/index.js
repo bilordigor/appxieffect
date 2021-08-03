@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Knowledge = inject('store')(observer(({ store }) => {
+const Managment = inject('store')(observer(({ store }) => {
   const classes = useStyles();
   const theme = useTheme();
   const { enqueueSnackbar } = useSnackbar();
@@ -149,7 +149,6 @@ const Knowledge = inject('store')(observer(({ store }) => {
             Стать Автором
           </Button>
         </Grid>}
-        <Grid  item className={classes.gridCard} container key={course.id}></Grid>
         {role.author === "current" && <Grid
           container
           direction="column"
@@ -165,4 +164,4 @@ const Knowledge = inject('store')(observer(({ store }) => {
   );
 }))
 
-export default Knowledge
+export default Managment
