@@ -5,8 +5,8 @@ import { CircularProgress, Grid, Typography, makeStyles, useTheme } from '@mater
 import { inject, observer } from 'mobx-react'
 
 import Image from 'next/image'
-import Chipper from './Courses/Chipper';
-import CoursesList from './Courses/CoursesList';
+import Chipper from './Modules/Chipper';
+import ModulesList from './Modules/ModulesList';
 
 const useStyles = makeStyles((theme) => ({
     gridLoading: {
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Courses = inject('store')(observer(({courses, store }) => {
+const Modules = inject('store')(observer(({ store }) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -29,7 +29,7 @@ const Courses = inject('store')(observer(({courses, store }) => {
     return (
         <>
             <Chipper />
-            <CoursesList courses={courses}/>
+            <ModulesList/>
             <Grid
                 className={classes.gridLoading}
                 container
@@ -56,4 +56,4 @@ const Courses = inject('store')(observer(({courses, store }) => {
 }));
 
 
-export default Courses;
+export default Modules;

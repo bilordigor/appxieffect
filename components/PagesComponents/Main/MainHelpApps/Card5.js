@@ -31,9 +31,12 @@ const useStyles = makeStyles((theme) => ({
     PaginationItem: {
         color: theme.palette.primary.contrastText,
     },
+    labelContent: {
+        margin: 16,
+    }
 }));
 
-const HowEffectWillCont = inject('store')(observer((props) => {
+const Card5 = inject('store')(observer((props) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -79,7 +82,7 @@ const HowEffectWillCont = inject('store')(observer((props) => {
                 justify="flex-start"
                 alignItems="center"
             >
-                <Typography className={classes.mainLabel}> Как связаться с разработчиками? </Typography>
+                <Typography className={classes.mainLabel}> Что, если возникла ошибка на сайте? </Typography>
             </Grid>
             <Grid
                 className={classes.content}
@@ -90,8 +93,8 @@ const HowEffectWillCont = inject('store')(observer((props) => {
             >
                 {page == 1 && <div className={classes.background}>
                     <Image
-                        alt="HowEffectWillCont"
-                        src="/illustrations/HowEffectWillCont.png"
+                        alt="HowFiltersWork"
+                        src="/illustrations/HowFiltersWork.png"
                         //layout="fill"
                         width={350}
                         height={350}
@@ -99,6 +102,8 @@ const HowEffectWillCont = inject('store')(observer((props) => {
                     //quality={100}
                     />
                 </div>}
+                {page == 2 && <Typography align="center" className={classes.labelContent}> {"Все настройки доступны в соответствующем пункте меню, он отмечен шестерёнкой. Здесь собраны как настройки аккаунта, так и внешнего вида сайта. Настройки внешнего вида сохраняются автоматически."} </Typography>}
+                {page == 3 && <Typography align="center" className={classes.labelContent}> {"Будьте осторожны с изменением почты и пароля. Кроме того, не доверяйте пароль от аккаунта или доступ к почте посторонним. Если вы забудете пароль, его восстановление возможно только через привязанную к аккаунту почту."} </Typography>}
             </Grid>
             <Grid
                 className={classes.gridPagination}
@@ -111,7 +116,7 @@ const HowEffectWillCont = inject('store')(observer((props) => {
                     renderItem={(item) => <PaginationItem className={classes.PaginationItem} {...item} />}
                     shape="rounded"
                     size="large"
-                    count={5}
+                    count={3}
                     page={page}
                     onChange={handleChange} />
             </Grid>
@@ -121,4 +126,4 @@ const HowEffectWillCont = inject('store')(observer((props) => {
 
 }))
 
-export default HowEffectWillCont
+export default Card5

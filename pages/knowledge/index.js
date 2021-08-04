@@ -6,6 +6,7 @@ import React from 'react';
 import { Grid, Box, AppBar, Tabs, Typography, Tab } from '@material-ui/core';
 import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles'
 
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 import SwipeableViews from 'react-swipeable-views';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
@@ -13,7 +14,7 @@ import { inject, observer } from 'mobx-react'
 
 import NavigationAll from '../../components/OtherComponents/Navigation/NavigationAll'
 //import Background from '../../components/OtherComponents/Background/Background.js'
-import Courses from '../../components/PagesComponents/Knowledge/Courses';
+import Modules from '../../components/PagesComponents/Knowledge/Modules';
 import CourseEditor from '../../components/PagesComponents/Knowledge/CourseEditor';
 //import Moderate from '../../components/PagesComponents/Knowledge/Moderate';
 import Other from '../../components/PagesComponents/Knowledge/Other';
@@ -98,8 +99,6 @@ const Knowledge = inject('store')(observer(({ store }) => {
     setValue(index);
   };
 
-  const [courses, setCourses] = React.useState([])
-
   React.useEffect(() => {
     if (value === 0) {
       store.fetchDataScr(`${store.url}/filters/`, "GET")
@@ -148,9 +147,9 @@ const Knowledge = inject('store')(observer(({ store }) => {
               aria-label="full width tabs example"
             >
               <Tab label={<Typography className={classes.tabLabel}>Модули</Typography>} {...a11yProps(0)} />
-              <Tab label={<Typography className={classes.tabLabel}>Редактор</Typography>} {...a11yProps(1)} />
+              <Tab label={<Typography className={classes.tabLabel}>Страницы</Typography>} {...a11yProps(1)} />
               {/* <Tab label={<Typography className={classes.tabLabel}>Модерация</Typography>} {...a11yProps(2)} /> */}
-              <Tab label={<Typography className={classes.tabLabel}>Другое</Typography>} {...a11yProps(2)} />
+              <Tab label={<Typography className={classes.tabLabel}><MoreHorizIcon /></Typography>} {...a11yProps(2)} />
             </AntTabs>
           </AppBar>
           <SwipeableViews
@@ -160,10 +159,10 @@ const Knowledge = inject('store')(observer(({ store }) => {
             onChangeIndex={handleChangeIndex}
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <Courses courses={courses} />
+              <Modules/>
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
-              <CourseEditor />
+              {/* <CourseEditor /> */}
             </TabPanel>
             {/* <TabPanel value={value} index={2} dir={theme.direction}> */}
             {/* <Moderate/> */}

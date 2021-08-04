@@ -7,6 +7,7 @@ import { inject, observer } from 'mobx-react'
 import Image from 'next/image'
 import { useSwipeable } from 'react-swipeable';
 
+
 const useStyles = makeStyles((theme) => ({
     root: {
         margin: 16,
@@ -31,9 +32,12 @@ const useStyles = makeStyles((theme) => ({
     PaginationItem: {
         color: theme.palette.primary.contrastText,
     },
+    labelContent: {
+        margin: 16,
+    }
 }));
 
-const HowICanChangeData = inject('store')(observer((props) => {
+const Card3 = inject('store')(observer((props) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -79,7 +83,7 @@ const HowICanChangeData = inject('store')(observer((props) => {
                 justify="flex-start"
                 alignItems="center"
             >
-                <Typography className={classes.mainLabel}> Как изменить настройки аккаунта? </Typography>
+                <Typography className={classes.mainLabel}> Как работают фильтры? </Typography>
             </Grid>
             <Grid
                 className={classes.content}
@@ -90,8 +94,8 @@ const HowICanChangeData = inject('store')(observer((props) => {
             >
                 {page == 1 && <div className={classes.background}>
                     <Image
-                        alt="HowICanChangeData"
-                        src="/illustrations/HowICanChangeData.png"
+                        alt="HowCreateCourse"
+                        src="/illustrations/HowCreateCourse.png"
                         //layout="fill"
                         width={350}
                         height={350}
@@ -99,6 +103,10 @@ const HowICanChangeData = inject('store')(observer((props) => {
                     //quality={100}
                     />
                 </div>}
+                {page == 2 && <Typography align="center" className={classes.labelContent}> {"Вкладка 'Знания' содержит абсолютно все модули сайта и разбираться среди них довольно трудно. Поэтому вам доступны фильтры. Их можно найти вверху страницы."} </Typography>}
+                {page == 3 && <Typography align="center" className={classes.labelContent}> {"Модули в этом списке можно добавлять в избранное и закреплять. Позже такие модули можно выделить через выбор соответствующего глобального фильтра. Для удобства последний выбор глобального фильтра сохраняется."} </Typography>}
+                {page == 4 && <Typography align="center" className={classes.labelContent}> {"Чтобы найти что-то конкретное, фильтруйте модули по темам (предметные области), категориям и сложности. Сложность в данном случае скорее обозначает уровень вхождения: чем выше сложность, тем больше познаний нужно иметь перед началом работы с модулем."} </Typography>}
+                {page == 5 && <Typography align="center" className={classes.labelContent}> {"И, наконец, сортировка. Она поможет приблизить к началу популярные, новые или недавно посещённые модули. Последний тип помещает посещённые модули выше других, сортируя по дате последнего визита, а остальные сортирует по популярности."} </Typography>}
             </Grid>
             <Grid
                 className={classes.gridPagination}
@@ -121,4 +129,4 @@ const HowICanChangeData = inject('store')(observer((props) => {
 
 }))
 
-export default HowICanChangeData
+export default Card3

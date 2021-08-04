@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const HowICanTellAboutBug = inject('store')(observer((props) => {
+const Card7 = inject('store')(observer((props) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -104,8 +104,8 @@ const HowICanTellAboutBug = inject('store')(observer((props) => {
                     //quality={100}
                     />
                 </div>}
-                {page == 2 && <Typography align="justify" className={classes.labelContent}> Если вы нашли баг/проблему и хотите поделиться с нами следуйте инструкциям на следующем слайде </Typography>}
-                {page == 3 && <Typography align="justify" className={classes.labelContent}> Напишите нам на почту: xieffect@yandex.ru Опишите проблему, расскажите нам как она возникает. По возможности прикрепите скриншоты. Спасибо! </Typography>}
+                {page == 2 && <Typography align="center" className={classes.labelContent}> Если вы нашли баг/проблему и хотите поделиться с нами следуйте инструкциям на следующем слайде </Typography>}
+                {page == 3 && <Typography align="center" className={classes.labelContent}> Напишите нам на почту: xieffect@yandex.ru Опишите проблему, расскажите нам как она возникает. По возможности прикрепите скриншоты. Спасибо! </Typography>}
             </Grid>
             <Grid
                 className={classes.gridPagination}
@@ -128,4 +128,4 @@ const HowICanTellAboutBug = inject('store')(observer((props) => {
 
 }))
 
-export default HowICanTellAboutBug
+export default Card7

@@ -31,9 +31,9 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     chipClicked: {
-        backgroundColor: theme.palette.primary.contrastText,
+        borderColor: theme.palette.primary.main,
         '&:hover': {
-            backgroundColor: theme.palette.primary.contrastText,
+            borderColor: theme.palette.primary.main,
         }
     },
     chipTypography: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
         cursor: 'pointer',
     },
     chipTypographyClicked: {
-        color: theme.palette.secondary.contrastText,
+        color: theme.palette.primary.main,
 
     },
     chipTypographyNotClicked: {

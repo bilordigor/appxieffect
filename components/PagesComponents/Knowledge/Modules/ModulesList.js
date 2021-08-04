@@ -175,7 +175,7 @@ const coursesImgList = {
     "Физика: термодинамика": "/knowledge/phi.jpeg",
 }
 
-const CoursesList = inject('store')(observer(({ store }) => {
+const ModulesList = inject('store')(observer(({ store }) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -377,4 +377,4 @@ const CoursesList = inject('store')(observer(({ store }) => {
 
 
 
-export default CoursesList;
+export default ModulesList;

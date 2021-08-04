@@ -32,13 +32,11 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.contrastText,
     },
     labelContent: {
-        color: theme.palette.primary.contrastText,
-        padding: 16,
-        fontSize: 20,
+        margin: 16,
     }
 }));
 
-const HowICanTellIdea = inject('store')(observer((props) => {
+const Card4 = inject('store')(observer((props) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -55,13 +53,9 @@ const HowICanTellIdea = inject('store')(observer((props) => {
         onSwipedLeft: (eventData) => {
             if (page === 1) return setPage(2);
             if (page === 2) return setPage(3);
-            // if (page === 3) return setPage(4);
-            // if (page === 4) return setPage(5);
             //console.log("User Swiped!", eventData)
         },
         onSwipedRight: (eventData) => {
-            // if (page === 5) return setPage(4);
-            // if (page === 4) return setPage(3);
             if (page === 3) return setPage(2);
             if (page === 2) return setPage(1);
             //console.log("User Swiped!", eventData)
@@ -84,7 +78,7 @@ const HowICanTellIdea = inject('store')(observer((props) => {
                 justify="flex-start"
                 alignItems="center"
             >
-                <Typography className={classes.mainLabel}> Как связаться с разработчиками? </Typography>
+                <Typography className={classes.mainLabel}> Как изменить настройки аккаунта? </Typography>
             </Grid>
             <Grid
                 className={classes.content}
@@ -95,8 +89,8 @@ const HowICanTellIdea = inject('store')(observer((props) => {
             >
                 {page == 1 && <div className={classes.background}>
                     <Image
-                        alt="HowICanTellIdea"
-                        src="/illustrations/HowICanTellIdea.png"
+                        alt="HowEffectWillCont"
+                        src="/illustrations/collegeGirlStuding.png"
                         //layout="fill"
                         width={350}
                         height={350}
@@ -104,8 +98,8 @@ const HowICanTellIdea = inject('store')(observer((props) => {
                     //quality={100}
                     />
                 </div>}
-                {page == 2 && <Typography align="justify" className={classes.labelContent}> Лучший способ связаться с нами, написать нам на почту: xieffect@yandex.ru </Typography>}
-                {page == 3 && <Typography align="justify" className={classes.labelContent}> Также вы можете написать в Telegram: https://t.me/bilord </Typography>}
+                {page == 2 && <Typography align="center" className={classes.labelContent}> {"Все настройки доступны в соответствующем пункте меню, он отмечен шестерёнкой. Здесь собраны как настройки аккаунта, так и внешнего вида сайта. Настройки внешнего вида сохраняются автоматически."} </Typography>}
+                {page == 3 && <Typography align="center" className={classes.labelContent}> {"Будьте осторожны с изменением почты и пароля. Кроме того, не доверяйте пароль от аккаунта или доступ к почте посторонним. Если вы забудете пароль, его восстановление возможно только через привязанную к аккаунту почту."} </Typography>}
             </Grid>
             <Grid
                 className={classes.gridPagination}
@@ -128,4 +122,4 @@ const HowICanTellIdea = inject('store')(observer((props) => {
 
 }))
 
-export default HowICanTellIdea
+export default Card4

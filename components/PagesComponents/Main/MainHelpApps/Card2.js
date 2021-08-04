@@ -32,9 +32,12 @@ const useStyles = makeStyles((theme) => ({
     PaginationItem: {
         color: theme.palette.primary.contrastText,
     },
+    labelContent: {
+        margin: 16,
+    }
 }));
 
-const HowCreateCourse = inject('store')(observer((props) => {
+const Card2 = inject('store')(observer((props) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -80,7 +83,7 @@ const HowCreateCourse = inject('store')(observer((props) => {
                 justify="flex-start"
                 alignItems="center"
             >
-                <Typography className={classes.mainLabel}> Как создать модуль? </Typography>
+                <Typography className={classes.mainLabel}> Как работать с типами модулей? </Typography>
             </Grid>
             <Grid
                 className={classes.content}
@@ -91,8 +94,8 @@ const HowCreateCourse = inject('store')(observer((props) => {
             >
                 {page == 1 && <div className={classes.background}>
                     <Image
-                        alt="HowCreateCourse"
-                        src="/illustrations/HowCreateCourse.png"
+                        alt="HowCoursesWork"
+                        src="/illustrations/HowCoursesWork.png"
                         //layout="fill"
                         width={350}
                         height={350}
@@ -100,6 +103,10 @@ const HowCreateCourse = inject('store')(observer((props) => {
                     //quality={100}
                     />
                 </div>}
+                {page == 2 && <Typography align="center" className={classes.labelContent}> {"Стандартные модули созданы для пошагового изучения чего-то нового. Они содержат как теорию, так и упражнения для её закрепления."} </Typography>}
+                {page == 3 && <Typography align="center" className={classes.labelContent}> {"Блоки теории — это справочники, содержащие систематизированную теорию по какой-то теме. Они идеальны для повторения материала перед контрольными."} </Typography>}
+                {page == 4 && <Typography align="center" className={classes.labelContent}> {"Блоки практики содержат только упражнения в случайном порядке. Они сделаны для наработки практических навыков по некоторой теме после её изучения."} </Typography>}
+                {page == 5 && <Typography align="center" className={classes.labelContent}> {"Тестирования — сборники тестовых заданий, которые нужно проходить пакетом.  Один и тот же тест можно проходить заново и улучшать свой результат. Идеальны для подготовки к экзаменам."} </Typography>}
             </Grid>
             <Grid
                 className={classes.gridPagination}
@@ -122,4 +129,4 @@ const HowCreateCourse = inject('store')(observer((props) => {
 
 }))
 
-export default HowCreateCourse
+export default Card2

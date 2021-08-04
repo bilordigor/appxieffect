@@ -7,7 +7,6 @@ import { inject, observer } from 'mobx-react'
 import Image from 'next/image'
 import { useSwipeable } from 'react-swipeable';
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         margin: 16,
@@ -32,16 +31,14 @@ const useStyles = makeStyles((theme) => ({
     PaginationItem: {
         color: theme.palette.primary.contrastText,
     },
+    labelContent: {
+        margin: 16,
+    }
 }));
 
-const HowCoursesWork = inject('store')(observer((props) => {
+const Card1 = inject('store')(observer((props) => {
     const classes = useStyles();
     const theme = useTheme();
-
-    const [page, setPage] = React.useState(1);
-    const handleChange = (event, value) => {
-        setPage(value);
-    };
 
     const config = {
         delta: 10,
@@ -65,6 +62,11 @@ const HowCoursesWork = inject('store')(observer((props) => {
         ...config,
     });
 
+    const [page, setPage] = React.useState(1);
+    const handleChange = (event, value) => {
+        setPage(value);
+    };
+
     return (
         <Grid
             {...handlers}
@@ -80,7 +82,7 @@ const HowCoursesWork = inject('store')(observer((props) => {
                 justify="flex-start"
                 alignItems="center"
             >
-                <Typography className={classes.mainLabel}> Как устроены модули? </Typography>
+                <Typography className={classes.mainLabel}> Как начать обучение? </Typography>
             </Grid>
             <Grid
                 className={classes.content}
@@ -89,10 +91,11 @@ const HowCoursesWork = inject('store')(observer((props) => {
                 justify="center"
                 alignItems="center"
             >
+
                 {page == 1 && <div className={classes.background}>
                     <Image
-                        alt="HowCoursesWork"
-                        src="/illustrations/HowCoursesWork.png"
+                        alt="HowBeginLearning"
+                        src="/illustrations/HowBeginLearning.png"
                         //layout="fill"
                         width={350}
                         height={350}
@@ -100,6 +103,11 @@ const HowCoursesWork = inject('store')(observer((props) => {
                     //quality={100}
                     />
                 </div>}
+                {page == 2 && <Typography align="center" className={classes.labelContent}> {"На портале вы можете найти теорию, упражнения и тесты по многим предметам. Начните перейдя в раздел 'Знания', отмеченный в меню раскрытой книгой."} </Typography>}
+                {page == 3 && <Typography align="center" className={classes.labelContent}> {"Чтобы найти именно то, что нужно, используйте фильтры. Детальная инструкция по их использованию есть в соответствующей карточке."} </Typography>}
+                {page == 4 && <Typography align="center" className={classes.labelContent}> {"Все образовательные материалы, расположенные во вкладке 'Знания', сгруппированы в модули для упрощённой навигации, фильтрации и сортировки."} </Typography>}
+                {page == 5 && <Typography align="center" className={classes.labelContent}> {"Модули делятся на четыре типа: стандартный модуль, блок теории, блок практики и тестирование. Об этих типах также можно узнать в соответствующей карточке."} </Typography>}
+
             </Grid>
             <Grid
                 className={classes.gridPagination}
@@ -120,6 +128,6 @@ const HowCoursesWork = inject('store')(observer((props) => {
         </Grid>
     )
 
-}))
+}));
 
-export default HowCoursesWork
+export default Card1

@@ -31,9 +31,12 @@ const useStyles = makeStyles((theme) => ({
     PaginationItem: {
         color: theme.palette.primary.contrastText,
     },
+    labelContent: {
+        margin: 16,
+    }
 }));
 
-const HowFiltersWork = inject('store')(observer((props) => {
+const Card6 = inject('store')(observer((props) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -79,7 +82,7 @@ const HowFiltersWork = inject('store')(observer((props) => {
                 justify="flex-start"
                 alignItems="center"
             >
-                <Typography className={classes.mainLabel}> Как работают фильтры? </Typography>
+                <Typography className={classes.mainLabel}> Как связаться с разработчиками? </Typography>
             </Grid>
             <Grid
                 className={classes.content}
@@ -90,8 +93,8 @@ const HowFiltersWork = inject('store')(observer((props) => {
             >
                 {page == 1 && <div className={classes.background}>
                     <Image
-                        alt="HowFiltersWork"
-                        src="/illustrations/HowFiltersWork.png"
+                        alt="HowICanChangeData"
+                        src="/illustrations/HowICanChangeData.png"
                         //layout="fill"
                         width={350}
                         height={350}
@@ -99,6 +102,8 @@ const HowFiltersWork = inject('store')(observer((props) => {
                     //quality={100}
                     />
                 </div>}
+                {page == 2 && <Typography align="center" className={classes.labelContent}> {"Лучший способ связаться с нами по любому поводу — написать нам на почту: "} <a href="mailto:xieffect@yandex.ru"> xieffect@yandex.ru</a>  </Typography>}
+                {page == 3 && <Typography align="center" className={classes.labelContent}> {"Также у нас есть сервер в discord: https://discord.gg/aNQfXXb и Telegram: https://t.me/bilord или https://t.me/xi_qzart"} </Typography>}
             </Grid>
             <Grid
                 className={classes.gridPagination}
@@ -111,7 +116,7 @@ const HowFiltersWork = inject('store')(observer((props) => {
                     renderItem={(item) => <PaginationItem className={classes.PaginationItem} {...item} />}
                     shape="rounded"
                     size="large"
-                    count={5}
+                    count={3}
                     page={page}
                     onChange={handleChange} />
             </Grid>
@@ -121,4 +126,4 @@ const HowFiltersWork = inject('store')(observer((props) => {
 
 }))
 
-export default HowFiltersWork
+export default Card6

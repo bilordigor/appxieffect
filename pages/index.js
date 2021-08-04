@@ -10,13 +10,13 @@ import NavigationAll from './../components/OtherComponents/Navigation/Navigation
 //import Background from './../components/OtherComponents/Background/Background'
 //import QuiсkButtons from './../components/PagesComponents/Main/QuiсkButtons';
 //import QuiсkWidgets from '../components/PagesComponents/Main/QuiсkWidgets';
-import HowBeginLearning from './../components/PagesComponents/Main/MainHelpApps/HowBeginLearning';
-import HowCoursesWork from './../components/PagesComponents/Main/MainHelpApps/HowCoursesWork';
-import HowCreateCourse from './../components/PagesComponents/Main/MainHelpApps/HowCreateCourse';
-import HowICanChangeData from './../components/PagesComponents/Main/MainHelpApps/HowICanChangeData';
-import HowFiltersWork from './../components/PagesComponents/Main/MainHelpApps/HowFiltersWork';
-import HowICanTellAboutBug from './../components/PagesComponents/Main/MainHelpApps/HowICanTellAboutBug';
-import HowICanTellIdea from './../components/PagesComponents/Main/MainHelpApps/HowICanTellIdea';
+import Card1 from './../components/PagesComponents/Main/MainHelpApps/Card1';
+import Card2 from './../components/PagesComponents/Main/MainHelpApps/Card2';
+import Card3 from './../components/PagesComponents/Main/MainHelpApps/Card3';
+import Card4 from './../components/PagesComponents/Main/MainHelpApps/Card4';
+import Card5 from './../components/PagesComponents/Main/MainHelpApps/Card5';
+import Card6 from './../components/PagesComponents/Main/MainHelpApps/Card6';
+import Card7 from './../components/PagesComponents/Main/MainHelpApps/Card7';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,26 +46,26 @@ const Home = inject('store')(observer(({ store }) => {
       <NavigationAll>
         <Grid container className={classes.main}>
           <Grid xs={12} sm={12} md={12} lg={6} xl={4} item container>
-            <HowBeginLearning />
+            <Card1 />
           </Grid>
           <Grid xs={12} sm={12} md={12} lg={6} xl={4} item container>
-            <HowCoursesWork />
+            <Card2 />
           </Grid>
           <Grid xs={12} sm={12} md={12} lg={6} xl={4} item container>
-            <HowCreateCourse />
+            <Card3 />
           </Grid>
           <Grid xs={12} sm={12} md={12} lg={6} xl={4} item container>
-            <HowICanChangeData />
+            <Card4 />
           </Grid>
           <Grid xs={12} sm={12} md={12} lg={6} xl={4} item container>
-            <HowFiltersWork />
+            <Card5 />
           </Grid>
           <Grid xs={12} sm={12} md={12} lg={6} xl={4} item container>
-            <HowICanTellAboutBug />
+            <Card6 />
           </Grid>
-          <Grid xs={12} sm={12} md={12} lg={6} xl={4} item container>
-            <HowICanTellIdea />
-          </Grid>
+          {/* <Grid xs={12} sm={12} md={12} lg={6} xl={4} item container>
+            <Card7 />
+          </Grid> */}
           {/* <Grid item>
             <QuiсkButtons />
           </Grid> */}

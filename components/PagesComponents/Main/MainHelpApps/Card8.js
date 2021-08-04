@@ -31,11 +31,21 @@ const useStyles = makeStyles((theme) => ({
     PaginationItem: {
         color: theme.palette.primary.contrastText,
     },
+    labelContent: {
+        color: theme.palette.primary.contrastText,
+        padding: 16,
+        fontSize: 20,
+    }
 }));
 
-const HowBeginLearning = inject('store')(observer((props) => {
+const Card8 = inject('store')(observer((props) => {
     const classes = useStyles();
     const theme = useTheme();
+
+    const [page, setPage] = React.useState(1);
+    const handleChange = (event, value) => {
+        setPage(value);
+    };
 
     const config = {
         delta: 10,
@@ -45,24 +55,19 @@ const HowBeginLearning = inject('store')(observer((props) => {
         onSwipedLeft: (eventData) => {
             if (page === 1) return setPage(2);
             if (page === 2) return setPage(3);
-            if (page === 3) return setPage(4);
-            if (page === 4) return setPage(5);
+            // if (page === 3) return setPage(4);
+            // if (page === 4) return setPage(5);
             //console.log("User Swiped!", eventData)
         },
         onSwipedRight: (eventData) => {
-            if (page === 5) return setPage(4);
-            if (page === 4) return setPage(3);
+            // if (page === 5) return setPage(4);
+            // if (page === 4) return setPage(3);
             if (page === 3) return setPage(2);
             if (page === 2) return setPage(1);
             //console.log("User Swiped!", eventData)
         },
         ...config,
     });
-
-    const [page, setPage] = React.useState(1);
-    const handleChange = (event, value) => {
-        setPage(value);
-    };
 
     return (
         <Grid
@@ -79,7 +84,7 @@ const HowBeginLearning = inject('store')(observer((props) => {
                 justify="flex-start"
                 alignItems="center"
             >
-                <Typography className={classes.mainLabel}> Как начать обучение? </Typography>
+                <Typography className={classes.mainLabel}> Как связаться с разработчиками? </Typography>
             </Grid>
             <Grid
                 className={classes.content}
@@ -90,8 +95,8 @@ const HowBeginLearning = inject('store')(observer((props) => {
             >
                 {page == 1 && <div className={classes.background}>
                     <Image
-                        alt="HowBeginLearning"
-                        src="/illustrations/HowBeginLearning.png"
+                        alt="HowICanTellIdea"
+                        src="/illustrations/HowICanTellIdea.png"
                         //layout="fill"
                         width={350}
                         height={350}
@@ -99,6 +104,8 @@ const HowBeginLearning = inject('store')(observer((props) => {
                     //quality={100}
                     />
                 </div>}
+                {page == 2 && <Typography align="center" className={classes.labelContent}> Лучший способ связаться с нами, написать нам на почту: xieffect@yandex.ru </Typography>}
+                {page == 3 && <Typography align="center" className={classes.labelContent}> Также вы можете написать в Telegram: https://t.me/bilord </Typography>}
             </Grid>
             <Grid
                 className={classes.gridPagination}
@@ -111,7 +118,7 @@ const HowBeginLearning = inject('store')(observer((props) => {
                     renderItem={(item) => <PaginationItem className={classes.PaginationItem} {...item} />}
                     shape="rounded"
                     size="large"
-                    count={5}
+                    count={3}
                     page={page}
                     onChange={handleChange} />
             </Grid>
@@ -119,6 +126,6 @@ const HowBeginLearning = inject('store')(observer((props) => {
         </Grid>
     )
 
-}));
+}))
 
-export default HowBeginLearning
+export default Card8
