@@ -15,6 +15,7 @@ import { inject, observer } from 'mobx-react'
 import NavigationAll from '../../components/OtherComponents/Navigation/NavigationAll'
 //import Background from '../../components/OtherComponents/Background/Background.js'
 import Modules from '../../components/PagesComponents/Knowledge/Modules';
+import Pages from '../../components/PagesComponents/Knowledge/Pages';
 import CourseEditor from '../../components/PagesComponents/Knowledge/CourseEditor';
 //import Moderate from '../../components/PagesComponents/Knowledge/Moderate';
 import Other from '../../components/PagesComponents/Knowledge/Other';
@@ -162,7 +163,7 @@ const Knowledge = inject('store')(observer(({ store }) => {
               <Modules/>
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
-              {/* <CourseEditor /> */}
+              <Pages/>
             </TabPanel>
             {/* <TabPanel value={value} index={2} dir={theme.direction}> */}
             {/* <Moderate/> */}

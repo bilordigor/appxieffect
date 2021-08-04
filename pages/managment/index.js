@@ -13,6 +13,8 @@ import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import { inject, observer } from 'mobx-react'
 
 import NavigationAll from '../../components/OtherComponents/Navigation/NavigationAll'
+import AuthorCard from '../../components/PagesComponents/Managment/Managment/AuthorCard';
+import ModerationCard from '../../components/PagesComponents/Managment/Managment/ModerationCard';
 
 
 
@@ -99,7 +101,7 @@ const Managment = inject('store')(observer(({ store }) => {
   const theme = useTheme();
   const { enqueueSnackbar } = useSnackbar();
 
-  const [role, setRole] = React.useState({author: null, moderator: null})
+  const [role, setRole] = React.useState({ author: null, moderator: null })
   React.useEffect(() => {
     store.fetchDataScr(`${store.url}/settings/roles/`, "GET")
       .then((data) => {
@@ -112,10 +114,10 @@ const Managment = inject('store')(observer(({ store }) => {
   const becomeAuther = () => {
     store.fetchDataScr(`${store.url}/authors/permit/`, "GET")
       .then((data) => {
-          if (data.a) return setRole([...role, author = "current"])
-          if (!data.a) {
-            enqueueSnackbar('Вы не можете стать автором', { variant: 'error' });
-          }
+        if (data.a) return setRole([...role, author = "current"])
+        if (!data.a) {
+          enqueueSnackbar('Вы не можете стать автором', { variant: 'error' });
+        }
       });
   }
 
@@ -128,36 +130,12 @@ const Managment = inject('store')(observer(({ store }) => {
       </Head>
       {/* <Background/> */}
       <NavigationAll>
-        {role.author != "current" && <Grid
-          container
-          direction="column"
-          justify="center"
-          alignItems="center"
-          className={classes.main}
-        >
-          <Image
-            alt="HowBeginLearning"
-            src="/illustrations/HowBeginLearning.png"
-            //layout="fill"
-            width={350}
-            height={350}
-          //objectFit="cover"
-          //quality={100}
-          />
-          <Typography className={classes.labelAuthor}> Текст описание </Typography>
-          <Button onClick={becomeAuther} className={classes.buttonAuthor} variant="outlined">
-            Стать Автором
-          </Button>
-        </Grid>}
-        {role.author === "current" && <Grid
-          container
-          direction="column"
-          justify="center"
-          alignItems="center"
-          className={classes.main}
-        >
-          Контент
-        </Grid>}
+        <Grid container className={classes.main}>
+          <AuthorCard />
+          <ModerationCard />
+          <ModerationCard />
+
+        </Grid>
       </NavigationAll>
 
     </>

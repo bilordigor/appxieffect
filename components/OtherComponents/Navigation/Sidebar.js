@@ -159,18 +159,38 @@ const Sidebar = inject('store')(observer(({ store, openSideMenu, setOpenSideMenu
 
     const [openManagment, setOpenManagment] = React.useState(false)
 
-    const handleChange = () => {
-        if (router.pathname.includes('/managment/') && openManagment) router.push('/managment/')
-        setOpenManagment((prev) => !prev);
-        //console.log("openManagment", openManagment)
-    };
+    // const handleChange = () => {
+    //     if (router.pathname.includes('/managment/') && openManagment) router.push('/managment/')
+    //     setOpenManagment((prev) => !prev);
+    //     //console.log("openManagment", openManagment)
+    // };
 
     // React.useEffect(() => {
     // })
 
+    const HomeIconClicked = () => {
+        router.push('/')
+        setOpenManagment(false)
+    }
+
+    const MenuBookIconClicked = () => {
+        router.push('/knowledge')
+        setOpenManagment(false)
+    }
+
+    const AddToQueueIconClicked = () => {
+        router.push('/managment')
+        setOpenManagment(true)
+    }
+
+    const SettingsIconClicked = () => {
+        router.push('/settings')
+        setOpenManagment(false)
+    }
+
     React.useEffect(() => {
-        if (router.pathname === '/managment/content') setOpenManagment(true)
-    }, [])
+        if (router.pathname.includes('/managment')) setOpenManagment(true)
+    })
 
     const [menuList, setMenuList] = React.useState([
         {
@@ -231,21 +251,21 @@ const Sidebar = inject('store')(observer(({ store, openSideMenu, setOpenSideMenu
                         alignItems="center"
                     >
                         <Tooltip title="Главная" placement="right" arrow>
-                            <ListItem onClick={() => router.push('/')} className={clsx(classes.listItem, { [classes.listItemActive]: router.pathname === '/' })}>
+                            <ListItem onClick={HomeIconClicked} className={clsx(classes.listItem, { [classes.listItemActive]: router.pathname === '/' })}>
                                 <ListItemIcon className={classes.listItemIcon}>
                                     <HomeIcon fontSize="large" className={classes.icon} />
                                 </ListItemIcon>
                             </ListItem>
                         </Tooltip>
                         <Tooltip title="Знания" placement="right" arrow>
-                            <ListItem onClick={() => router.push('/knowledge')} className={clsx(classes.listItem, { [classes.listItemActive]: router.pathname === '/knowledge' })}>
+                            <ListItem onClick={MenuBookIconClicked} className={clsx(classes.listItem, { [classes.listItemActive]: router.pathname === '/knowledge' })}>
                                 <ListItemIcon className={classes.listItemIcon}>
                                     <MenuBookIcon fontSize="large" className={classes.icon} />
                                 </ListItemIcon>
                             </ListItem>
                         </Tooltip>
                         <Tooltip title="Управление" placement="right" arrow>
-                            <ListItem onClick={() => router.push('/managment')} className={clsx(classes.listItem, { [classes.listItemActive]: router.pathname === '/managment' })}>
+                            <ListItem onClick={AddToQueueIconClicked} className={clsx(classes.listItem, { [classes.listItemActive]: router.pathname === '/managment' })}>
                                 <ListItemIcon className={classes.listItemIcon}>
                                     <AddToQueueIcon fontSize="large" className={classes.icon} />
                                 </ListItemIcon>
@@ -255,14 +275,9 @@ const Sidebar = inject('store')(observer(({ store, openSideMenu, setOpenSideMenu
                             <FadeMenuManagment />
                         </Collapse>}
                         {/* <Divider orientation="vertical" className={classes.dividerVert}/> */}
-                        <Tooltip title="" placement="right" arrow>
-                            <ListItem onClick={handleChange} className={classes.dividerButton}>
-
-                            </ListItem>
-                        </Tooltip>
                         <Divider className={classes.divider} />
                         <Tooltip title="Настройки" placement="right" arrow>
-                            <ListItem onClick={() => router.push('/settings')} className={clsx(classes.listItem, { [classes.listItemActive]: router.pathname === '/settings' })}>
+                            <ListItem onClick={SettingsIconClicked} className={clsx(classes.listItem, { [classes.listItemActive]: router.pathname === '/settings' })}>
                                 <ListItemIcon className={classes.listItemIcon}>
                                     <SettingsIcon fontSize="large" className={classes.icon} />
                                 </ListItemIcon>

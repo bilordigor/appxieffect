@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         overflow: 'initial',
         background: theme.palette.blueGrey["5"],
-    }, 
+    },
 }));
 
 const AuthorCard = inject('store')(observer(({ store }) => {
@@ -42,9 +42,17 @@ const AuthorCard = inject('store')(observer(({ store }) => {
     const { enqueueSnackbar } = useSnackbar();
 
     return (
-        <Grid xs={12} sm={12} md={6} lg={4} xl={3} item className={classes.gridCard} container key={course.id}>
-            <Card className={cx(classes.card)} key={course.id}>
-                
+        <Grid
+            xs={12} sm={12} md={6} lg={4} xl={3}
+            item
+            container
+            className={classes.gridCard}
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+        >
+            <Card className={cx(classes.card)}>
+
             </Card>
         </Grid>
     )
