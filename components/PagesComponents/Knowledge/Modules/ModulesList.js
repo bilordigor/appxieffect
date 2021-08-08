@@ -339,7 +339,7 @@ const ModulesList = inject('store')(observer(({ store }) => {
                                                     id="composition-menu"
                                                     aria-labelledby="composition-button"
                                                 >
-                                                    <MenuItem onClick={() => clickedHiddenCourse(course.id, course.starred)}>Скрыть курс</MenuItem>
+                                                    {/* <MenuItem onClick={() => clickedHiddenCourse(course.id, course.starred)}>Скрыть курс</MenuItem> */}
                                                     <MenuItem onClick={() => clearHidden()}>Пожаловаться</MenuItem>
                                                     {/* <MenuItem onClick={handleClose}>Logout</MenuItem> */}
                                                 </MenuList>

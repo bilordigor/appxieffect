@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
 
-import { Chip, Divider, Button, Grid, Typography, makeStyles, useTheme } from '@material-ui/core';
+import { Chip, Divider, FormControl, FormLabel, RadioGroup, Radio, FormControlLabel, Popper, ClickAwayListener, Paper, MenuItem, MenuList, IconButton, Button, Grid, InputBase, Typography, makeStyles, useTheme } from '@material-ui/core';
 
-import TuneIcon from '@material-ui/icons/Tune';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
 
 import { inject, observer } from 'mobx-react'
 
@@ -16,184 +17,59 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 4,
         background: theme.palette.blueGrey["1"],
     },
-    gridChip: {
-        marginLeft: '6px',
-        marginTop: '8px',
-        cursor: 'pointer',
-    },
-    chip: {
-        border: '2px solid',
-        borderColor: theme.palette.primary.contrastText,
-        cursor: 'pointer',
-        backgroundColor: "rgb(0,0,0, .0)",
-        '&:hover': {
-            backgroundColor: "rgb(0,0,0, .0)"
-        }
-    },
-    chipClicked: {
-        borderColor: theme.palette.primary.light,
-        '&:hover': {
-            borderColor: theme.palette.primary.light,
-        }
-    },
-    chipTypography: {
-        fontSize: 18,
-        cursor: 'pointer',
-    },
-    chipTypographyTheme: {
-        fontSize: 16,
-        cursor: 'pointer',
-    },
-    chipTypographyClicked: {
-        color: theme.palette.primary.main,
 
-    },
-    chipTypographyNotClicked: {
-        color: theme.palette.primary.contrastText,
-    },
-    labelTypography: {
-        paddingRight: 4,
-        fontSize: 18,
-        color: theme.palette.primary.contrastText,
-    },
-    labelTypographyAccept: {
-        paddingRight: 4,
-        fontSize: 16,
-    },
-    icons: {
-        color: theme.palette.primary.contrastText,
-
-    },
-    filterColumn: {
-        width: 'auto',
-        paddingLeft: 8,
-        paddingRight: 8,
-    },
-    labelFilterColumn: {
-        paddingTop: 16,
-        paddingLeft: 12,
-        fontSize: 20,
-        color: theme.palette.primary.contrastText,
-    },
-    gridFilters: {
-        marginTop: 0,
-        marginBottom: 8,
-    },
-    gridLabelTypographyAccept: {
-        paddingTop: 8,
-        paddingLeft: 8,
-        paddingBottom: 8,
-    },
-    formControl: {
-        marginBottom: 4,
-    },
-    typographyInputLabel: {
-        color: theme.palette.primary.contrastText,
-    },
-    applyButton: {
-        marginLeft: 8,
-        marginTop: 8,
-        marginBottom: 8,
-    },
     divider: {
         backgroundColor: theme.palette.primary.contrastText
+    },
+    input: {
+        color: theme.palette.primary.contrastText,
+        marginLeft: theme.spacing(1),
+        flex: 1,
+        // minWidth: 100,
+        maxWidth: 200,
+    },
+    iconButton: {
+        padding: 10,
+    },
+    popper: {
+        zIndex: 1000,
+        //position: 'fixed',
+    },
+    popperPaper: {
+        zIndex: 1000,
+        minWidth: 200,
+        backgroundColor: theme.palette.blueGrey["6"]
+    },
+    popperPaperGrid: {
+        padding: 8,
     }
-
 }));
 
-const Chipper = inject('store')(observer(({ store, loadingMoreCourses }) => {
+const Chipper = inject('store')(observer(({ dataType, setDataType, setSize, store, loadingMoreCourses }) => {
     const classes = useStyles();
     const theme = useTheme()
     const [open, setOpen] = React.useState(false);
 
-    const globalList = [
-        { key: 0, title: "Избранное", name: "starred" },
-        { key: 1, title: "Закреплённое", name: "pinned" },
-        { key: 2, title: "Начатое", name: "started" },
-    ]
-    const [globalListActive, setGlobalListActive] = React.useState(null)
+    const [serchValue, setSearchValue] = React.useState("")
 
-    const categoryList = [
-        { key: 0, title: "Средняя школа", name: "middle-school" },
-        { key: 1, title: "Основная школа", name: "main-school" },
-        { key: 2, title: "Высшая школа", name: "high-school" },
-        { key: 3, title: "Высшее образование", name: "university" },
-        { key: 4, title: "Кружки", name: "clubs" },
-        { key: 5, title: "Хобби", name: "hobby" },
-        { key: 6, title: "ОГЭ", name: "bne" },
-        { key: 7, title: "ЕГЭ", name: "une" },
-        { key: 8, title: "Профессиональные навыки", name: "prof-skills" },
-    ]
-    const [categoryListActive, setCategoryListActive] = React.useState(null)
+    const [openMenu, setOpenMenu] = React.useState(null)
 
-    const themeList = [
-        { key: 0, title: "Математика", name: "math" },
-        { key: 1, title: "Алгебра", name: "algebra" },
-        { key: 2, title: "Геометрия", name: "geometry" },
-        { key: 3, title: "Языки", name: "languages" },
-        { key: 4, title: "Физика", name: "physics" },
-        { key: 5, title: "Химия", name: "chemistry" },
-        { key: 6, title: "Биология", name: "biology" },
-        { key: 7, title: "География", name: "geography" },
-        { key: 8, title: "История", name: "history" },
-        { key: 9, title: "Обществознание", name: "social-science" },
-        { key: 10, title: "Искусства", name: "arts" },
-        { key: 11, title: "Информатика", name: "informatics" },
-        { key: 12, title: "Литература", name: "literature" },
-        { key: 13, title: "Философия", name: "philosophy" },
-    ]
-    const [themeListActive, setThemeListActive] = React.useState(null)
+    //const [value, setValue] = React.useState('female');
 
-    const difficultyList = [
-        { key: 0, title: "Обзорный", name: "review" },
-        { key: 1, title: "Новичок", name: "newbie" },
-        { key: 2, title: "Любитель", name: "amateur" },
-        { key: 3, title: "Энтузиаст", name: "enthusiast" },
-        { key: 4, title: "Профи", name: "professional" },
-        { key: 5, title: "Эксперт", name: "expert" },
-    ]
-    const [difficultyListActive, setDifficultyListActive] = React.useState(null)
-
-    const sortList = [
-        { key: 0, title: "По популярности", clicked: true, name: "popularity" },
-        { key: 1, title: "По дате посещения: сначала недавние", clicked: false, name: "visit-date" },
-        { key: 2, title: "По дате создания: сначала новые", clicked: false, name: "creation-date" },
-    ]
-    const [sortListActive, setSortListActive] = React.useState(0)
-
-    useEffect(() => {
-        store.fetchDataScr(`${store.url}/filters/`, "GET")
-            .then((data) => {
-                console.log("filtersI:", data)
-                // if (data != undefined) {
-                //     store.setFiltersGlobal(data)
-                //     if (!store.allLoading) store.loadingMoreCourses()
-                // }
-            });
-
-    }, [store]);
-
-    const clickedLoadingCourses = () => {
-        let filters = {
-            "filters": {
-                
-            },
-            "sort": "popularity",
-            "counter": 0
-        }
-
-        if (globalListActive != null) filters.filters.global = globalList[globalListActive].name
-        if (difficultyListActive != null) filters.filters.difficulty = difficultyList[difficultyListActive].name
-        if (categoryListActive != null) filters.filters.category = categoryList[categoryListActive].name
-        if (themeListActive != null) filters.filters.theme = themeList[themeListActive].name
-        if (sortListActive != null)  filters.sort = sortList[sortListActive].name
-        store.setFilters(filters)
-        store.clearCoursesList()
-        store.loadingMoreCourses()
-        store.setAllLoading(false)
-    }
-
-
+    const handleChange = (event) => {
+        setDataType(event.target.value);
+        if (event.target.value === "list") setSize({
+            md: 6,
+            lg: 4,
+            xl: 3,
+        })
+        if (event.target.value === "grid") setSize({
+            md: 12,
+            lg: 12,
+            xl: 12,
+        })
+        //console.log("dataType", dataType)
+    };
 
     return (
         <Grid container direction="column" className={classes.root}>
@@ -203,172 +79,43 @@ const Chipper = inject('store')(observer(({ store, loadingMoreCourses }) => {
                 justify="flex-start"
                 alignItems="center"
             >
-                <Button onClick={() => setOpen(!open)}>
-                    <Typography className={classes.labelTypography}> Фильтры </Typography>
-                    <TuneIcon className={classes.icons} />
-                </Button>
+                <ClickAwayListener onClickAway={() => setOpenMenu(null)}>
+                    <IconButton onClick={(event) => setOpenMenu(openMenu ? null : event.currentTarget)} className={classes.iconButton} aria-label="menu">
+                        <MenuIcon />
+                    </IconButton>
+                </ClickAwayListener>
+                <Popper className={classes.popper} id={undefined} open={Boolean(openMenu)} anchorEl={openMenu}>
+                    <Paper className={classes.popperPaper}>
+                        <Grid
+                            className={classes.popperPaperGrid}
+                            container
+                            direction="column"
+                            justifyContent="flex-start"
+                            alignItems="flex-start"
+                        >
+                            <FormControl component="fieldset">
+                                <FormLabel component="legend">Вид</FormLabel>
+                                <RadioGroup aria-label="gender" name="gender1" value={dataType} onChange={handleChange}>
+                                    <FormControlLabel value="list" control={<Radio color="primary" />} label="Сетка" />
+                                    <FormControlLabel value="grid" control={<Radio color="primary" />} label="Список" />
+                                </RadioGroup>
+                            </FormControl>
 
-                {open && <Button color="primary" className={classes.applyButton} variant="contained" onClick={clickedLoadingCourses}>
-                    <Typography className={classes.labelTypographyAccept}> Применить </Typography>
-                </Button>}
+                        </Grid>
+
+                    </Paper>
+                </Popper>
+                <InputBase
+                    value={serchValue}
+                    onChange={(event) => setSearchValue(event.target.value)}
+                    className={classes.input}
+                    placeholder="Поиск страниц"
+                    inputProps={{ 'aria-label': 'Поиск страниц' }}
+                />
+                <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                    <SearchIcon />
+                </IconButton>
             </Grid>
-            {open && <Divider />}
-            {open && <Grid
-                item
-                className={classes.gridFilters}
-                container
-                direction="row"
-            >
-                <Grid
-                    item
-                    className={classes.filterColumn}
-                    container
-                    direction="column"
-                    justify="flex-start"
-                    alignItems="flex-start"
-                >
-                    <Typography className={classes.labelFilterColumn}> Глобальные: </Typography>
-                    {globalList.map((chip) => (
-                        <Grid className={classes.gridChip} key={chip.key}>
-                            <Chip
-                                clickable={false}
-                                className={clsx(classes.chip, {
-                                    [classes.chipClicked]: chip.key === globalListActive,
-                                })}
-                                onClick={() => setGlobalListActive(chip.key === globalListActive ? null : chip.key)}
-                                label={
-                                    <Typography
-                                        className={clsx(classes.chipTypography, {
-                                            [classes.chipTypographyClicked]: chip.key === globalListActive,
-                                            [classes.chipTypographyNotClicked]: !(chip.key === globalListActive),
-                                        })}
-
-                                    >
-                                        {chip.title}
-                                    </Typography>} />
-                        </Grid>
-                    ))}
-                </Grid>
-                <Grid
-                    item
-                    className={classes.filterColumn}
-                    container
-                    direction="column"
-                    justify="flex-start"
-                    alignItems="flex-start"
-                >
-                    <Typography className={classes.labelFilterColumn}> По Категории: </Typography>
-                    {categoryList.map((chip) => (
-                        <Grid className={classes.gridChip} key={chip.key}>
-                            <Chip
-                                clickable={false}
-                                className={clsx(classes.chip, {
-                                    [classes.chipClicked]: chip.key === categoryListActive,
-                                })}
-                                onClick={() => setCategoryListActive(chip.key === categoryListActive ? null : chip.key)}
-                                label={
-                                    <Typography
-                                        className={clsx(classes.chipTypography, {
-                                            [classes.chipTypographyClicked]: chip.key === categoryListActive,
-                                            [classes.chipTypographyNotClicked]: !(chip.key === categoryListActive),
-                                        })}
-
-                                    >
-                                        {chip.title}
-                                    </Typography>} />
-                        </Grid>
-                    ))}
-                </Grid>
-                <Grid
-                    item
-                    className={classes.filterColumn}
-                    container
-                    direction="column"
-                    justify="flex-start"
-                    alignItems="flex-start"
-                >
-                    <Typography className={classes.labelFilterColumn}> По Теме: </Typography>
-                    {themeList.map((chip) => (
-                        <Grid className={classes.gridChip} key={chip.key}>
-                            <Chip
-                                clickable={false}
-                                className={clsx(classes.chip, {
-                                    [classes.chipClicked]: chip.key === themeListActive,
-                                })}
-                                onClick={() => setThemeListActive(chip.key === themeListActive ? null : chip.key)}
-                                label={
-                                    <Typography
-                                        className={clsx(classes.chipTypographyTheme, {
-                                            [classes.chipTypographyClicked]: chip.key === themeListActive,
-                                            [classes.chipTypographyNotClicked]: !(chip.key === themeListActive),
-                                        })}
-
-                                    >
-                                        {chip.title}
-                                    </Typography>} />
-                        </Grid>
-                    ))}
-                </Grid>
-                <Grid
-                    item
-                    className={classes.filterColumn}
-                    container
-                    direction="column"
-                    justify="flex-start"
-                    alignItems="flex-start"
-                >
-                    <Typography className={classes.labelFilterColumn}> По Сложности: </Typography>
-                    {difficultyList.map((chip) => (
-                        <Grid className={classes.gridChip} key={chip.key}>
-                            <Chip
-                                clickable={false}
-                                className={clsx(classes.chip, {
-                                    [classes.chipClicked]: chip.key === difficultyListActive,
-                                })}
-                                onClick={() => setDifficultyListActive(chip.key === difficultyListActive ? null : chip.key)}
-                                label={
-                                    <Typography
-                                        className={clsx(classes.chipTypography, {
-                                            [classes.chipTypographyClicked]: chip.key === difficultyListActive,
-                                            [classes.chipTypographyNotClicked]: !(chip.key === difficultyListActive),
-                                        })}
-
-                                    >
-                                        {chip.title}
-                                    </Typography>} />
-                        </Grid>
-                    ))}
-                </Grid>
-                <Grid
-                    item
-                    className={classes.filterColumn}
-                    container
-                    direction="column"
-                    justify="flex-start"
-                    alignItems="flex-start"
-                >
-                    <Typography className={classes.labelFilterColumn}> Сортировка: </Typography>
-                    {sortList.map((chip) => (
-                        <Grid className={classes.gridChip} key={chip.key}>
-                            <Chip
-                                clickable={false}
-                                className={clsx(classes.chip, {
-                                    [classes.chipClicked]: chip.key === sortListActive,
-                                })}
-                                onClick={() => setSortListActive(chip.key)}
-                                label={
-                                    <Typography
-                                        className={clsx(classes.chipTypography, {
-                                            [classes.chipTypographyClicked]: chip.key === sortListActive,
-                                            [classes.chipTypographyNotClicked]: !(chip.key === sortListActive),
-                                        })}
-                                    >
-                                        {chip.title}
-                                    </Typography>} />
-                        </Grid>
-                    ))}
-                </Grid>
-            </Grid>}
             <Divider className={classes.divider} />
         </Grid>
     )

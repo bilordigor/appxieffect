@@ -7,13 +7,15 @@ import React from 'react';
 import { Grid, Box, AppBar, Tabs, Button, Typography, Tab } from '@material-ui/core';
 import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles'
 
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 import SwipeableViews from 'react-swipeable-views';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import { inject, observer } from 'mobx-react'
 
 import NavigationAll from '../../../components/OtherComponents/Navigation/NavigationAll'
-
+import Reports from '../../../components/PagesComponents/Managment/Moderation/Reports';
+import Content from '../../../components/PagesComponents/Managment/Moderation/Content';
 
 
 
@@ -80,39 +82,24 @@ const useStyles = makeStyles((theme) => ({
   },
   SwipeableViews: {
     marginTop: 48,
-  },
-  buttonAuthor: {
-    marginTop: 12,
-    color: theme.palette.primary.contrastText,
-    border: `1px solid ${theme.palette.primary.contrastText}`,
-  },
-  labelAuthor: {
-    marginTop: 12,
-    color: theme.palette.primary.contrastText,
   }
 }));
 
 
 
-const Knowledge = inject('store')(observer(({ store }) => {
+const Moderation = inject('store')(observer(({ store }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const [role, setRole] = React.useState(null)
-  React.useEffect(() => {
-    store.fetchDataScr(`${store.url}/settings/roles/`, "GET")
-      .then((data) => {
-        setRole(data)
-      });
-    //store.getNewCourses()
-  }, []);
 
-  const becomeAuther = () => {
-    store.fetchDataScr(`${store.url}/authors/permit/`, "GET")
-      .then((data) => {
-          if (data.a) return setRole([...role, author = "current"])
-        
-      });
-  }
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleChangeIndex = (index) => {
+    setValue(index);
+  };
 
   return (
     <>
@@ -123,14 +110,40 @@ const Knowledge = inject('store')(observer(({ store }) => {
       </Head>
       {/* <Background/> */}
       <NavigationAll>
-        <Grid
-          container
-          direction="column"
-          justify="center"
-          alignItems="center"
-          className={classes.main}
-        >
-          Контент
+        <Grid container direction="column" className={classes.main}>
+          <AppBar className={classes.appBar} position="fixed" color="default">
+            <AntTabs
+              value={value}
+              onChange={handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+              aria-label="full width tabs example"
+            >
+              <Tab label={<Typography className={classes.tabLabel}>Жалобы</Typography>} {...a11yProps(0)} />
+              <Tab label={<Typography className={classes.tabLabel}>Контент</Typography>} {...a11yProps(1)} />
+              {/* <Tab label={<Typography className={classes.tabLabel}>Модерация</Typography>} {...a11yProps(2)} /> */}
+              <Tab label={<Typography className={classes.tabLabel}><MoreHorizIcon /></Typography>} {...a11yProps(2)} />
+            </AntTabs>
+          </AppBar>
+          <SwipeableViews
+            className={classes.SwipeableViews}
+            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+            index={value}
+            onChangeIndex={handleChangeIndex}
+          >
+            <TabPanel value={value} index={0} dir={theme.direction}>
+              <Reports />
+            </TabPanel>
+            <TabPanel value={value} index={1} dir={theme.direction}>
+              <Content />
+            </TabPanel>
+            {/* <TabPanel value={value} index={2} dir={theme.direction}> */}
+            {/* <Moderate/> */}
+            {/* </TabPanel> */}
+            <TabPanel value={value} index={2} dir={theme.direction}>
+              {/* <Other /> */}
+            </TabPanel>
+          </SwipeableViews>
         </Grid>
       </NavigationAll>
 
@@ -138,4 +151,4 @@ const Knowledge = inject('store')(observer(({ store }) => {
   );
 }))
 
-export default Knowledge
+export default Moderation

@@ -25,32 +25,18 @@ const Pages = inject('store')(observer(({ store }) => {
     const classes = useStyles();
     const theme = useTheme();
 
+    const [dataType, setDataType] = React.useState("list")
+    const [size, setSize] = React.useState({
+        md: 6,
+        lg: 4,
+        xl: 3,
+    })
+
 
     return (
         <>
-            <Chipper />
-            <PagesList/>
-            <Grid
-                className={classes.gridLoading}
-                container
-                direction="column"
-                justify="center"
-                alignItems="center"
-            >
-                {store.isLoadingNewCourses && <CircularProgress />}
-                {store.allLoading && <Typography className={classes.labelThatsAll}> На этом пока всё </Typography>}
-                {store.allLoading && <div>
-                    <Image
-                        alt="img"
-                        src="/knowledge/search.png"
-                        //layout="fill"
-                        width={100}
-                        height={100}
-                    //objectFit="cover"
-                    //quality={100}
-                    />
-                </div>}
-            </Grid>
+            <Chipper dataType={dataType} setDataType={setDataType} setSize={setSize}/>
+            <PagesList dataType={dataType} size={size}/>
         </>
     )
 }));
