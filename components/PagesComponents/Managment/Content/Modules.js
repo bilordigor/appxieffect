@@ -6,11 +6,14 @@ import { inject, observer } from 'mobx-react'
 
 import Image from 'next/image'
 import Toolbar from './Modules/Toolbar';
+import DataList from './Modules/DataList';
 // import Chipper from './Modules/Chipper';
 // import ModulesList from './Modules/ModulesList';
 
 const useStyles = makeStyles((theme) => ({
-
+    gridToolbar: {
+        marginTop: 16,
+    }
 }));
 
 
@@ -29,12 +32,10 @@ const Modules = inject('store')(observer(({ store }) => {
             <Grid>
                 <Typography variant="h5"> Управление контентом </Typography>
             </Grid>
-            <Grid>
+            <Grid className={classes.gridToolbar}>
                 <Toolbar />
             </Grid>
-            <Grid>
-
-            </Grid>
+            <DataList />
         </Grid>
     )
 }));

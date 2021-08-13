@@ -120,8 +120,8 @@ const Content = inject('store')(observer(({ store }) => {
               textColor="primary"
               aria-label="full width tabs example"
             >
-              <Tab label={<Typography className={classes.tabLabel}>Модули</Typography>} {...a11yProps(0)} />
-              <Tab label={<Typography className={classes.tabLabel}>Страницы</Typography>} {...a11yProps(1)} />
+              <Tab label={<Typography className={classes.tabLabel}>Страницы</Typography>} {...a11yProps(0)} />
+              <Tab label={<Typography className={classes.tabLabel}>Модули</Typography>} {...a11yProps(1)} />
               {/* <Tab label={<Typography className={classes.tabLabel}>Модерация</Typography>} {...a11yProps(2)} /> */}
               <Tab label={<Typography className={classes.tabLabel}><MoreHorizIcon /></Typography>} {...a11yProps(2)} />
             </AntTabs>
@@ -133,10 +133,10 @@ const Content = inject('store')(observer(({ store }) => {
             onChangeIndex={handleChangeIndex}
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <Modules />
+              <Pages />
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
-              <Pages />
+              <Modules />
             </TabPanel>
             {/* <TabPanel value={value} index={2} dir={theme.direction}> */}
             {/* <Moderate/> */}
