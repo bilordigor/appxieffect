@@ -16,7 +16,6 @@ import NavigationAll from '../../components/OtherComponents/Navigation/Navigatio
 //import Background from '../../components/OtherComponents/Background/Background.js'
 import Modules from '../../components/PagesComponents/Knowledge/Modules';
 import Pages from '../../components/PagesComponents/Knowledge/Pages';
-import CourseEditor from '../../components/PagesComponents/Knowledge/CourseEditor';
 //import Moderate from '../../components/PagesComponents/Knowledge/Moderate';
 import Other from '../../components/PagesComponents/Knowledge/Other';
 
