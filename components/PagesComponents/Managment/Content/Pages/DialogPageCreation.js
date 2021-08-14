@@ -13,11 +13,11 @@ import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-import StepOne from './DialogCourseCreation/StepOne';
-import StepTwo from './DialogCourseCreation/StepTwo';
-import StepThree from './DialogCourseCreation/StepThree';
-
 import { useSwipeable } from 'react-swipeable';
+import StepOne from './DialogPageCreation/StepOne';
+import StepTwo from './DialogPageCreation/StepTwo';
+import StepThree from './DialogPageCreation/StepThree';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -134,7 +134,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const DialogCourseCreation = inject('store')(observer(({ store }) => {
+const DialogPageCreation = inject('store')(observer(({ dialogPageCreation, setDialogPageCreation, store }) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -152,8 +152,8 @@ const DialogCourseCreation = inject('store')(observer(({ store }) => {
         <Dialog
             className={classes.dialog}
             fullScreen
-            open={store.openDialogCourseCreation}
-            onClose={() => store.setOpenDialogCourseCreation(false)}
+            open={dialogPageCreation}
+            onClose={() => setDialogPageCreation(false)}
             scroll='paper'
             aria-labelledby="scroll-dialog-title"
             aria-describedby="scroll-dialog-description"
@@ -167,7 +167,7 @@ const DialogCourseCreation = inject('store')(observer(({ store }) => {
                         alignItems="center"
                     >
                         <Grid>
-                            <Typography className={classes.mainLabel}> Создание модуля </Typography>
+                            <Typography className={classes.mainLabel}> Создание страницы </Typography>
                         </Grid>
                         <Grid>
                             <Tooltip title="Сохранить">
@@ -176,7 +176,7 @@ const DialogCourseCreation = inject('store')(observer(({ store }) => {
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Закрыть. Перед закрытием сохраните, иначе прогресс будет потерян">
-                                <IconButton onClick={() => store.setOpenDialogCourseCreation(false)}>
+                                <IconButton onClick={() => setDialogPageCreation(false)}>
                                     <CloseIcon className={classes.icon} />
                                 </IconButton>
                             </Tooltip>
@@ -244,4 +244,4 @@ const DialogCourseCreation = inject('store')(observer(({ store }) => {
     )
 }));
 
-export default DialogCourseCreation
+export default DialogPageCreation

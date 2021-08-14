@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const Toolbar = inject('store')(observer(({ store }) => {
+const Toolbar = inject('store')(observer(({ setDialogPageCreation, store }) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -24,7 +24,7 @@ const Toolbar = inject('store')(observer(({ store }) => {
     return (
         <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
             <Tooltip title="Создать страницу">
-                <Button> Создать </Button>
+                <Button onClick={() => setDialogPageCreation(true)}> Создать </Button>
             </Tooltip>
             {/* <Button>Two</Button>
             <Button>Three</Button> */}

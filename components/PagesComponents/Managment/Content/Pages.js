@@ -7,6 +7,7 @@ import { inject, observer } from 'mobx-react'
 import Image from 'next/image'
 import Toolbar from './Pages/Toolbar';
 import DataList from './Pages/DataList';
+import DialogPageCreation from './Pages/DialogPageCreation';
 // import Chipper from './Modules/Chipper';
 // import ModulesList from './Modules/ModulesList';
 
@@ -21,6 +22,7 @@ const Pages = inject('store')(observer(({ store }) => {
     const classes = useStyles();
     const theme = useTheme();
 
+    const [dialogPageCreation, setDialogPageCreation] = React.useState(false)
 
     return (
         <Grid
@@ -33,8 +35,9 @@ const Pages = inject('store')(observer(({ store }) => {
                 <Typography variant="h5"> Управление контентом  </Typography>
             </Grid>
             <Grid className={classes.gridToolbar}>
-                <Toolbar />
+                <Toolbar setDialogPageCreation={setDialogPageCreation}/>
             </Grid>
+            <DialogPageCreation dialogPageCreation={dialogPageCreation} setDialogPageCreation={setDialogPageCreation} />
             <DataList />
         </Grid>
     )
