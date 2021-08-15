@@ -1,14 +1,18 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 
-import { CircularProgress, Grid, Button, Typography, makeStyles, useTheme } from '@material-ui/core';
-
-import { inject, observer } from 'mobx-react'
+import { Tooltip, IconButton, CircularProgress, Grid, Button, Typography, makeStyles, useTheme } from '@material-ui/core';
 import { DataGrid, useGridSlotComponentProps } from '@material-ui/data-grid';
 import Pagination from '@material-ui/lab/Pagination';
 import PaginationItem from '@material-ui/lab/PaginationItem';
 import { createMuiTheme } from '@material-ui/core/styles';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+
 import Image from 'next/image'
+
+import { inject, observer } from 'mobx-react'
+
 // import Chipper from './Modules/Chipper';
 // import ModulesList from './Modules/ModulesList';
 
@@ -146,56 +150,73 @@ const DataList = inject('store')(observer(({ store }) => {
 
     const columns = [
         {
-            field: 'valueReports',
-            headerName: 'Количество жалоб',
-            type: 'number',
+            field: 'name',
+            headerName: 'Название',
             width: 220,
-            renderCell: (params) => (
-                <strong>
-                    {params.value}
-                    <Button
-                        onClick={() => dialogOpen(params)}
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                        style={{ marginLeft: 16, marginTop: -2 }}
-                    >
-                        Открыть
-                    </Button>
-                </strong>
-            ),
         },
         {
-            field: 'reportType',
-            headerName: 'Тема жалобы',
+            field: 'status',
+            headerName: 'Статус',
             width: 180,
         },
         {
-            field: 'contentType',
-            headerName: 'Тип контента',
+            field: 'views',
+            headerName: 'Просмотры',
+            width: 180,
+        },
+        {
+            field: 'type',
+            headerName: 'Тип',
+            width: 180,
+        },
+        {
+            field: 'category',
+            headerName: 'Категория',
             width: 200,
         },
         {
-            field: 'contentAuthor',
-            headerName: 'Автор контента',
+            field: 'theme',
+            headerName: 'Тематика',
             width: 210,
         },
         {
-            field: 'reportValue',
-            headerName: 'Содержание жалобы',
+            field: 'difficulty',
+            headerName: 'Cложность',
             flex: 1,
             minWidth: 150,
         },
-        // {
-        //     field: 'fullName',
-        //     headerName: 'Full name',
-        //     description: 'This column has a value getter and is not sortable.',
-        //     sortable: false,
-        //     width: 160,
-        //     valueGetter: (params) =>
-        //         `${params.getValue(params.id, 'firstName') || ''} ${params.getValue(params.id, 'lastName') || ''
-        //         }`,
-        // },
+        {
+            field: '',
+            headerName: '',
+            //type: 'number',
+            width: 130,
+            renderCell: (params) => (
+                <Grid>
+                    <Tooltip title="Изменить">
+                        <IconButton
+                            onClick={() => dialogOpen(params)}
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                            style={{ marginLeft: 16, marginTop: -4 }}
+                        >
+                            <EditIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Удалить">
+                        <IconButton
+                            onClick={() => dialogOpen(params)}
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                            style={{ marginLeft: 16, marginTop: -4 }}
+                        >
+                            <DeleteForeverIcon />
+                        </IconButton>
+                    </Tooltip>
+                </Grid>
+            ),
+        },
     ];
 
     const rows = [
