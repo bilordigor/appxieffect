@@ -132,16 +132,19 @@ function CustomPagination() {
 
 
 
-const DataList = inject('store')(observer(({ store }) => {
+const DataList = inject('store')(observer(({ setPackageId, setOpenDialogReports, store }) => {
     const classes = useStyles();
     const theme = useTheme();
 
-    const [openDialog, setOpenDialog] = React.useState(null)
-    const [selectId, setSelectId] = React.useState()
+    // const [openDialog, setOpenDialog] = React.useState(null)
+    // const [selectId, setSelectId] = React.useState()
 
     const dialogOpen = (params) => {
-        setOpenDialog(params)
-        console.log(openDialog)
+        setPackageId(params.row.id)
+        setOpenDialogReports(() => true)
+        //console.log("params", params.row)
+        // setOpenDialog(params)
+        // console.log(openDialog)
     }
 
     const columns = [
@@ -197,6 +200,8 @@ const DataList = inject('store')(observer(({ store }) => {
         //         }`,
         // },
     ];
+
+
 
     const rows = [
         { id: 1, valueReports: 1, reportType: 'Не исторично', contentType: 'Страница', contentAuthor: 'Ξ Effect', reportValue: 'Разработчики, вы, <дальше следует непереводимая игра слов с использованием местных идиоматических выражений>', },

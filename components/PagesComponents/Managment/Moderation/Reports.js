@@ -7,6 +7,7 @@ import { inject, observer } from 'mobx-react'
 import Image from 'next/image'
 import Toolbar from './Reports/Toolbar';
 import DataList from './Reports/DataList';
+import DialogReports from './Reports/DialogReports';
 // import Chipper from './Modules/Chipper';
 // import ModulesList from './Modules/ModulesList';
 
@@ -19,6 +20,8 @@ const Reports = inject('store')(observer(({ store }) => {
     const classes = useStyles();
     const theme = useTheme();
 
+    const [packageId, setPackageId] = React.useState(null)
+    const [openDialogReports, setOpenDialogReports] = React.useState(false)
 
     return (
         <Grid
@@ -34,7 +37,8 @@ const Reports = inject('store')(observer(({ store }) => {
             <Grid>
                 {/* <Toolbar /> */}
             </Grid>
-            <DataList />
+            <DataList setPackageId={setPackageId} setOpenDialogReports={setOpenDialogReports}/>
+            <DialogReports packageId={packageId} openDialogReports={openDialogReports} setOpenDialogReports={setOpenDialogReports}/>
         </Grid>
     )
 }));
