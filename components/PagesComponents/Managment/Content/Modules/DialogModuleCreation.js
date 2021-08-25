@@ -13,11 +13,13 @@ import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-import StepOne from '../../../Knowledge/CourseEditor/DialogCourseCreation/StepOne';
-import StepTwo from '../../../Knowledge/CourseEditor/DialogCourseCreation/StepTwo';
-import StepThree from '../../../Knowledge/CourseEditor/DialogCourseCreation/StepThree';
+
 
 import { useSwipeable } from 'react-swipeable';
+import StepOne from './DialogModuleCreation/StepOne';
+import StepTwo from './DialogModuleCreation/StepTwo';
+import StepThree from './DialogModuleCreation/StepThree';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -134,7 +136,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const DialogCourseCreation = inject('store')(observer(({ store }) => {
+const DialogModuleCreation = inject('store')(observer(({ dialogModuleCreation, setDialogModuleCreation, store }) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -152,8 +154,8 @@ const DialogCourseCreation = inject('store')(observer(({ store }) => {
         <Dialog
             className={classes.dialog}
             fullScreen
-            open={store.openDialogCourseCreation}
-            onClose={() => store.setOpenDialogCourseCreation(false)}
+            open={dialogModuleCreation}
+            onClose={() => setDialogModuleCreation(false)}
             scroll='paper'
             aria-labelledby="scroll-dialog-title"
             aria-describedby="scroll-dialog-description"
@@ -176,7 +178,7 @@ const DialogCourseCreation = inject('store')(observer(({ store }) => {
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Закрыть. Перед закрытием сохраните, иначе прогресс будет потерян">
-                                <IconButton onClick={() => store.setOpenDialogCourseCreation(false)}>
+                                <IconButton onClick={() => setDialogModuleCreation(false)}>
                                     <CloseIcon className={classes.icon} />
                                 </IconButton>
                             </Tooltip>
@@ -244,4 +246,4 @@ const DialogCourseCreation = inject('store')(observer(({ store }) => {
     )
 }));
 
-export default DialogCourseCreation
+export default DialogModuleCreation

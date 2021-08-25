@@ -44,12 +44,16 @@ const useStyles = makeStyles((theme) => ({
     },
     changeLabel: {
         marginTop: 16,
+    },
+    stepWrapper: {
+        padding: 16,
+        //width: "calc(100% - 64px)",
+        //backgroundColor: "blue",
     }
 }));
 
-const StepThree = inject('store')(observer(({ store }) => {
+const StepThree = inject('store')(observer(({ savePage, store }) => {
     const classes = useStyles();
-    const options = ['Участник', 'Ученик', 'Преподаватель', 'Автор', 'Родитель'];
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -73,9 +77,9 @@ const StepThree = inject('store')(observer(({ store }) => {
     return (
         <>
             <Grid
+                className={classes.stepWrapper}
                 xs={12} sm={12} md={6} lg={6} xl={6}
                 container
-                item
                 direction="column"
                 justify="flex-start"
                 alignItems="flex-start"
@@ -170,7 +174,6 @@ const StepThree = inject('store')(observer(({ store }) => {
                 className={classes.stepWrapper}
                 xs={12} sm={12} md={6} lg={6} xl={6}
                 container
-                item
                 direction="column"
                 justify="flex-start"
                 alignItems="flex-start"
@@ -187,7 +190,6 @@ const StepThree = inject('store')(observer(({ store }) => {
 
 
                 </Grid>
-
             </Grid >
         </>
     )

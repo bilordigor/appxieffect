@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const StepThree = inject('store')(observer(({ store }) => {
+const StepThree = inject('store')(observer(({ savePage, dialogPageCreationData, changeDialogPageCreationData, store }) => {
     const classes = useStyles();
 
     const [checked, setChecked] = React.useState(true)
@@ -77,29 +77,29 @@ const StepThree = inject('store')(observer(({ store }) => {
                 <FormControlLabel
                     control={
                         <Switch
-                            checked={checked}
-                            onChange={() => setChecked(prev => !prev)}
-                            name="checkedB"
+                            checked={dialogPageCreationData.reusable}
+                            onChange={(event) => changeDialogPageCreationData("reusable", !dialogPageCreationData.reusable)}
+                            name="reusable"
                             color="primary"
                         />
                     }
-                    label="Сделать страницу публичной"
+                    label="Позволить другим авторам использовать эту страницу в своих модулях"
                 />
             </FormControl>
             <FormControl className={classes.FormControl} fullWidth>
                 <FormControlLabel
                     control={
                         <Switch
-                            checked={checkedA}
-                            onChange={() => setCheckedA(prev => !prev)}
-                            name="checkedB"
+                            checked={dialogPageCreationData.public}
+                            onChange={(event) => changeDialogPageCreationData("public", !dialogPageCreationData.public)}
+                            name="public"
                             color="primary"
                         />
                     }
-                    label="Позволить другим авторам использовать эту страницу"
+                    label="Сделать страницу публичной. Все пользователи смогут её увидеть "
                 />
             </FormControl>
-            <Button variant="contained" color="primary" className={classes.Button}>
+            <Button onClick={() => savePage()} variant="contained" color="primary" className={classes.Button}>
                 Завершить работу над страницей
             </Button>
         </Grid>

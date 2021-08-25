@@ -134,9 +134,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const DialogPageCreation = inject('store')(observer(({ dialogPageCreation, setDialogPageCreation, store }) => {
+const DialogPageCreation = inject('store')(observer(({ savePage, deleteItemInPages, setComponentsData, pushNewItemToPages, dialogPageCreationData, changeDialogPageCreationData, dialogPageCreation, setDialogPageCreation, store }) => {
     const classes = useStyles();
     const theme = useTheme();
+
+    React.useEffect(() => {
+        if (dialogPageCreation) console.log("Эффект")
+    })
 
     const [activeStep, setActiveStep] = React.useState(0);
 
@@ -171,8 +175,8 @@ const DialogPageCreation = inject('store')(observer(({ dialogPageCreation, setDi
                         </Grid>
                         <Grid>
                             <Tooltip title="Сохранить">
-                                <IconButton>
-                                    <SaveIcon onClick={() => store.saveChangeInModuleEditor()} className={classes.icon} />
+                                <IconButton onClick={() => savePage()}>
+                                    <SaveIcon className={classes.icon} />
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Закрыть. Перед закрытием сохраните, иначе прогресс будет потерян">
@@ -198,9 +202,9 @@ const DialogPageCreation = inject('store')(observer(({ dialogPageCreation, setDi
                         [classes.gridMainStepFour]: activeStep == 1,
                     })}
                 >
-                    {activeStep == 0 && <StepOne />}
-                    {activeStep == 1 && <StepTwo />}
-                    {activeStep == 2 && <StepThree />}
+                    {activeStep == 0 && <StepOne dialogPageCreationData={dialogPageCreationData} changeDialogPageCreationData={changeDialogPageCreationData}/>}
+                    {activeStep == 1 && <StepTwo deleteItemInPages={deleteItemInPages} setComponentsData={setComponentsData} pushNewItemToPages={pushNewItemToPages} dialogPageCreationData={dialogPageCreationData} changeDialogPageCreationData={changeDialogPageCreationData}/>}
+                    {activeStep == 2 && <StepThree savePage={savePage} dialogPageCreationData={dialogPageCreationData} changeDialogPageCreationData={changeDialogPageCreationData}/>}
 
                 </Grid>
             </DialogContent>

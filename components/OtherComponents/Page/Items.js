@@ -35,15 +35,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const ModuleSelect = (value, listeners, index, store) => {
+const ModuleSelect = (value, listeners, index, setComponentsData, deleteItemInPages) => {
     if (value.type === "h") return (
         <>
-            <Header listeners={listeners} values={value} index={index}/>
+            <Header listeners={listeners} values={value} index={index} setComponentsData={setComponentsData} deleteItemInPages={deleteItemInPages}/>
         </>
     )
     if (value.type === "text") return (
         <>
-            <Text listeners={listeners} values={value} index={index}/>
+            <Text listeners={listeners} values={value} index={index} setComponentsData={setComponentsData} deleteItemInPages={deleteItemInPages}/>
         </>
     )
 }
@@ -68,6 +68,8 @@ const Items = React.memo(
                 transform,
                 value,
                 wrapperStyle,
+                setComponentsData,
+                deleteItemInPages,
                 ...props
             },
             ref
@@ -102,7 +104,7 @@ const Items = React.memo(
                         container
                         className={classes.rootGrid}
                     >
-                        {ModuleSelect(value, listeners, index)}
+                        {ModuleSelect(value, listeners, index, setComponentsData, deleteItemInPages)}
                     </Grid>
                 </Paper>
             );

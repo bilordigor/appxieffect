@@ -9,6 +9,7 @@ import Toolbar from './Modules/Toolbar';
 import DataList from './Modules/DataList';
 // import Chipper from './Modules/Chipper';
 // import ModulesList from './Modules/ModulesList';
+import DialogModuleCreation from './Modules/DialogModuleCreation';
 
 const useStyles = makeStyles((theme) => ({
     gridToolbar: {
@@ -21,6 +22,7 @@ const Modules = inject('store')(observer(({ store }) => {
     const classes = useStyles();
     const theme = useTheme();
 
+    const [dialogModuleCreation, setDialogModuleCreation] = React.useState(false)
 
     return (
         <Grid
@@ -33,8 +35,9 @@ const Modules = inject('store')(observer(({ store }) => {
                 <Typography variant="h5"> Управление контентом </Typography>
             </Grid>
             <Grid className={classes.gridToolbar}>
-                <Toolbar />
+                <Toolbar setDialogModuleCreation={setDialogModuleCreation} />
             </Grid>
+            <DialogModuleCreation dialogModuleCreation={dialogModuleCreation} setDialogModuleCreation={setDialogModuleCreation} />
             <DataList />
         </Grid>
     )

@@ -63,30 +63,30 @@ const StyledToggleButtonGroup = withStyles((theme) => ({
     },
 }))(ToggleButtonGroup);
 
-const Text = inject('store')(observer(({ store, values, listeners, index }) => {
+const Text = inject('store')(observer(({ store, values, listeners, index, setComponentsData, deleteItemInPages }) => {
 
     const handleFontSize = (event, newFormats) => {
         //console.log(index, "fontSize", newFormats)
-        store.setComponentsValues(index, "fontSize", newFormats)
+        setComponentsData(index, "fontSize", newFormats)
     };
 
     const handleTextAlign = (event, newAlignment) => {
-        store.setComponentsValues(index, "textAlign", newAlignment)
+        setComponentsData(index, "textAlign", newAlignment)
     };
 
     const handleFontStyle = (event, newAlignment) => {
-        if (values.fontStyle === "normal") return store.setComponentsValues(index, "fontStyle", "italic")
-        return store.setComponentsValues(index, "fontStyle", "normal");
+        if (values.fontStyle === "normal") return setComponentsData(index, "fontStyle", "italic")
+        return setComponentsData(index, "fontStyle", "normal");
     };
 
     const handleFontWeight = (event, newAlignment) => {
-        if (values.fontWeight === "normal") return store.setComponentsValues(index, "fontWeight", "bold");
-        return store.setComponentsValues(index, "fontWeight", "normal");
+        if (values.fontWeight === "normal") return setComponentsData(index, "fontWeight", "bold");
+        return setComponentsData(index, "fontWeight", "normal");
     };
 
     const handleTextDecoration = (event, newAlignment) => {
-        if (values.textDecoration === "none") return store.setComponentsValues(index, "textDecoration", "underline");
-        return store.setComponentsValues(index, "textDecoration", "none");
+        if (values.textDecoration === "none") return setComponentsData(index, "textDecoration", "underline");
+        return setComponentsData(index, "textDecoration", "none");
     };
 
     // Simulated props for the purpose of the example
@@ -176,7 +176,7 @@ const Text = inject('store')(observer(({ store, values, listeners, index }) => {
                         //onChange={handleFormat}
                         aria-label="text formatting"
                     >
-                        <ToggleButton onClick={() => store.deleteComponent(index)}>
+                        <ToggleButton onClick={() => deleteItemInPages(index)}>
                             <ClearIcon />
                         </ToggleButton>
                         <ToggleButton>
@@ -200,7 +200,7 @@ const Text = inject('store')(observer(({ store, values, listeners, index }) => {
                     multiline
                     fullWidth
                     value={values.label}
-                    onChange={(event) => store.setComponentsValues(index, "label", event.target.value)}
+                    onChange={(event) => setComponentsData(index, "label", event.target.value)}
                 />
                 {/* </ClickAwayListener>} */}
             </Grid>

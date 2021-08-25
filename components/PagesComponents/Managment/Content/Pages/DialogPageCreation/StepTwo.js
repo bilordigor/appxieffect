@@ -146,7 +146,7 @@ function createRange(length, initializer = defaultInitializer) {
     return [...new Array(length)].map((_, index) => initializer(index));
 }
 
-const StepTwo = inject('store')(observer(({ store }) => {
+const StepTwo = inject('store')(observer(({ deleteItemInPages, setComponentsData, pushNewItemToPages, dialogPageCreationData, changeDialogPageCreationData, store }) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -182,7 +182,7 @@ const StepTwo = inject('store')(observer(({ store }) => {
     }
 
     const components = [
-        { title: "Текст", subtitle: "Блок текста с возможностью форматирования",  type: "text" },
+        { title: "Текст", subtitle: "Блок текста с возможностью форматирования", type: "text" },
         { title: "Заголовок", subtitle: "Блок с различными заголовками и возможностью форматирования", type: "h" },
     ]
 
@@ -214,75 +214,19 @@ const StepTwo = inject('store')(observer(({ store }) => {
                     justify="flex-start"
                     alignItems="center"
                 >
-                    {mainWindowType === "point" &&
-                        <Grid
-                            item
-                            container
-                            direction="column"
-                            justify="flex-start"
-                            alignItems="center"
-                        >
-                            <Typography> Мета информация для точки. </Typography>
-                            <FormControl className={classes.FormControl}>
-                                <InputLabel className={classes.InputLabel} variant="standard" htmlFor="uncontrolled-native">
-                                    Тип точки
-                                </InputLabel>
-                                <NativeSelect
-                                    className={classes.NativeSelect}
-                                    value={store.nowEditModule.points[idPoint].type}
-                                    onChange={(event) => store.setPointType(idPoint, event.target.value)}
-                                    inputProps={{
-                                        name: 'age',
-                                        id: 'uncontrolled-native',
-                                    }}
-                                >
-                                    <option className={classes.option} value={'not selected'}>Не выбрано</option>
-                                    <option value={'theory'}> Теория</option>
-                                    <option value={'practice'}> Практика </option>
-                                    <option value={'test'}> Тест</option>
-                                </NativeSelect>
-                            </FormControl>
-
-                        </Grid>}
-                    {(mainWindowType === "none" || mainWindowType === "point") && <Image
-                        quality={100}
-                        alt="howtocreateamodule"
-                        src="/illustrations/mathTeacher.png"
-                        //layout='fill'
-                        width={480}
-                        height={480}
-                    />}
-                    {mainWindowType === "page" &&
-                        <Grid
-                            item
-                            container
-                            direction="column"
-                            justify="flex-start"
-                            alignItems="flex-start"
-                        >
-                            {/* <Typography> Мета информация для точки. </Typography> */}
-                            <FormControl className={classes.FormControl}>
-                                <InputLabel className={classes.InputLabel} variant="standard" htmlFor="uncontrolled-native">
-                                    Тип страницы
-                                </InputLabel>
-                                <NativeSelect
-                                    className={classes.NativeSelect}
-                                    value={store.nowEditModule.points[idPoint].type}
-                                    onChange={(event) => store.setPointType(idPoint, event.target.value)}
-                                    inputProps={{
-                                        name: 'age',
-                                        id: 'uncontrolled-native',
-                                    }}
-                                >
-                                    <option className={classes.option} value={'page'}> Страница </option>
-                                    <option value={'drawing'}> Чертёж </option>
-                                </NativeSelect>
-                            </FormControl>
-
-                        </Grid>}
+                    {
+                        dialogPageCreationData.components.length == 0 && <Image
+                            quality={100}
+                            alt="howtocreateamodule"
+                            src="/illustrations/mathTeacher.png"
+                            //layout='fill'
+                            width={480}
+                            height={480}
+                        />
+                    }
                 </Grid>
-                {mainWindowType === 'page' && store[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.length != 0 && <Sortable store={store} items={store[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components} handle />}
-                {mainWindowType === 'page' && store[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.length == 0 && <Typography> Страница пока пуста. Добавьте компоненты </Typography>}
+                {dialogPageCreationData.components.length != 0 && <Sortable deleteItemInPages={deleteItemInPages} setComponentsData={setComponentsData} store={store} items={dialogPageCreationData.components} changeDialogPageCreationData={changeDialogPageCreationData} handle />}
+                {dialogPageCreationData.components.length == 0 && <Typography> Страница пока пуста. Добавьте компоненты </Typography>}
 
             </Grid>
 
@@ -344,7 +288,7 @@ const StepTwo = inject('store')(observer(({ store }) => {
                                     justify="center"
                                     alignItems="center"
                                 >
-                                    <Button onClick={() => store.pushNewItemToPages(item.type)}>
+                                    <Button onClick={() => pushNewItemToPages(item.type)}>
                                         <Tooltip title="Добавить Компонент">
                                             <AddIcon className={classes.icon} />
                                         </Tooltip>

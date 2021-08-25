@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Sortable = ({ items, store, adjustScale = false, collisionDetection = closestCenter, dropAnimation = defaultDropAnimationConfig, getItemStyles = () => ({}), handle = false, itemCount, isDisabled = () => false, removable, strategy = rectSortingStrategy, useDragOverlay = true, wrapperStyle = () => ({}), }) => {
+const Sortable = ({ deleteItemInPages, setComponentsData, items, store, changeDialogPageCreationData, adjustScale = false, collisionDetection = closestCenter, dropAnimation = defaultDropAnimationConfig, getItemStyles = () => ({}), handle = false, itemCount, isDisabled = () => false, removable, strategy = rectSortingStrategy, useDragOverlay = true, wrapperStyle = () => ({}), }) => {
     const classes = useStyles();
     console.log("Sortable render items", items)
     const [activeId, setActiveId] = useState(null);
@@ -73,7 +73,7 @@ const Sortable = ({ items, store, adjustScale = false, collisionDetection = clos
             if (over) {
                 //const overIndex = getIndex(over.id);
                 if (activeId !== over.id) {
-                    store.setComponentsPages(arrayMove(store[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components, activeId, over.id));
+                    changeDialogPageCreationData("components", arrayMove(items, activeId, over.id));
                 }
             }
             //console.log(items)
@@ -84,7 +84,8 @@ const Sortable = ({ items, store, adjustScale = false, collisionDetection = clos
             <div className={classes.Container}>
                 {items.map((value, index) => (
                     <SortableItem
-                        store={store}
+                        deleteItemInPages={deleteItemInPages}
+                        setComponentsData={setComponentsData}
                         value={value}
                         key={index.toString()}
                         id={index.toString()}
@@ -107,7 +108,8 @@ const Sortable = ({ items, store, adjustScale = false, collisionDetection = clos
                 >
                     {activeId ? (
                         <Items
-                            store={store}
+                            deleteItemInPages={deleteItemInPages}
+                            setComponentsData={setComponentsData}
                             value={items[activeIndex]}
                             handle={handle}
                             wrapperStyle={wrapperStyle({
@@ -145,7 +147,9 @@ function SortableItem({
     useDragOverlay,
     wrapperStyle,
     value,
-    store,
+    setComponentsData,
+    deleteItemInPages,
+
 }) {
     const {
         attributes,
@@ -163,9 +167,10 @@ function SortableItem({
 
     return (
         <Items
+            deleteItemInPages={deleteItemInPages}
+            setComponentsData={setComponentsData}
             ref={setNodeRef}
             value={value}
-            store={store}
             disabled={disabled}
             dragging={isDragging}
             sorting={isSorting}

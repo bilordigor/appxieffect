@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const StepOne = inject('store')(observer(({ store }) => {
+const StepOne = inject('store')(observer(({ dialogPageCreationData, changeDialogPageCreationData, store }) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -77,8 +77,8 @@ const StepOne = inject('store')(observer(({ store }) => {
                 <Input
                     required
                     className={classes.input}
-                    value={store.nowEditModule.name}
-                    onChange={(event) => store.setnowEditModule("name", event.target.value)}
+                    value={dialogPageCreationData.name}
+                    onChange={(event) => changeDialogPageCreationData("name", event.target.value)}
                 // margin='dense'
                 //multiline={true}
                 // fullWidth={true}
@@ -91,8 +91,8 @@ const StepOne = inject('store')(observer(({ store }) => {
                 <Input
                     required
                     className={classes.input}
-                    value={store.nowEditModule.description}
-                    onChange={(event) => store.setnowEditModule("description", event.target.value)}
+                    value={dialogPageCreationData.description}
+                    onChange={(event) => changeDialogPageCreationData("description", event.target.value)}
                     multiline={true}
                 // fullWidth={true}
                 />
@@ -104,8 +104,8 @@ const StepOne = inject('store')(observer(({ store }) => {
                 <Input
                     required
                     className={classes.input}
-                    value={store.nowEditModule.description}
-                    onChange={(event) => store.setnowEditModule("description", event.target.value)}
+                    value={dialogPageCreationData.theme}
+                    onChange={(event) => changeDialogPageCreationData("theme", event.target.value)}
                     multiline={true}
                 // fullWidth={true}
                 />
@@ -118,17 +118,17 @@ const StepOne = inject('store')(observer(({ store }) => {
                 <NativeSelect
                     className={classes.NativeSelect}
                     // defaultValue={'Не выбрано'}
-                    value={store.nowEditModule.category}
-                    onChange={(event) => store.setnowEditModule("category", event.target.value)}
+                    value={dialogPageCreationData.kind}
+                    onChange={(event) => changeDialogPageCreationData("kind", event.target.value)}
                     inputProps={{
                         name: 'age',
                         id: 'uncontrolled-native',
                     }}
                 >
                     <option value={'not selected'}> Не выбрано </option>
-                    <option value={'middle-school'}> Теория </option>
-                    <option value={'main-school'}> Практика </option>
-                    <option value={'high-school'}> Тестовое задание </option>
+                    <option value={'theory'}> Теория </option>
+                    <option value={'practice'}> Практика </option>
+                    <option value={'task'}> Тестовое задание </option>
                 </NativeSelect>
             </FormControl>
             {/* <FormControl className={classes.FormControl} fullWidth>

@@ -14,7 +14,6 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import CloseIcon from '@material-ui/icons/Close';
 import { inject, observer } from 'mobx-react'
-import Sortable from './../../../../OtherComponents/Page/Sortable'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
@@ -29,6 +28,7 @@ import {
 } from "react-contexify";
 
 import "react-contexify/dist/ReactContexify.css";
+import Sortable from '../../../../../OtherComponents/Page/Sortable';
 
 const MENU_ID = "menu-id";
 

@@ -14,17 +14,14 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const Toolbar = inject('store')(observer(({ store }) => {
+const Toolbar = inject('store')(observer(({ setDialogModuleCreation, store }) => {
     const classes = useStyles();
     const theme = useTheme();
-
-    const [alignment, setAlignment] = React.useState('left');
-
 
     return (
         <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
             <Tooltip title="Создать модуль">
-                <Button> Создать </Button>
+                <Button onClick={() => setDialogModuleCreation(true)}> Создать </Button>
             </Tooltip>
             {/* <Button>Two</Button>
             <Button>Three</Button> */}
