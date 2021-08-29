@@ -29,8 +29,15 @@ const AntTabs = withStyles((theme) => ({
   },
 }))(Tabs);
 
+const useStylesTabPanel = makeStyles((theme) => ({
+  Box: {
+    color: theme.palette.primary.contrastText,
+  }
+}));
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+  const classes = useStylesTabPanel();
 
   return (
     <div
@@ -41,8 +48,8 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
+        <Box className={classes.Box} p={3}>
+          {children}
         </Box>
       )}
     </div>

@@ -99,7 +99,7 @@ const StepThree = inject('store')(observer(({ savePage, dialogPageCreationData, 
                     label="Сделать страницу публичной. Все пользователи смогут её увидеть "
                 />
             </FormControl>
-            <Button onClick={() => savePage()} variant="contained" color="primary" className={classes.Button}>
+            <Button onClick={() => savePage(true)} variant="contained" color="primary" className={classes.Button}>
                 Завершить работу над страницей
             </Button>
         </Grid>

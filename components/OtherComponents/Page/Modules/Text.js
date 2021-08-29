@@ -23,9 +23,8 @@ import ClearIcon from '@material-ui/icons/Clear';
 import { inject, observer } from 'mobx-react'
 
 const useStyles = makeStyles((theme) => ({
-    paper: {
-        display: 'flex',
-        flexWrap: 'wrap',
+    gridButtons: {
+        marginLeft: 4,
     },
     divider: {
         margin: theme.spacing(1, 0.5),
@@ -36,7 +35,8 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1, 0.5),
     },
     gridTextWrapper: {
-        width: "100%",
+        //textAlign: "center !important",
+        width: "calc(100% - 92px)",
     },
     text: {
         width: "100%",
@@ -63,31 +63,7 @@ const StyledToggleButtonGroup = withStyles((theme) => ({
     },
 }))(ToggleButtonGroup);
 
-const Text = inject('store')(observer(({ store, values, listeners, index, setComponentsData, deleteItemInPages }) => {
-
-    const handleFontSize = (event, newFormats) => {
-        //console.log(index, "fontSize", newFormats)
-        setComponentsData(index, "fontSize", newFormats)
-    };
-
-    const handleTextAlign = (event, newAlignment) => {
-        setComponentsData(index, "textAlign", newAlignment)
-    };
-
-    const handleFontStyle = (event, newAlignment) => {
-        if (values.fontStyle === "normal") return setComponentsData(index, "fontStyle", "italic")
-        return setComponentsData(index, "fontStyle", "normal");
-    };
-
-    const handleFontWeight = (event, newAlignment) => {
-        if (values.fontWeight === "normal") return setComponentsData(index, "fontWeight", "bold");
-        return setComponentsData(index, "fontWeight", "normal");
-    };
-
-    const handleTextDecoration = (event, newAlignment) => {
-        if (values.textDecoration === "none") return setComponentsData(index, "textDecoration", "underline");
-        return setComponentsData(index, "textDecoration", "none");
-    };
+const Text = inject('store')(observer(({ store, values, listeners, index, setComponentsData, deleteItemInPages, setSelectId }) => {
 
     // Simulated props for the purpose of the example
     const props = { fontSize: values.fontSize, textAlign: values.textAlign, fontStyle: values.fontStyle, fontWeight: values.fontWeight, textDecoration: values.textDecoration, backgroundColor: 'black', color: 'white' };
@@ -99,81 +75,27 @@ const Text = inject('store')(observer(({ store, values, listeners, index, setCom
         <>
             <Grid
                 container
-                direction="column"
-                justifyContent="flex-start"
+                direction="row"
+                justify="flex-start"
                 alignItems="flex-start"
+                onClick={() => setSelectId(index)}
             >
-                <Grid className={classes.paper}>
-                    {/* <Paper elevation={0} > */}
+                <Grid className={classes.gridTextWrapper}>
+                    <Input
+                        classes={{
+                            input: classes.text
+                        }}
+                        type="text"
+                        disableUnderline
+                        multiline
+                        fullWidth
+                        value={values.label}
+                        onChange={(event) => setComponentsData(index, "label", event.target.value)}
+                    />
+                </Grid>
+                <Grid className={classes.gridButtons}>
                     <StyledToggleButtonGroup
                         size="small"
-                        value={values.fontSize}
-                        exclusive
-                        onChange={handleFontSize}
-                        aria-label="text alignment"
-                    >
-                        <ToggleButton value={48}>
-                            <LooksOneIcon />
-                        </ToggleButton>
-                        <ToggleButton value={42}>
-                            <LooksTwoIcon />
-                        </ToggleButton>
-                        <ToggleButton value={36}>
-                            <Looks3Icon />
-                        </ToggleButton>
-                        <ToggleButton value={30}>
-                            <Looks4Icon />
-                        </ToggleButton>
-                        <ToggleButton value={24}>
-                            <Looks5Icon />
-                        </ToggleButton>
-                        <ToggleButton value={18}>
-                            <Looks6Icon />
-                        </ToggleButton>
-                    </StyledToggleButtonGroup>
-                    <Divider flexItem orientation="vertical" className={classes.divider} />
-                    <StyledToggleButtonGroup
-                        size="small"
-                        value={values.textAlign}
-                        exclusive
-                        onChange={handleTextAlign}
-                        aria-label="text alignment"
-                    >
-                        <ToggleButton value="left" aria-label="left aligned">
-                            <FormatAlignLeftIcon />
-                        </ToggleButton>
-                        <ToggleButton value="center" aria-label="centered">
-                            <FormatAlignCenterIcon />
-                        </ToggleButton>
-                        <ToggleButton value="right" aria-label="right aligned">
-                            <FormatAlignRightIcon />
-                        </ToggleButton>
-                        <ToggleButton value="justify" aria-label="right aligned">
-                            <FormatAlignJustifyIcon />
-                        </ToggleButton>
-                    </StyledToggleButtonGroup>
-                    <Divider flexItem orientation="vertical" className={classes.divider} />
-                    <StyledToggleButtonGroup
-                        size="small"
-                        // value={formats}
-                        // onChange={handleFormat}
-                        aria-label="text formatting"
-                    >
-                        <ToggleButton selected={values.fontWeight === "bold" ? true : false} onClick={handleFontWeight} aria-label="bold">
-                            <FormatBoldIcon />
-                        </ToggleButton>
-                        <ToggleButton selected={values.fontStyle === "italic" ? true : false} onClick={handleFontStyle} aria-label="italic">
-                            <FormatItalicIcon />
-                        </ToggleButton>
-                        <ToggleButton selected={values.textDecoration === "underline" ? true : false} onClick={handleTextDecoration} value="underlined" aria-label="underlined">
-                            <FormatUnderlinedIcon />
-                        </ToggleButton>
-                    </StyledToggleButtonGroup>
-                    <Divider flexItem orientation="vertical" className={classes.divider} />
-                    <StyledToggleButtonGroup
-                        size="small"
-                        //value={formats}
-                        //onChange={handleFormat}
                         aria-label="text formatting"
                     >
                         <ToggleButton onClick={() => deleteItemInPages(index)}>
@@ -183,26 +105,7 @@ const Text = inject('store')(observer(({ store, values, listeners, index, setCom
                             <DragIndicatorIcon {...listeners} />
                         </ToggleButton>
                     </StyledToggleButtonGroup>
-                    {/* </Paper> */}
                 </Grid>
-            </Grid>
-            <Divider flexItem className={classes.divider1} />
-            <Grid className={classes.gridTextWrapper}>
-                {/* {!edit && <Typography className={classes.text} onClick={() => setEdit(true)} >{values.label}</Typography>} */}
-                {/* {edit && <ClickAwayListener > */}
-                <Input
-                    classes={{
-                        input: classes.text
-                    }}
-                    type="text"
-                    //className={classes.text}
-                    disableUnderline
-                    multiline
-                    fullWidth
-                    value={values.label}
-                    onChange={(event) => setComponentsData(index, "label", event.target.value)}
-                />
-                {/* </ClickAwayListener>} */}
             </Grid>
         </>
     );
@@ -211,3 +114,4 @@ const Text = inject('store')(observer(({ store, values, listeners, index, setCom
 // onClickAway={() => setEdit(false)}
 
 export default Text
+

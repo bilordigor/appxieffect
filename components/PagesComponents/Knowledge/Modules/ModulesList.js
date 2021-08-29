@@ -227,7 +227,7 @@ const ModulesList = inject('store')(observer(({ store }) => {
             value = true
         }
         console.log(answer)
-        store.fetchDataScr(`${store.url}/modules/${id}/preference/`, "POST", answer, )
+        store.fetchDataScr(`${store.url}/modules/${id}/preference/`, "POST", answer,)
             .then((data) => {
                 //console.log(data)
                 if (data != undefined) {
@@ -247,7 +247,7 @@ const ModulesList = inject('store')(observer(({ store }) => {
         store.storeClickedMoreVertIcon(id, false)
         console.log("id", id)
         let answer = { "a": "hide" }
-        store.fetchDataScr(`${store.url}/modules/${id}/preference/`, "POST", answer, )
+        store.fetchDataScr(`${store.url}/modules/${id}/preference/`, "POST", answer,)
             .then((data) => {
                 console.log(data)
                 if (data != undefined) {
@@ -283,7 +283,7 @@ const ModulesList = inject('store')(observer(({ store }) => {
     return (
         <Grid container className={classes.container}>
             {
-                store.coursesList.map((course) => (
+                store.coursesList.map((course, index) => (
                     <Grid xs={12} sm={12} md={6} lg={4} xl={3} item className={classes.gridCard} container key={course.id}>
                         <Card className={cx(classes.card)} key={course.id}>
                             <Box className={classes.boxCardHeader}>
@@ -295,8 +295,9 @@ const ModulesList = inject('store')(observer(({ store }) => {
                             </Box>
                             <div className={classes.Page}>
                                 <CardMedia
+                                    src="img"
                                     className={classes.media}
-                                    image={coursesImgList[course.name]}
+                                    image={coursesImgList[course.name] != undefined ? coursesImgList[course.name] : "/illustrations/astronaut.png"}
                                 />
                                 {/* <Skeleton animation={false} variant="rectangular"  height={320} />  */}
                             </div>
@@ -333,18 +334,18 @@ const ModulesList = inject('store')(observer(({ store }) => {
                                         <IconButton variant="contained" color="primary" onClick={(event) => clickedMoreVertIcon(course.id, course.openMenu, event)}>
                                             <MoreVertIcon className={classes.icons} />
                                         </IconButton>
-                                        <Popper className={classes.popper} id={undefined} open={course.openMenu} anchorEl={course.openMenuTarget}>
+                                        {/* <Popper className={classes.popper} id={index} open={course.openMenu} anchorEl={course.openMenuTarget}>
                                             <Paper className={classes.popper}>
                                                 <MenuList
                                                     id="composition-menu"
                                                     aria-labelledby="composition-button"
-                                                >
-                                                    {/* <MenuItem onClick={() => clickedHiddenCourse(course.id, course.starred)}>Скрыть курс</MenuItem> */}
-                                                    <MenuItem onClick={() => clearHidden()}>Пожаловаться</MenuItem>
-                                                    {/* <MenuItem onClick={handleClose}>Logout</MenuItem> */}
-                                                </MenuList>
+                                                > */}
+                                        {/* <MenuItem onClick={() => clickedHiddenCourse(course.id, course.starred)}>Скрыть курс</MenuItem> */}
+                                        {/* <MenuItem onClick={() => clearHidden()}>Пожаловаться</MenuItem> */}
+                                        {/* <MenuItem onClick={handleClose}>Logout</MenuItem> */}
+                                        {/* </MenuList>
                                             </Paper>
-                                        </Popper>
+                                        </Popper> */}
                                     </Grid>
                                 </Grid>
                             </CardContent>

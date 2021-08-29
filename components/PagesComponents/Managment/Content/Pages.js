@@ -24,14 +24,16 @@ const Pages = inject('store')(observer(({ store }) => {
 
     const [dialogPageCreation, setDialogPageCreation] = React.useState(false)
 
+    const [selectId, setSelectId] = React.useState(null)
+
     const [dialogPageCreationData, setDialogPageCreationData] = React.useState({
         id: null,
         name: '',
         description: '',
         theme: '',
-        type: '',
         kind: '',
         components: [],
+        blueprint: false,
         reusable: false,
         public: false,
     })
@@ -58,13 +60,19 @@ const Pages = inject('store')(observer(({ store }) => {
         if (type === "h") {
             setDialogPageCreationData(prevState => ({
                 ...prevState,
-                components: [...dialogPageCreationData.components, { type: "h", fontSize: 30, textAlign: "left", fontWeight: "normal", fontStyle: "normal", textDecoration: "none", label: "заголовок" }]
+                components: [...dialogPageCreationData.components, { type: "h", fontSize: 36, textAlign: "center", fontWeight: "normal", fontStyle: "normal", textDecoration: "none", label: "заголовок" }]
             }));
         }
         if (type === "text") {
             setDialogPageCreationData(prevState => ({
                 ...prevState,
-                components: [...dialogPageCreationData.components, { type: "text", fontSize: 30, textAlign: "left", fontWeight: "normal", fontStyle: "normal", textDecoration: "none", label: "текст" }]
+                components: [...dialogPageCreationData.components, { type: "text", fontSize: 14, textAlign: "left", fontWeight: "normal", fontStyle: "normal", textDecoration: "none", label: "текст" }]
+            }));
+        }
+        if (type === "divider") {
+            setDialogPageCreationData(prevState => ({
+                ...prevState,
+                components: [...dialogPageCreationData.components, { type: "divider", }]
             }));
         }
     }
@@ -79,15 +87,16 @@ const Pages = inject('store')(observer(({ store }) => {
         }));
     }
 
-    const savePage = () => {
+    const savePage = (close = false) => {
         // Сохранить изменения в странице
+
         if (dialogPageCreationData.id) {
             console.log("updatePage", dialogPageCreationData)
             store.fetchDataScr(`${store.url}/wip/pages/${dialogPageCreationData.id}`, "PUT", dialogPageCreationData).then(
                 (data) => {
                     if (data) {
                         console.log("done", data)
-                        
+
                     } else {
                         console.log("fail", data)
                     }
@@ -109,6 +118,22 @@ const Pages = inject('store')(observer(({ store }) => {
 
                 })
         }
+        if (close) {
+            dialogPageCreation(false)
+            setDialogPageCreationData(
+                {
+                    id: null,
+                    name: '',
+                    description: '',
+                    theme: '',
+                    kind: '',
+                    components: [],
+                    blueprint: false,
+                    reusable: false,
+                    public: false,
+                }
+            )
+        }
     }
 
 
@@ -126,7 +151,7 @@ const Pages = inject('store')(observer(({ store }) => {
             <Grid className={classes.gridToolbar}>
                 <Toolbar setDialogPageCreation={setDialogPageCreation} />
             </Grid>
-            <DialogPageCreation savePage={savePage} deleteItemInPages={deleteItemInPages} setComponentsData={setComponentsData} pushNewItemToPages={pushNewItemToPages} dialogPageCreationData={dialogPageCreationData} changeDialogPageCreationData={changeDialogPageCreationData} dialogPageCreation={dialogPageCreation} setDialogPageCreation={setDialogPageCreation} />
+            <DialogPageCreation selectId={selectId} setSelectId={setSelectId} savePage={savePage} deleteItemInPages={deleteItemInPages} setComponentsData={setComponentsData} pushNewItemToPages={pushNewItemToPages} dialogPageCreationData={dialogPageCreationData} changeDialogPageCreationData={changeDialogPageCreationData} dialogPageCreation={dialogPageCreation} setDialogPageCreation={setDialogPageCreation} />
             <DataList />
         </Grid>
     )

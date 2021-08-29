@@ -3,19 +3,20 @@ import { Tabs, Tab, ButtonGroup, Input, AppBar, Toolbar, Dialog, InputLabel, Nat
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import Header from './Modules/Header';
 import Text from './Modules/Text';
+import DividerComponent from './Modules/DividerComponent';
 
 
 
 const useStyles = makeStyles((theme) => ({
     rootPaper: {
         // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-        border: 0,
-        borderRadius: 3,
+        //border: 0,
+        //borderRadius: 3,
         //boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
         //width: "calc(100% - 8px)",
         margin: 4,
         padding: 0,
-        backgroundColor: theme.palette.blueGrey["7"],
+        //backgroundColor: theme.palette.blueGrey["7"],
         position: "relative",
     },
     rootGrid: {
@@ -35,15 +36,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const ModuleSelect = (value, listeners, index, setComponentsData, deleteItemInPages) => {
+const ModuleSelect = (value, listeners, index, setComponentsData, deleteItemInPages, setSelectId) => {
     if (value.type === "h") return (
         <>
-            <Header listeners={listeners} values={value} index={index} setComponentsData={setComponentsData} deleteItemInPages={deleteItemInPages}/>
+            <Header listeners={listeners} values={value} index={index} setComponentsData={setComponentsData} deleteItemInPages={deleteItemInPages} setSelectId={setSelectId}/>
         </>
     )
     if (value.type === "text") return (
         <>
-            <Text listeners={listeners} values={value} index={index} setComponentsData={setComponentsData} deleteItemInPages={deleteItemInPages}/>
+            <Text listeners={listeners} values={value} index={index} setComponentsData={setComponentsData} deleteItemInPages={deleteItemInPages} setSelectId={setSelectId}/>
+        </>
+    )
+    if (value.type === "divider") return (
+        <>
+            <DividerComponent listeners={listeners} values={value} index={index} setComponentsData={setComponentsData} deleteItemInPages={deleteItemInPages} setSelectId={setSelectId}/>
         </>
     )
 }
@@ -70,6 +76,7 @@ const Items = React.memo(
                 wrapperStyle,
                 setComponentsData,
                 deleteItemInPages,
+                setSelectId,
                 ...props
             },
             ref
@@ -91,8 +98,8 @@ const Items = React.memo(
             const classes = useStyles();
 
             return (
-                <Paper
-                    elevation={3}
+                <Grid
+                    //elevation={3}
                     ref={ref}
                     className={classes.rootPaper}
                     data-cypress="draggable-item"
@@ -104,9 +111,9 @@ const Items = React.memo(
                         container
                         className={classes.rootGrid}
                     >
-                        {ModuleSelect(value, listeners, index, setComponentsData, deleteItemInPages)}
+                        {ModuleSelect(value, listeners, index, setComponentsData, deleteItemInPages, setSelectId)}
                     </Grid>
-                </Paper>
+                </Grid>
             );
         }
     ))

@@ -46,7 +46,7 @@ const NavigationAll = inject('store')(observer(({ store, children }) => {
                 } else {
                     store.fetchDataScr(`${store.url}/avatar/`, "GET")
                         .then((data) => {
-                            console.log("avatar", data)
+                            //console.log("avatar", data)
                             if (data != undefined && data.message != "The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.") {
                                 store.setSettings("avatar", data)
                             }

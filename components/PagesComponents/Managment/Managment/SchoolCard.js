@@ -48,7 +48,7 @@ const AuthorCard = inject('store')(observer(({ store }) => {
             container
             className={classes.gridCard}
             direction="column"
-            justifyContent="center"
+            justify="center"
             alignItems="center"
         >
             <Card className={cx(classes.card)}>

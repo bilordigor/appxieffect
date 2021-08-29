@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
     iconButton: {
         padding: 10,
+        color: theme.palette.primary.contrastText,
     },
     popper: {
         zIndex: 1000,
@@ -45,12 +46,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Chipper = inject('store')(observer(({ dataType, setDataType, setSize, store, loadingMoreCourses }) => {
+const Chipper = inject('store')(observer(({ goSearch, search, setSearch, dataType, setDataType, setSize, store, loadingMoreCourses }) => {
     const classes = useStyles();
     const theme = useTheme()
     const [open, setOpen] = React.useState(false);
-
-    const [serchValue, setSearchValue] = React.useState("")
 
     const [openMenu, setOpenMenu] = React.useState(null)
 
@@ -90,7 +89,7 @@ const Chipper = inject('store')(observer(({ dataType, setDataType, setSize, stor
                             className={classes.popperPaperGrid}
                             container
                             direction="column"
-                            justifyContent="flex-start"
+                            justify="flex-start"
                             alignItems="flex-start"
                         >
                             <FormControl component="fieldset">
@@ -106,13 +105,13 @@ const Chipper = inject('store')(observer(({ dataType, setDataType, setSize, stor
                     </Paper>
                 </Popper>
                 <InputBase
-                    value={serchValue}
-                    onChange={(event) => setSearchValue(event.target.value)}
+                    value={search}
+                    onChange={(event) => setSearch(event.target.value)}
                     className={classes.input}
                     placeholder="Поиск страниц"
                     inputProps={{ 'aria-label': 'Поиск страниц' }}
                 />
-                <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                <IconButton onClick={() => goSearch()} type="submit" className={classes.iconButton} aria-label="search">
                     <SearchIcon />
                 </IconButton>
             </Grid>

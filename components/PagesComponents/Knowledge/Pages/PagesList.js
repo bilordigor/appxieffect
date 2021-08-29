@@ -3,15 +3,23 @@ import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import cx from 'clsx';
 import clsx from 'clsx';
-import { Divider, CardContent, Popper, MenuList, Avatar, MenuItem, Paper, Accordion, IconButton, Chip, AccordionSummary, AccordionDetails, CardHeader, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme } from '@material-ui/core';
+import { Divider, CardContent, Popper, MenuList, Avatar, withStyles, Paper, Accordion, IconButton, Chip, AccordionSummary, AccordionDetails, CardHeader, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip } from '@material-ui/core';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import { SnackbarProvider, useSnackbar } from 'notistack';
 import { inject, observer } from 'mobx-react'
 
-
+const CustomTooltip = withStyles((theme) => ({
+    tooltip: {
+        //backgroundColor: theme.palette.common.white,
+        //color: 'rgba(0, 0, 0, 0.87)',
+        //boxShadow: theme.shadows[1],
+        fontSize: 14,
+    },
+}))(Tooltip);
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -75,8 +83,8 @@ const useStyles = makeStyles((theme) => ({
         padding: 0,
     },
     Chip: {
-        border: '2px solid',
-        marginLeft: 4,
+        //border: '2px solid',
+        marginRight: 4,
     },
     CardActions: {
         marginTop: "auto",
@@ -116,29 +124,63 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 1000,
         //position: 'fixed',
     },
+    pageName: {
+        cursor: "default",
+        marginTop: 16,
+        marginLeft: 16,
+        fontSize: 24,
+        color: theme.palette.primary.contrastText,
+    },
+    pageDescription: {
+        cursor: "default",
+        marginTop: 12,
+        marginLeft: 0,
+        fontSize: 16,
+        color: theme.palette.primary.contrastText,
+    },
+    Tooltip: {
+        //fontSize: 24,
+    }
 }));
 
-const Views = React.memo(({ value }) => {
-    const classes = useStyles();
-    if (value < 1000) {
+const useStylesViews = makeStyles((theme) => ({
+    icon: {
+        marginLeft: 12,
+        marginRight: 8,
+        color: theme.palette.primary.contrastText,
+    }
+}));
+
+const Views = React.memo(({ views }) => {
+    const classes = useStylesViews();
+    if (views < 1000) {
         return (
-            <Typography> {`${value} просмотров`} </Typography>
+            <>
+                <VisibilityIcon className={classes.icon} />
+                <Typography> {`${views}`} </Typography>
+            </>
         )
     }
-    if (value >= 1000 && value < 1000000) {
+    if (views >= 1000 && views < 1000000) {
         return (
-            <Typography> {`${Math.round(value / 1000)} тыс. просмотров`} </Typography>
+            <>
+                <VisibilityIcon className={classes.icon} />
+                <Typography> {`${Math.round(views / 1000)}к`} </Typography>
+            </>
         )
     }
-    if (value > 1000000) {
+    if (views > 1000000) {
         return (
-            <Typography> {`${Math.round(value / 1000000)} млн. просмотров`} </Typography>
+            <>
+                <VisibilityIcon className={classes.icon} />
+                <Typography> {`${Math.round(views / 1000000)} млн`} </Typography>
+            </>
         )
     }
 })
 
 
-const PagesList = inject('store')(observer(({ dataType, size, store }) => {
+const PagesList = inject('store')(observer(({ pages, dataType, size, store }) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -146,24 +188,17 @@ const PagesList = inject('store')(observer(({ dataType, size, store }) => {
 
     const { enqueueSnackbar } = useSnackbar();
 
-    const pages = [
-        { label: "Название", type: "тип", theme: "тема", description: "описание" },
-        { label: "Название", type: "тип", theme: "тема", description: "описание" },
-        { label: "Название", type: "тип", theme: "тема", description: "описание" },
-        { label: "Название", type: "тип", theme: "тема", description: "описание" },
-        { label: "Название", type: "тип", theme: "тема", description: "описание" },
-        { label: "Название", type: "тип", theme: "тема", description: "описание" },
-        { label: "Название", type: "тип", theme: "тема", description: "описание" },
-        { label: "Название", type: "тип", theme: "тема", description: "описание" },
-        { label: "Название", type: "тип", theme: "тема", description: "описание" },
-    ];
-
+    const kindSelect = (value) => {
+        if (value === "practice") return "Практика"
+        if (value === "task") return "Задание"
+        if (value === "theory") return "Теория"
+    }
 
     return (
         <Grid
             container
             direction={dataType === "grid" ? "column" : "row"}
-            justifyContent="center"
+            justify="center"
             alignItems="center"
             className={classes.container}
         >
@@ -173,39 +208,46 @@ const PagesList = inject('store')(observer(({ dataType, size, store }) => {
                         className={clsx(classes.gridCard, { [classes.cardColumn]: dataType === "grid" })}
                         container key={index}>
                         <Card className={cx(classes.card)}>
-                            <CardHeader
-                                className={classes.cardHeader}
-                                title={<Typography className={classes.title}>{page.label}</Typography>}
-                                subheader={<Views value={123456} />}
-                            />
+                            <Grid container wrap="nowrap" spacing={2}>
+                                <Grid item xs zeroMinWidth>
+                                    <CustomTooltip className={classes.Tooltip} arrow title={`Название: ${page.name}`}>
+                                        <Typography className={classes.pageName} noWrap>{page.name}</Typography>
+                                    </CustomTooltip>
+                                </Grid>
+                            </Grid>
                             <CardContent className={classes.content}>
                                 <Grid
                                     container
                                     direction="column"
-                                    justifyContent="flex-start"
+                                    justify="flex-start"
                                     alignItems="flex-start"
                                 >
                                     <Grid
                                         container
                                         direction="row"
-                                        justifyContent="flex-start"
+                                        justify="flex-start"
                                         alignItems="center"
                                     >
-                                        <Chip className={classes.Chip} label="Теория" size="small" variant="outlined" color="primary" />
-                                        <Chip className={classes.Chip} label="Математика ЕГЭ" size="small" variant="outlined" color="primary" />
+                                        <Chip className={classes.Chip} label={page.theme} size="small" color="primary" />
+                                        <Chip className={classes.Chip} label={kindSelect(page.kind)} size="small" color="primary" />
+                                        <Views views={page.views} />
                                     </Grid>
                                     {/* <Divider className={classes.Divider} /> */}
-                                    <Grid>
-                                        <Typography> Описание </Typography>
+                                    <Grid container wrap="nowrap" spacing={2}>
+                                        <Grid item xs zeroMinWidth>
+                                            <CustomTooltip className={classes.Tooltip} arrow title={`Описание`}>
+                                                <Typography className={classes.pageDescription} noWrap>{page.description != null ? page.description : "Автор не оставил описание страницы"}</Typography>
+                                            </CustomTooltip>
+                                        </Grid>
                                     </Grid>
                                     {/* <Divider className={classes.Divider}/> */}
                                     <Grid container item direction="row" justify="flex-end" xs={12} className={classes.CardContentGrid}>
                                         <Grid container direction='row' className={classes.userownerinfo}>
                                             {/* {course.createrAvatar} */}
-                                            <Grid><Avatar className={classes.avatar}> Ξ </Avatar></Grid>
+                                            <Grid><Avatar className={classes.avatar}> {page["author_name"][0].toUpperCase()} </Avatar></Grid>
                                             <Grid className={classes.gridcreater}>
                                                 <Typography className={classes.overline}>Создатель</Typography>
-                                                <Typography className={classes.name}>Ξ Effect</Typography>
+                                                <Typography className={classes.name}>{page["author_name"]}</Typography>
                                             </Grid>
                                             {/* {course["author-name"]} */}
                                         </Grid>
@@ -223,9 +265,9 @@ const PagesList = inject('store')(observer(({ dataType, size, store }) => {
                                             </IconButton>
                                         </Grid> */}
                                         <Grid className={classes.CardContentSmallActionButtom}>
-                                            <IconButton variant="contained" color="primary" onClick={(event) => setOpenMenu(event.currentTarget)}>
+                                            {/* <IconButton variant="contained" color="primary" onClick={(event) => setOpenMenu(event.currentTarget)}>
                                                 <MoreVertIcon className={classes.icons} />
-                                            </IconButton>
+                                            </IconButton> */}
                                             {/* <Popper className={classes.popper} id={undefined} open={Boolean(openMenu)} onClose={() => setOpenMenu(null)} anchorEl={openMenu}>
                                                 <Paper className={classes.popper}>
                                                     <MenuList
@@ -249,7 +291,7 @@ const PagesList = inject('store')(observer(({ dataType, size, store }) => {
                                         <Link
                                             href={{
                                                 pathname: '/knowledge/page/[id]',
-                                                query: { id: index },
+                                                query: { id: page.id },
                                             }}
                                             passHref>
                                             <Button variant="contained" color="primary" className={classes.CardActionsCenterButton}>

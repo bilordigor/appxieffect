@@ -134,7 +134,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const DialogPageCreation = inject('store')(observer(({ savePage, deleteItemInPages, setComponentsData, pushNewItemToPages, dialogPageCreationData, changeDialogPageCreationData, dialogPageCreation, setDialogPageCreation, store }) => {
+const DialogPageCreation = inject('store')(observer(({ selectId, setSelectId, savePage, deleteItemInPages, setComponentsData, pushNewItemToPages, dialogPageCreationData, changeDialogPageCreationData, dialogPageCreation, setDialogPageCreation, store }) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -203,7 +203,7 @@ const DialogPageCreation = inject('store')(observer(({ savePage, deleteItemInPag
                     })}
                 >
                     {activeStep == 0 && <StepOne dialogPageCreationData={dialogPageCreationData} changeDialogPageCreationData={changeDialogPageCreationData}/>}
-                    {activeStep == 1 && <StepTwo deleteItemInPages={deleteItemInPages} setComponentsData={setComponentsData} pushNewItemToPages={pushNewItemToPages} dialogPageCreationData={dialogPageCreationData} changeDialogPageCreationData={changeDialogPageCreationData}/>}
+                    {activeStep == 1 && <StepTwo selectId={selectId} setSelectId={setSelectId} deleteItemInPages={deleteItemInPages} setComponentsData={setComponentsData} pushNewItemToPages={pushNewItemToPages} dialogPageCreationData={dialogPageCreationData} changeDialogPageCreationData={changeDialogPageCreationData}/>}
                     {activeStep == 2 && <StepThree savePage={savePage} dialogPageCreationData={dialogPageCreationData} changeDialogPageCreationData={changeDialogPageCreationData}/>}
 
                 </Grid>

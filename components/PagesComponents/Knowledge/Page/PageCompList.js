@@ -8,15 +8,23 @@ import Header from './Components/Header';
 
 
 const useStyles = makeStyles((theme) => ({
-
+    wrapperRoot: {
+        marginTop: 16,
+        maxWidth: 800,
+    },
+    wrapper: {
+        // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+        border: 0,
+        width: "calc(100% - 4px)",
+        margin: 1,
+        padding: 1,
+    },
 }));
 
 
-const Page = inject('store')(observer(({ store, components }) => {
+const PageCompList = inject('store')(observer(({ store, components }) => {
     const classes = useStyles();
     const theme = useTheme();
-
-    const [dataType, setDataType] = React.useState("list")
 
     const componentsSelect = (value) => {
         if (value.type === "h") return (
@@ -35,11 +43,12 @@ const Page = inject('store')(observer(({ store, components }) => {
         <Grid
             container
             direction="column"
-            justifyContent="center"
+            justify="center"
             alignItems="center"
+            className={classes.wrapperRoot}
         >
             {components.map((value, index) => (
-                <Grid key={index}>
+                <Grid className={classes.wrapper} key={index}>
                     {componentsSelect(value)}
                 </Grid>
             ))}
@@ -48,4 +57,4 @@ const Page = inject('store')(observer(({ store, components }) => {
 }));
 
 
-export default Page;
+export default PageCompList;

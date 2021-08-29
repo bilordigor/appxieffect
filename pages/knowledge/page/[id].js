@@ -8,11 +8,14 @@ import { Divider, Paper, Grid, FormControlLabel, Button, makeStyles, useTheme, M
 import { inject, observer } from 'mobx-react'
 
 import NavigationAll from './../../../components/OtherComponents/Navigation/NavigationAll';
+import PageCompList from './../../../components/PagesComponents/Knowledge/Page/PageCompList';
+import Toolbar from '../../../components/PagesComponents/Knowledge/Page/Toolbar';
 
 const useStyles = makeStyles((theme) => ({
     main: {
         width: '100%',
         zIndex: 1,
+        //backgroundColor: 'red',
     },
 }));
 
@@ -21,21 +24,35 @@ const Page = inject('store')(observer(({ store }) => {
     const classes = useStyles();
     const theme = useTheme();
     const router = useRouter();
-    const [page, setPage] = React.useState(null)
 
-    const LoadPage = () => {
+    const [components, setComponents] = React.useState([])
+    const [meta, setMeta] = React.useState([])
+
+    const LoadComponents = () => {
         let str = document.location.href.toString()
         const id = str.slice(str.lastIndexOf("/") + 1)
         console.log("id", id)
-        store.fetchDataScr(`${store.url}/pages/${id}`, "GET").then(
+        store.fetchDataScr(`${store.url}/pages/${id}/components/`, "GET").then(
             (data) => {
-                
-                setPage(data)
+                console.log(data)
+                setComponents(data)
+            })
+    }
+
+    const LoadMeta = () => {
+        let str = document.location.href.toString()
+        const id = str.slice(str.lastIndexOf("/") + 1)
+        console.log("id", id)
+        store.fetchDataScr(`${store.url}/pages/${id}/`, "GET").then(
+            (data) => {
+                console.log("meta", data)
+                setMeta(data)
             })
     }
 
     React.useEffect(() => {
-        LoadPage()
+        LoadComponents()
+        LoadMeta()
     }, []);
 
 
@@ -49,8 +66,15 @@ const Page = inject('store')(observer(({ store }) => {
             </Head>
             {/* <Background/> */}
             <NavigationAll>
-                <Grid container direction="column" className={classes.main}>
-                    {page}
+                <Grid
+                    className={classes.main}
+                    direction="column"
+                    justify="flex-start"
+                    alignItems="center"
+                    container
+                >
+                    <Toolbar meta={meta} />
+                    <PageCompList components={components} />
                 </Grid>
             </NavigationAll>
 

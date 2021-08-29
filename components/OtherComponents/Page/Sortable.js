@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Sortable = ({ deleteItemInPages, setComponentsData, items, store, changeDialogPageCreationData, adjustScale = false, collisionDetection = closestCenter, dropAnimation = defaultDropAnimationConfig, getItemStyles = () => ({}), handle = false, itemCount, isDisabled = () => false, removable, strategy = rectSortingStrategy, useDragOverlay = true, wrapperStyle = () => ({}), }) => {
+const Sortable = ({ setSelectId, deleteItemInPages, setComponentsData, items, store, changeDialogPageCreationData, adjustScale = false, collisionDetection = closestCenter, dropAnimation = defaultDropAnimationConfig, getItemStyles = () => ({}), handle = false, itemCount, isDisabled = () => false, removable, strategy = rectSortingStrategy, useDragOverlay = true, wrapperStyle = () => ({}), }) => {
     const classes = useStyles();
     console.log("Sortable render items", items)
     const [activeId, setActiveId] = useState(null);
@@ -84,6 +84,7 @@ const Sortable = ({ deleteItemInPages, setComponentsData, items, store, changeDi
             <div className={classes.Container}>
                 {items.map((value, index) => (
                     <SortableItem
+                        setSelectId={setSelectId}
                         deleteItemInPages={deleteItemInPages}
                         setComponentsData={setComponentsData}
                         value={value}
@@ -108,6 +109,7 @@ const Sortable = ({ deleteItemInPages, setComponentsData, items, store, changeDi
                 >
                     {activeId ? (
                         <Items
+                            setSelectId={setSelectId}
                             deleteItemInPages={deleteItemInPages}
                             setComponentsData={setComponentsData}
                             value={items[activeIndex]}
@@ -149,7 +151,7 @@ function SortableItem({
     value,
     setComponentsData,
     deleteItemInPages,
-
+    setSelectId,
 }) {
     const {
         attributes,
@@ -167,6 +169,7 @@ function SortableItem({
 
     return (
         <Items
+            setSelectId={setSelectId}
             deleteItemInPages={deleteItemInPages}
             setComponentsData={setComponentsData}
             ref={setNodeRef}

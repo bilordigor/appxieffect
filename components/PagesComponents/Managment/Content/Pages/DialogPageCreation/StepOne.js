@@ -131,19 +131,19 @@ const StepOne = inject('store')(observer(({ dialogPageCreationData, changeDialog
                     <option value={'task'}> Тестовое задание </option>
                 </NativeSelect>
             </FormControl>
-            {/* <FormControl className={classes.FormControl} fullWidth>
+            <FormControl className={classes.FormControl} fullWidth>
                 <FormControlLabel
                     control={
                         <Switch
-                            checked={checked}
-                            onChange={() => setChecked(prev => !prev)}
+                            checked={dialogPageCreationData.blueprint}
+                            onChange={() => changeDialogPageCreationData("blueprint", !dialogPageCreationData.blueprint)}
                             name="checkedB"
                             color="primary"
                         />
                     }
                     label="Чертёж"
                 />
-            </FormControl> */}
+            </FormControl>
         </Grid>
     )
 }))

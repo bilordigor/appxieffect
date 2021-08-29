@@ -1,29 +1,40 @@
 import React from 'react';
 
-import { CircularProgress, Grid, Typography, makeStyles, useTheme } from '@material-ui/core';
+import { Tooltip, Divider, Grid, Typography, makeStyles, useTheme, IconButton } from '@material-ui/core';
 
 import { inject, observer } from 'mobx-react'
 
-import Image from 'next/image'
-import Chipper from './Pages/Chipper';
-import PagesList from './Pages/PagesList';
+import { useRouter } from 'next/router'
+
+import UndoIcon from '@material-ui/icons/Undo';
+import InfoIcon from '@material-ui/icons/Info';
 
 const useStyles = makeStyles((theme) => ({
-    gridLoading: {
+    wrapperRoot: {
         marginTop: 8,
-        marginBottom: 8,
-        //height: 96,
+        marginLeft: 8,
+        maxWidth: 800,
     },
-    labelThatsAll: {
-        fontSize: 24,
+    IconButton: {
         color: theme.palette.primary.contrastText,
     },
+    mainLabel: {
+        color: theme.palette.primary.contrastText,
+        fontWeight: "bolder",
+    },
+    divider: {
+        backgroundColor: theme.palette.primary.contrastText,
+        width: "100%",
+        height: 1,
+        maxWidth: 800,
+    }
 }));
 
 
-const Toolbar = inject('store')(observer(({ store }) => {
+const Toolbar = inject('store')(observer(({ store, meta }) => {
     const classes = useStyles();
     const theme = useTheme();
+    const router = useRouter()
 
     const [dataType, setDataType] = React.useState("list")
     const [size, setSize] = React.useState({
@@ -34,13 +45,31 @@ const Toolbar = inject('store')(observer(({ store }) => {
 
 
     return (
-        <Grid
-            container
-            direction="row"
-            justifyContent="flex-start"
-            alignItems="center"
-        >
-        </Grid>
+        <>
+            <Grid
+                container
+                direction="row"
+                justify="flex-start"
+                alignItems="center"
+                wrap="nowrap"
+                className={classes.wrapperRoot}
+            >
+                <Grid item xs zeroMinWidth>
+                    <Typography variant="h5" className={classes.mainLabel} noWrap>{meta.name}</Typography>
+                </Grid>
+                <Tooltip title="Информация о странице">
+                    <IconButton onClick={null} className={classes.IconButton}>
+                        <InfoIcon />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Назад">
+                    <IconButton onClick={() => router.back()} className={classes.IconButton}>
+                        <UndoIcon />
+                    </IconButton>
+                </Tooltip>
+            </Grid>
+            <Divider className={classes.divider} />
+        </>
     )
 }));
 

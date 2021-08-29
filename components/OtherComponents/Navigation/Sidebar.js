@@ -258,7 +258,7 @@ const Sidebar = inject('store')(observer(({ store, openSideMenu, setOpenSideMenu
                             </ListItem>
                         </Tooltip>
                         <Tooltip title="Знания" placement="right" arrow>
-                            <ListItem onClick={MenuBookIconClicked} className={clsx(classes.listItem, { [classes.listItemActive]: router.pathname === '/knowledge' })}>
+                            <ListItem onClick={MenuBookIconClicked} className={clsx(classes.listItem, { [classes.listItemActive]: router.pathname.includes('/knowledge') })}>
                                 <ListItemIcon className={classes.listItemIcon}>
                                     <MenuBookIcon fontSize="large" className={classes.icon} />
                                 </ListItemIcon>

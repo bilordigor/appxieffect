@@ -27,7 +27,7 @@ const Modules = inject('store')(observer(({ store }) => {
 
 
     return (
-        <>
+        <div>
             <Chipper />
             <ModulesList/>
             <Grid
@@ -51,7 +51,7 @@ const Modules = inject('store')(observer(({ store }) => {
                     />
                 </div>}
             </Grid>
-        </>
+        </div>
     )
 }));
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from "next/link";
 import clsx from 'clsx';
-import { Tabs, Tab, ButtonGroup, Input, AppBar, Toolbar, Dialog, InputLabel, NativeSelect, FormControl, DialogContent, MobileStepper, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip } from '@material-ui/core';
+import { Tabs, Tab, withStyles, ButtonGroup, Input, AppBar, Toolbar, Dialog, InputLabel, NativeSelect, FormControl, DialogContent, MobileStepper, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip } from '@material-ui/core';
 
 import { SnackbarProvider, useSnackbar } from 'notistack';
 
@@ -14,13 +14,229 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import CloseIcon from '@material-ui/icons/Close';
 import { inject, observer } from 'mobx-react'
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
+import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
+import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
+import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
+import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
+import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
+import FormatBoldIcon from '@material-ui/icons/FormatBold';
+import FormatItalicIcon from '@material-ui/icons/FormatItalic';
+import FormatUnderlinedIcon from '@material-ui/icons/FormatUnderlined';
+import FormatColorFillIcon from '@material-ui/icons/FormatColorFill';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import LooksOneIcon from '@material-ui/icons/LooksOne';
+import LooksTwoIcon from '@material-ui/icons/LooksTwo';
+import Looks3Icon from '@material-ui/icons/Looks3';
+import Looks4Icon from '@material-ui/icons/Looks4';
+import Looks5Icon from '@material-ui/icons/Looks5';
+import Looks6Icon from '@material-ui/icons/Looks6';
+import ClearIcon from '@material-ui/icons/Clear';
 
 import "react-contexify/dist/ReactContexify.css";
 import Sortable from '../../../../../OtherComponents/Page/Sortable';
+
+const StyledToggleButtonGroup = withStyles((theme) => ({
+    grouped: {
+        margin: theme.spacing(0.5),
+        border: 'none',
+        '&:not(:first-child)': {
+            borderRadius: theme.shape.borderRadius,
+        },
+        '&:first-child': {
+            borderRadius: theme.shape.borderRadius,
+        },
+    },
+}))(ToggleButtonGroup);
+
+const useStylesTool = makeStyles((theme) => ({
+    paper: {
+        marginLeft: 16,
+    }
+}));
+
+const ToolbarComp = ({ value, index, setComponentsData }) => {
+    const classes = useStylesTool();
+
+    const handleFontSize = (event, newFormats) => {
+        //console.log(index, "fontSize", newFormats)
+        setComponentsData(index, "fontSize", newFormats)
+    };
+
+    const handleTextAlign = (event, newAlignment) => {
+        setComponentsData(index, "textAlign", newAlignment)
+    };
+
+    const handleFontStyle = () => {
+        if (value.fontStyle === "normal") return setComponentsData(index, "fontStyle", "italic")
+        return setComponentsData(index, "fontStyle", "normal");
+    };
+
+    const handleFontWeight = () => {
+        if (value.fontWeight === "normal") return setComponentsData(index, "fontWeight", "bold");
+        return setComponentsData(index, "fontWeight", "normal");
+    };
+
+    const handleTextDecoration = () => {
+        if (value.textDecoration === "none") return setComponentsData(index, "textDecoration", "underline");
+        return setComponentsData(index, "textDecoration", "none");
+    };
+
+    if (value.type === "h") {
+        return (
+            <Grid
+                container
+                direction="row"
+                justify="flex-start"
+                alignItems="center"
+                className={classes.paper}>
+
+                <StyledToggleButtonGroup
+                    size="small"
+                    value={value.fontSize}
+                    exclusive
+                    onChange={handleFontSize}
+                    aria-label="text alignment"
+                >
+                    <ToggleButton value={72}>
+                        <LooksOneIcon />
+                    </ToggleButton>
+                    <ToggleButton value={60}>
+                        <LooksTwoIcon />
+                    </ToggleButton>
+                    <ToggleButton value={48}>
+                        <Looks3Icon />
+                    </ToggleButton>
+                    <ToggleButton value={36}>
+                        <Looks4Icon />
+                    </ToggleButton>
+                    <ToggleButton value={30}>
+                        <Looks5Icon />
+                    </ToggleButton>
+                    <ToggleButton value={24}>
+                        <Looks6Icon />
+                    </ToggleButton>
+                </StyledToggleButtonGroup>
+                <Divider flexItem orientation="vertical" className={classes.divider} />
+                <StyledToggleButtonGroup
+                    size="small"
+                    value={value.textAlign}
+                    exclusive
+                    onChange={handleTextAlign}
+                    aria-label="text alignment"
+                >
+                    <ToggleButton value="left" aria-label="left aligned">
+                        <FormatAlignLeftIcon />
+                    </ToggleButton>
+                    <ToggleButton value="center" aria-label="centered">
+                        <FormatAlignCenterIcon />
+                    </ToggleButton>
+                    <ToggleButton value="right" aria-label="right aligned">
+                        <FormatAlignRightIcon />
+                    </ToggleButton>
+                </StyledToggleButtonGroup>
+                <Divider flexItem orientation="vertical" className={classes.divider} />
+                <StyledToggleButtonGroup
+                    size="small"
+                    // value={formats}
+                    // onChange={handleFormat}
+                    aria-label="text formatting"
+                >
+                    <ToggleButton selected={value.fontWeight === "bold" ? true : false} onClick={handleFontWeight} aria-label="bold">
+                        <FormatBoldIcon />
+                    </ToggleButton>
+                    <ToggleButton selected={value.fontStyle === "italic" ? true : false} onClick={handleFontStyle} aria-label="italic">
+                        <FormatItalicIcon />
+                    </ToggleButton>
+                    <ToggleButton selected={value.textDecoration === "underline" ? true : false} onClick={handleTextDecoration} value="underlined" aria-label="underlined">
+                        <FormatUnderlinedIcon />
+                    </ToggleButton>
+                </StyledToggleButtonGroup>
+            </Grid >
+        )
+    }
+    if (value.type === "text") {
+        return (
+            <Grid
+                container
+                direction="row"
+                justify="flex-start"
+                alignItems="center"
+                className={classes.paper}>
+                <StyledToggleButtonGroup
+                    size="small"
+                    value={value.fontSize}
+                    exclusive
+                    onChange={handleFontSize}
+                    aria-label="text alignment"
+                >
+                    <ToggleButton value={26}>
+                        <LooksOneIcon />
+                    </ToggleButton>
+                    <ToggleButton value={22}>
+                        <LooksTwoIcon />
+                    </ToggleButton>
+                    <ToggleButton value={18}>
+                        <Looks3Icon />
+                    </ToggleButton>
+                    <ToggleButton value={14}>
+                        <Looks4Icon />
+                    </ToggleButton>
+                    <ToggleButton value={12}>
+                        <Looks5Icon />
+                    </ToggleButton>
+                    <ToggleButton value={10}>
+                        <Looks6Icon />
+                    </ToggleButton>
+                </StyledToggleButtonGroup>
+                <Divider flexItem orientation="vertical" className={classes.divider} />
+                <StyledToggleButtonGroup
+                    size="small"
+                    value={value.textAlign}
+                    exclusive
+                    onChange={handleTextAlign}
+                    aria-label="text alignment"
+                >
+                    <ToggleButton value="left" aria-label="left aligned">
+                        <FormatAlignLeftIcon />
+                    </ToggleButton>
+                    <ToggleButton value="center" aria-label="centered">
+                        <FormatAlignCenterIcon />
+                    </ToggleButton>
+                    <ToggleButton value="right" aria-label="right aligned">
+                        <FormatAlignRightIcon />
+                    </ToggleButton>
+                    <ToggleButton value="justify" aria-label="right aligned">
+                        <FormatAlignJustifyIcon />
+                    </ToggleButton>
+                </StyledToggleButtonGroup>
+                <Divider flexItem orientation="vertical" className={classes.divider} />
+                <StyledToggleButtonGroup
+                    size="small"
+                    aria-label="text formatting"
+                >
+                    <ToggleButton selected={value.fontWeight === "bold" ? true : false} onClick={handleFontWeight} aria-label="bold">
+                        <FormatBoldIcon />
+                    </ToggleButton>
+                    <ToggleButton selected={value.fontStyle === "italic" ? true : false} onClick={handleFontStyle} aria-label="italic">
+                        <FormatItalicIcon />
+                    </ToggleButton>
+                    <ToggleButton selected={value.textDecoration === "underline" ? true : false} onClick={handleTextDecoration} value="underlined" aria-label="underlined">
+                        <FormatUnderlinedIcon />
+                    </ToggleButton>
+                </StyledToggleButtonGroup>
+            </Grid>
+        )
+    }
+}
+
+const defaultInitializer = (index) => index;
+function createRange(length, initializer = defaultInitializer) {
+    return [...new Array(length)].map((_, index) => initializer(index));
+}
 
 const useStyles = makeStyles((theme) => ({
     gridRoot: {
@@ -60,7 +276,7 @@ const useStyles = makeStyles((theme) => ({
             width: "0! important",
             height: 0,
             display: "none !important",
-            background: "transparent",
+            background: "traimport",
         }
     },
     gridAction: {
@@ -138,52 +354,20 @@ const useStyles = makeStyles((theme) => ({
     componentLabel: {
         marginLeft: 12,
         color: theme.palette.primary.contrastText,
+    },
+    infoLabel: {
+        color: theme.palette.primary.contrastText,
     }
 }));
 
-const defaultInitializer = (index) => index;
-function createRange(length, initializer = defaultInitializer) {
-    return [...new Array(length)].map((_, index) => initializer(index));
-}
-
-const StepTwo = inject('store')(observer(({ deleteItemInPages, setComponentsData, pushNewItemToPages, dialogPageCreationData, changeDialogPageCreationData, store }) => {
+const StepTwo = inject('store')(observer(({ selectId, setSelectId, deleteItemInPages, setComponentsData, pushNewItemToPages, dialogPageCreationData, changeDialogPageCreationData, store }) => {
     const classes = useStyles();
     const theme = useTheme();
-
-    const [idPage, setIdPage] = React.useState(null)
-    const [idPoint, setIdPoint] = React.useState(null)
-    const [mainWindowType, setMainWindowType] = React.useState('none')
-
-    const handlePoint = (idpnt) => {
-        setMainWindowType("point")
-        setIdPage(undefined)
-        setIdPoint(idpnt)
-        console.log("Point")
-    }
-
-    const handlePage = (e, id, idpnt, idpgs) => {
-        e.stopPropagation();
-        e.cancelBubble = true;
-        store.setNowEditPageMeta("id", id)
-        if (id <= 0) {
-            store.setNowEditPageMeta("type", "newPages")
-        }
-        if (id > 0) {
-            store.setNowEditPageMeta("type", "loadPages")
-            if (store.loadedPages[store.nowEditPageMeta.id] === undefined) {
-                store.downloadLoadedPages(store.nowEditPageMeta.id)
-            }
-        }
-        setMainWindowType("page")
-        setIdPage(idpgs)
-        setIdPoint(idpnt)
-        console.log("Page", mainWindowType, idPoint, idPage)
-        console.log("Page1", store.nowEditPageMeta, store.newPages)
-    }
 
     const components = [
         { title: "Текст", subtitle: "Блок текста с возможностью форматирования", type: "text" },
         { title: "Заголовок", subtitle: "Блок с различными заголовками и возможностью форматирования", type: "h" },
+        { title: "Разделитель", subtitle: "Горизонтальная черта, разделяет соседние блоки", type: "divider" },
     ]
 
     return (
@@ -198,35 +382,41 @@ const StepTwo = inject('store')(observer(({ deleteItemInPages, setComponentsData
 
             <Grid
                 xs={12} sm={12} md={8} lg={8} xl={10}
-                item
                 container
                 direction="column"
-                justify="center"
+                justify="flex-start"
                 alignItems="center"
                 className={classes.gridMain}
             >
-                {/* <Page/> */}
+                {selectId != null && <ToolbarComp index={selectId} value={dialogPageCreationData.components[selectId]} setComponentsData={setComponentsData} />}
                 <Grid
-                    item
                     container
-                    direction="column"
-                    className={classes.gridMainImgWrapper}
-                    justify="flex-start"
-                    alignItems="center"
+                    className={classes.gridMain}
                 >
-                    {
-                        dialogPageCreationData.components.length == 0 && <Image
-                            quality={100}
-                            alt="howtocreateamodule"
-                            src="/illustrations/mathTeacher.png"
-                            //layout='fill'
-                            width={480}
-                            height={480}
-                        />
-                    }
+                    <Grid
+                        item
+                        container
+                        direction="column"
+                        className={classes.gridMainImgWrapper}
+                        justify="flex-start"
+                        alignItems="center"
+                    >
+                        {dialogPageCreationData.components.length == 0 && <Typography variant="h5" className={classes.infoLabel}> Страница пока пуста </Typography>}
+                        {dialogPageCreationData.components.length == 0 && <Typography variant="h5" className={classes.infoLabel}> Добавьте компоненты </Typography>}
+                        {
+                            dialogPageCreationData.components.length == 0 && <Image
+                                quality={100}
+                                alt="howtocreateamodule"
+                                src="/illustrations/mathTeacher.png"
+                                //layout='fill'
+                                width={480}
+                                height={480}
+                            />
+                        }
+                    </Grid>
+
+                    {dialogPageCreationData.components.length != 0 && <Sortable setSelectId={setSelectId} deleteItemInPages={deleteItemInPages} setComponentsData={setComponentsData} store={store} items={dialogPageCreationData.components} changeDialogPageCreationData={changeDialogPageCreationData} handle />}
                 </Grid>
-                {dialogPageCreationData.components.length != 0 && <Sortable deleteItemInPages={deleteItemInPages} setComponentsData={setComponentsData} store={store} items={dialogPageCreationData.components} changeDialogPageCreationData={changeDialogPageCreationData} handle />}
-                {dialogPageCreationData.components.length == 0 && <Typography> Страница пока пуста. Добавьте компоненты </Typography>}
 
             </Grid>
 
