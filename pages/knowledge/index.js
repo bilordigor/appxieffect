@@ -89,6 +89,12 @@ const Knowledge = inject('store')(observer(({ store }) => {
   const classes = useStyles();
   const theme = useTheme();
 
+  React.useEffect(() => {
+    if (sessionStorage.getItem('KnowledgeTab') === "Modules") return setValue(0)
+    if (sessionStorage.getItem('KnowledgeTab') === "Pages") return setValue(1)
+    if (sessionStorage.getItem('KnowledgeTab') === "Others") return setValue(2)
+  });
+
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -146,10 +152,10 @@ const Knowledge = inject('store')(observer(({ store }) => {
               textColor="primary"
               aria-label="full width tabs example"
             >
-              <Tab label={<Typography className={classes.tabLabel}>Модули</Typography>} {...a11yProps(0)} />
-              <Tab label={<Typography className={classes.tabLabel}>Страницы</Typography>} {...a11yProps(1)} />
+              <Tab onClick={() => sessionStorage.setItem('KnowledgeTab', "Modules")} label={<Typography className={classes.tabLabel}>Модули</Typography>} {...a11yProps(0)} />
+              <Tab onClick={() => sessionStorage.setItem('KnowledgeTab', "Pages")} label={<Typography className={classes.tabLabel}>Страницы</Typography>} {...a11yProps(1)} />
               {/* <Tab label={<Typography className={classes.tabLabel}>Модерация</Typography>} {...a11yProps(2)} /> */}
-              <Tab label={<Typography className={classes.tabLabel}><MoreHorizIcon /></Typography>} {...a11yProps(2)} />
+              <Tab onClick={() => sessionStorage.setItem('KnowledgeTab', "Others")} label={<Typography className={classes.tabLabel}><MoreHorizIcon /></Typography>} {...a11yProps(2)} />
             </AntTabs>
           </AppBar>
           <SwipeableViews
@@ -159,10 +165,10 @@ const Knowledge = inject('store')(observer(({ store }) => {
             onChangeIndex={handleChangeIndex}
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <Modules/>
+              <Modules />
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
-              <Pages/>
+              <Pages />
             </TabPanel>
             {/* <TabPanel value={value} index={2} dir={theme.direction}> */}
             {/* <Moderate/> */}

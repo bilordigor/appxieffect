@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Tooltip, Divider, Grid, Typography, makeStyles, useTheme, IconButton } from '@material-ui/core';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 import { inject, observer } from 'mobx-react'
 
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Toolbar = inject('store')(observer(({ store, meta }) => {
+const Toolbar = inject('store')(observer(({ loading, meta, store, }) => {
     const classes = useStyles();
     const theme = useTheme();
     const router = useRouter()
@@ -43,6 +44,10 @@ const Toolbar = inject('store')(observer(({ store, meta }) => {
         xl: 3,
     })
 
+    const goBack = () => {
+        
+        router.back()
+    }
 
     return (
         <>
@@ -55,7 +60,10 @@ const Toolbar = inject('store')(observer(({ store, meta }) => {
                 className={classes.wrapperRoot}
             >
                 <Grid item xs zeroMinWidth>
-                    <Typography variant="h5" className={classes.mainLabel} noWrap>{meta.name}</Typography>
+                    {
+                        loading ? <Skeleton animation="wave" variant="text" /> :
+                            <Typography variant="h5" className={classes.mainLabel} noWrap>{meta.name}</Typography>
+                    }
                 </Grid>
                 <Tooltip title="Информация о странице">
                     <IconButton onClick={null} className={classes.IconButton}>
@@ -63,7 +71,7 @@ const Toolbar = inject('store')(observer(({ store, meta }) => {
                     </IconButton>
                 </Tooltip>
                 <Tooltip title="Назад">
-                    <IconButton onClick={() => router.back()} className={classes.IconButton}>
+                    <IconButton onClick={() => goBack()} className={classes.IconButton}>
                         <UndoIcon />
                     </IconButton>
                 </Tooltip>

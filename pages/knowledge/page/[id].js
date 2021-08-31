@@ -25,8 +25,10 @@ const Page = inject('store')(observer(({ store }) => {
     const theme = useTheme();
     const router = useRouter();
 
+    const [loading, setLoading] = React.useState(true)
+
     const [meta, setMeta] = React.useState({
-        components: [] 
+        components: [{}, {}, {}, {}, {}, {}] 
     })
 
     const LoadMeta = () => {
@@ -37,6 +39,7 @@ const Page = inject('store')(observer(({ store }) => {
             (data) => {
                 console.log("meta", data)
                 setMeta(data)
+                setLoading(false)
             })
     }
 
@@ -63,8 +66,8 @@ const Page = inject('store')(observer(({ store }) => {
                     alignItems="center"
                     container
                 >
-                    <Toolbar meta={meta} />
-                    <PageCompList components={meta.components} />
+                    <Toolbar loading={loading} meta={meta} />
+                    <PageCompList loading={loading} components={meta.components} />
                 </Grid>
             </NavigationAll>
 

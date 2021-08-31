@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { CircularProgress, Grid, Typography, makeStyles, useTheme } from '@material-ui/core';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 import { inject, observer } from 'mobx-react'
 import Text from './Components/Text';
@@ -22,19 +23,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const PageCompList = inject('store')(observer(({ components, store }) => {
+const PageCompList = inject('store')(observer(({ loading, components, store }) => {
     const classes = useStyles();
     const theme = useTheme();
 
     const componentsSelect = (value) => {
         if (value.type === "h") return (
             <>
-                <Header value={value}/>
+                <Header value={value} />
             </>
         )
         if (value.type === "text") return (
             <>
-                <Text value={value}/>
+                <Text value={value} />
             </>
         )
     }
@@ -49,7 +50,8 @@ const PageCompList = inject('store')(observer(({ components, store }) => {
         >
             {components.map((value, index) => (
                 <Grid className={classes.wrapper} key={index}>
-                    {componentsSelect(value)}
+                    {loading ? <Skeleton variant="rect" animation="wave" height={64} /> :
+                        componentsSelect(value)}
                 </Grid>
             ))}
         </Grid>
