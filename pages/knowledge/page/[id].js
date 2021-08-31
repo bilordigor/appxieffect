@@ -25,19 +25,9 @@ const Page = inject('store')(observer(({ store }) => {
     const theme = useTheme();
     const router = useRouter();
 
-    const [components, setComponents] = React.useState([])
-    const [meta, setMeta] = React.useState([])
-
-    const LoadComponents = () => {
-        let str = document.location.href.toString()
-        const id = str.slice(str.lastIndexOf("/") + 1)
-        console.log("id", id)
-        store.fetchDataScr(`${store.url}/pages/${id}/components/`, "GET").then(
-            (data) => {
-                console.log(data)
-                setComponents(data)
-            })
-    }
+    const [meta, setMeta] = React.useState({
+        components: [] 
+    })
 
     const LoadMeta = () => {
         let str = document.location.href.toString()
@@ -51,7 +41,7 @@ const Page = inject('store')(observer(({ store }) => {
     }
 
     React.useEffect(() => {
-        LoadComponents()
+        // LoadComponents()
         LoadMeta()
     }, []);
 
@@ -74,7 +64,7 @@ const Page = inject('store')(observer(({ store }) => {
                     container
                 >
                     <Toolbar meta={meta} />
-                    <PageCompList components={components} />
+                    <PageCompList components={meta.components} />
                 </Grid>
             </NavigationAll>
 

@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const PageCompList = inject('store')(observer(({ store, components }) => {
+const PageCompList = inject('store')(observer(({ components, store }) => {
     const classes = useStyles();
     const theme = useTheme();
 

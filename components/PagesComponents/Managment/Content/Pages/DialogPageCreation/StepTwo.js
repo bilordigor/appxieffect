@@ -382,6 +382,7 @@ const StepTwo = inject('store')(observer(({ selectId, setSelectId, deleteItemInP
 
             <Grid
                 xs={12} sm={12} md={8} lg={8} xl={10}
+                item
                 container
                 direction="column"
                 justify="flex-start"
@@ -423,9 +424,9 @@ const StepTwo = inject('store')(observer(({ selectId, setSelectId, deleteItemInP
             {/* Компоненты */}
 
             <Grid
-                item
                 className={classes.gridSidebar}
                 xs={12} sm={12} md={4} lg={4} xl={2}
+                item
                 container
                 direction="column"
                 justify="center"

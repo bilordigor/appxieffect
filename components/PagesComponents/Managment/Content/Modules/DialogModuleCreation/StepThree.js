@@ -79,6 +79,7 @@ const StepThree = inject('store')(observer(({ savePage, store }) => {
             <Grid
                 className={classes.stepWrapper}
                 xs={12} sm={12} md={6} lg={6} xl={6}
+                item
                 container
                 direction="column"
                 justify="flex-start"
@@ -173,6 +174,7 @@ const StepThree = inject('store')(observer(({ savePage, store }) => {
             <Grid
                 className={classes.stepWrapper}
                 xs={12} sm={12} md={6} lg={6} xl={6}
+                item
                 container
                 direction="column"
                 justify="flex-start"

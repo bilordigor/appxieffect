@@ -203,9 +203,9 @@ const StepTwo = inject('store')(observer(({ store }) => {
         >
             {/* Дерево */}
             <Grid
-                item
                 className={classes.gridSidebar}
                 xs={12} sm={12} md={3} lg={2} xl={1}
+                item
                 container
                 direction="column"
                 justify="center"
@@ -456,9 +456,9 @@ const StepTwo = inject('store')(observer(({ store }) => {
             {/* Компоненты */}
 
             <Grid
-                item
                 className={classes.gridSidebar}
                 xs={12} sm={12} md={3} lg={2} xl={1}
+                item
                 container
                 direction="column"
                 justify="center"
