@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 
-import { CircularProgress, Grid, Typography, makeStyles, useTheme } from '@material-ui/core';
+import { CircularProgress, Button, Grid, Typography, makeStyles, useTheme } from '@material-ui/core';
 
 import { inject, observer } from 'mobx-react'
 
@@ -10,6 +11,48 @@ import DataList from './Pages/DataList';
 import DialogPageCreation from './Pages/DialogPageCreation';
 // import Chipper from './Modules/Chipper';
 // import ModulesList from './Modules/ModulesList';
+
+const useStylesToolbarBottom = makeStyles((theme) => ({
+    Grid: {
+        marginTop: 16,
+    },
+    Button: {
+        marginLeft: 16,
+        marginRight: 16,
+        color: theme.palette.primary.contrastText,
+    },
+    Typography: {
+        color: theme.palette.primary.contrastText,
+    }
+}));
+
+const ToolbarBottom = ({ prevPage, nextPage, counter, pl }) => {
+    const classes = useStylesToolbarBottom();
+
+    return (
+        <>
+            <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                className={classes.Grid}
+            >
+                <Button onClick={prevPage} className={classes.Button} variant="contained" color="primary" disabled={counter === 0 ? true : false}>
+                    Назад
+                </Button>
+                <Typography className={classes.Typography} variant="subtitle1">
+                    {`Страница ${counter + 1}`}
+                </Typography>
+                <Button onClick={nextPage} className={classes.Button} variant="contained" color="primary" disabled={pl < 50 ? true : false}>
+                    Вперёд
+                </Button>
+            </Grid>
+        </>
+    )
+}
+
+
 
 const useStyles = makeStyles((theme) => ({
     gridToolbar: {
@@ -92,7 +135,7 @@ const Pages = inject('store')(observer(({ store }) => {
 
         if (dialogPageCreationData.id) {
             console.log("updatePage", dialogPageCreationData)
-            store.fetchDataScr(`${store.url}/wip/pages/${dialogPageCreationData.id}`, "PUT", dialogPageCreationData).then(
+            store.fetchDataScr(`${store.url}/wip/pages/${dialogPageCreationData.id}/`, "PUT", dialogPageCreationData).then(
                 (data) => {
                     if (data) {
                         console.log("done", data)
@@ -119,7 +162,7 @@ const Pages = inject('store')(observer(({ store }) => {
                 })
         }
         if (close) {
-            dialogPageCreation(false)
+            setDialogPageCreation(false)
             setDialogPageCreationData(
                 {
                     id: null,
@@ -133,10 +176,68 @@ const Pages = inject('store')(observer(({ store }) => {
                     public: false,
                 }
             )
+            setCounter(0)
+            LoadPage()
         }
     }
 
 
+
+    const [pages, setPages] = React.useState([])
+    const [counter, setCounter] = React.useState(0)
+
+    const LoadPage = () => {
+        store.fetchDataScr(`${store.url}/pages/owned/`, "POST", { "counter": counter }).then(
+            (data) => {
+                console.log("log", data)
+                setPages(data)
+            })
+    }
+
+    React.useEffect(() => {
+        LoadPage()
+    }, []);
+
+    const prevPage = () => {
+        setCounter(prev => prev - 1)
+        LoadPage()
+    }
+
+    const nextPage = () => {
+        setCounter(prev => prev + 1)
+        LoadPage()
+    }
+
+    const deletePage = (id) => {
+        store.fetchDataScr(`${store.url}/wip/pages/${id}/`, "DELETE").then(
+            (data) => {
+                if (data.a) {
+                    console.log("done", data)
+                    setCounter(0)
+                    LoadPage()
+
+                } else {
+                    console.log("fail", data)
+                }
+
+            })
+
+    }
+
+    const changeOldPage = (id) => {
+        store.fetchDataScr(`${store.url}/wip/pages/${id}/`, "GET").then(
+            (data) => {
+                if (data) {
+                    console.log("done")
+                    console.log("data", data)
+                    setDialogPageCreationData(data)
+                    setDialogPageCreation(true)
+                } else {
+                    console.log("fail")
+                }
+
+            })
+    }
 
     return (
         <Grid
@@ -152,7 +253,8 @@ const Pages = inject('store')(observer(({ store }) => {
                 <Toolbar setDialogPageCreation={setDialogPageCreation} />
             </Grid>
             <DialogPageCreation selectId={selectId} setSelectId={setSelectId} savePage={savePage} deleteItemInPages={deleteItemInPages} setComponentsData={setComponentsData} pushNewItemToPages={pushNewItemToPages} dialogPageCreationData={dialogPageCreationData} changeDialogPageCreationData={changeDialogPageCreationData} dialogPageCreation={dialogPageCreation} setDialogPageCreation={setDialogPageCreation} />
-            <DataList />
+            <DataList changeOldPage={changeOldPage} deletePage={deletePage} pages={pages} />
+            <ToolbarBottom prevPage={prevPage} nextPage={nextPage} counter={counter} pl={pages.length} />
         </Grid>
     )
 }));

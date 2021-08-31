@@ -137,7 +137,7 @@ function CustomPagination() {
 
 
 
-const DataList = inject('store')(observer(({ store }) => {
+const DataList = inject('store')(observer(({ changeOldPage, deletePage, pages, store }) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -145,9 +145,23 @@ const DataList = inject('store')(observer(({ store }) => {
     const [selectId, setSelectId] = React.useState()
 
     const dialogOpen = (params) => {
+        console.log("params", params)
         setOpenDialog(params)
-        console.log(openDialog)
+        //console.log(openDialog)
     }
+
+    const kindSelect = (value) => {
+        if (value === "practice") return "Практика"
+        if (value === "task") return "Задание"
+        if (value === "theory") return "Теория"
+    }
+
+    const statusSelect = (value) => {
+        if (value === "wip") return "В Разработке"
+        if (value === "published") return "Опубликован"
+    }
+
+
 
     const columns = [
         {
@@ -155,16 +169,31 @@ const DataList = inject('store')(observer(({ store }) => {
             headerName: 'Название',
             //type: 'number',
             width: 220,
+            renderCell: (params) => (
+                <Grid container wrap="nowrap" spacing={2}>
+                    <Grid item xs zeroMinWidth>
+                        <Tooltip title={params.value != null ? params.value : ""}>
+                            <Typography style={{ cursor: "default" }} noWrap>{params.value}</Typography>
+                        </Tooltip>
+                    </Grid>
+                </Grid>
+            ),
         },
         {
             field: 'status',
             headerName: 'Статус',
             width: 180,
+            renderCell: (params) => (
+                <Typography style={{ cursor: "default" }}> {statusSelect(params.value)} </Typography>
+            ),
         },
         {
             field: 'views',
             headerName: 'Просмотры',
             width: 180,
+            renderCell: (params) => (
+                <Typography style={{ cursor: "default" }}> {params.value} </Typography>
+            ),
         },
         // {
         //     field: 'blueprint',
@@ -172,20 +201,41 @@ const DataList = inject('store')(observer(({ store }) => {
         //     width: 180,
         // },
         {
-            field: 'type',
+            field: 'kind',
             headerName: 'Вид',
             width: 200,
+            renderCell: (params) => (
+                <Typography style={{ cursor: "default" }}> {kindSelect(params.value)} </Typography>
+            ),
         },
         {
             field: 'theme',
             headerName: 'Тематика',
             width: 210,
+            renderCell: (params) => (
+                <Grid container wrap="nowrap" spacing={2}>
+                    <Grid item xs zeroMinWidth>
+                        <Tooltip title={params.value != null ? params.value : ""}>
+                            <Typography style={{ cursor: "default" }} noWrap>{params.value}</Typography>
+                        </Tooltip>
+                    </Grid>
+                </Grid>
+            ),
         },
         {
             field: 'description',
             headerName: 'Описание',
             flex: 1,
             minWidth: 150,
+            renderCell: (params) => (
+                <Grid container wrap="nowrap" spacing={2}>
+                    <Grid item xs zeroMinWidth>
+                        <Tooltip title={params.value != null ? params.value : ""}>
+                            <Typography style={{ cursor: "default" }} noWrap>{params.value}</Typography>
+                        </Tooltip>
+                    </Grid>
+                </Grid>
+            ),
         },
         {
             field: '',
@@ -196,22 +246,22 @@ const DataList = inject('store')(observer(({ store }) => {
                 <Grid>
                     <Tooltip title="Изменить">
                         <IconButton
-                            onClick={() => dialogOpen(params)}
+                            onClick={() => changeOldPage(params.row.id)}
                             variant="contained"
-                            color="primary"
+                            //color="primary"
                             size="small"
-                            style={{ marginLeft: 16, marginTop: -4 }}
+                            style={{ marginLeft: 16, marginTop: -4, color: theme.palette.primary.contrastText }}
                         >
                             <EditIcon />
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Удалить">
                         <IconButton
-                            onClick={() => dialogOpen(params)}
+                            onClick={() => deletePage(params.row.id)}
                             variant="contained"
-                            color="primary"
+                            //color="primary"
                             size="small"
-                            style={{ marginLeft: 16, marginTop: -4 }}
+                            style={{ marginLeft: 16, marginTop: -4, color: theme.palette.primary.contrastText }}
                         >
                             <DeleteForeverIcon />
                         </IconButton>
@@ -237,7 +287,7 @@ const DataList = inject('store')(observer(({ store }) => {
         <div style={{ display: 'flex', height: '100%', width: '100%', marginTop: 16, }} className={classes.root}>
             <div style={{ flexGrow: 1 }}>
                 <DataGrid
-                    rows={rows}
+                    rows={pages}
                     columns={columns}
                     className={classes.root}
                     autoHeight
@@ -247,6 +297,9 @@ const DataList = inject('store')(observer(({ store }) => {
                     getRowClassName={(params) =>
                         `super-app-theme--rows`
                     }
+                    disableColumnMenu
+                    // disableColumnSelector
+                    hideFooter
                 // components={{
                 //     Pagination: CustomPagination,
                 // }}

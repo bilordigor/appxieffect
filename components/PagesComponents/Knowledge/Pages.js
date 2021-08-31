@@ -20,7 +20,7 @@ const useStylesToolbar = makeStyles((theme) => ({
     }
 }));
 
-const Toolbar = ({ counter, pl }) => {
+const Toolbar = ({ prevPage, nextPage, counter, pl }) => {
     const classes = useStylesToolbar();
 
     return (
@@ -31,13 +31,13 @@ const Toolbar = ({ counter, pl }) => {
                 justify="center"
                 alignItems="center"
             >
-                <Button className={classes.Button} variant="contained" color="primary" disabled={counter === 0 ? true : false}>
+                <Button onClick={prevPage} className={classes.Button} variant="contained" color="primary" disabled={counter === 0 ? true : false}>
                     Назад
                 </Button>
                 <Typography className={classes.Typography} variant="subtitle1">
                     {`Страница ${counter + 1}`}
                 </Typography>
-                <Button className={classes.Button} variant="contained" color="primary" disabled={pl < 50 ? true : false}>
+                <Button onClick={nextPage} className={classes.Button} variant="contained" color="primary" disabled={pl < 50 ? true : false}>
                     Вперёд
                 </Button>
             </Grid>
@@ -73,6 +73,10 @@ const Pages = inject('store')(observer(({ store }) => {
     const [counter, setCounter] = React.useState(0)
     const [search, setSearch] = React.useState("")
 
+    React.useEffect(() => {
+        LoadPage()
+    }, []);
+
     const LoadPage = () => {
         store.fetchDataScr(`${store.url}/pages/`, "POST", { "counter": counter, "search": search }).then(
             (data) => {
@@ -81,9 +85,15 @@ const Pages = inject('store')(observer(({ store }) => {
             })
     }
 
-    React.useEffect(() => {
+    const prevPage = () => {
+        setCounter(prev => prev - 1)
         LoadPage()
-    }, []);
+    }
+
+    const nextPage = () => {
+        setCounter(prev => prev + 1)
+        LoadPage()
+    }
 
     const goSearch = () => {
         setCounter(0)
@@ -98,7 +108,7 @@ const Pages = inject('store')(observer(({ store }) => {
         <>
             <Chipper goSearch={goSearch} search={search} setSearch={setSearch} dataType={dataType} setDataType={setDataType} setSize={setSize} />
             <PagesList pages={pages} dataType={dataType} size={size} />
-            <Toolbar counter={counter} pl={pages.length} />
+            <Toolbar prevPage={prevPage} nextPage={nextPage} counter={counter} pl={pages.length} />
         </>
     )
 }));
