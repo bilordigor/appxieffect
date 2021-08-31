@@ -85,7 +85,7 @@ const ToolbarComp = ({ value, index, setComponentsData }) => {
         return setComponentsData(index, "textDecoration", "none");
     };
 
-    if (value.type === "h") {
+    if (value?.type === "h") {
         return (
             <Grid
                 container
@@ -158,7 +158,7 @@ const ToolbarComp = ({ value, index, setComponentsData }) => {
             </Grid >
         )
     }
-    if (value.type === "text") {
+    if (value?.type === "text") {
         return (
             <Grid
                 container
@@ -231,6 +231,7 @@ const ToolbarComp = ({ value, index, setComponentsData }) => {
             </Grid>
         )
     }
+    return null
 }
 
 const defaultInitializer = (index) => index;
