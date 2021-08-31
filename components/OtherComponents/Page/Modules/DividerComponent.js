@@ -7,9 +7,20 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 
 const useStyles = makeStyles((theme) => ({
+    gridButtons: {
+        marginLeft: "auto",
+    },
+    divider: {
+        margin: theme.spacing(1, 0.5),
+    },
+    divider1: {
+        width: "100%",
+        height: 1,
+        margin: theme.spacing(1, 0.5),
+    },
     gridTextWrapper: {
         //textAlign: "center !important",
-        width: "calc(100% - 92px)",
+        width: "calc(100% - 100px)",
     },
     divider: {
         width: "100%",
@@ -17,9 +28,6 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1, 0.5),
         backgroundColor: theme.palette.primary.contrastText,
     },
-    gridButtons: {
-        marginLeft: 4,
-    }
 }));
 
 const StyledToggleButtonGroup = withStyles((theme) => ({

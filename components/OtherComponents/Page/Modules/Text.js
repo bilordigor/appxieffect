@@ -24,7 +24,7 @@ import { inject, observer } from 'mobx-react'
 
 const useStyles = makeStyles((theme) => ({
     gridButtons: {
-        marginLeft: 4,
+        marginLeft: "auto",
     },
     divider: {
         margin: theme.spacing(1, 0.5),
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     },
     gridTextWrapper: {
         //textAlign: "center !important",
-        width: "calc(100% - 92px)",
+        width: "calc(100% - 100px)",
     },
     text: {
         width: "100%",
