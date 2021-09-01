@@ -55,6 +55,12 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 24,
         color: theme.palette.primary.contrastText,
     },
+    container: {
+        marginTop: 16,
+        marginBottom: 16,
+        height: '100%',
+        width: '100%',
+    },
 }));
 
 const Pages = inject('store')(observer(({ store }) => {
@@ -72,43 +78,87 @@ const Pages = inject('store')(observer(({ store }) => {
     const [pages, setPages] = React.useState([])
     const [counter, setCounter] = React.useState(0)
     const [search, setSearch] = React.useState("")
+    const [loadingInd, setLoadingInd] = React.useState(true)
+    const [loadingNothing, setLoadingNothing] = React.useState(false)
 
     React.useEffect(() => {
-        LoadPage()
+        LoadPage(false, counter, search)
     }, []);
 
-    const LoadPage = () => {
-        store.fetchDataScr(`${store.url}/pages/`, "POST", { "counter": counter, "search": search }).then(
+    const LoadPage = (isSearch, c, s) => {
+        setLoadingInd(true)
+        //console.log("LoadPage", c, s)
+        store.fetchDataScr(`${store.url}/pages/`, "POST", { "counter": c, "search": s != "" ? s : null }).then(
             (data) => {
                 console.log(data)
                 setPages(data)
+                setLoadingInd(false)
+                if (isSearch && data.length === 0) setLoadingNothing(true)
+
             })
     }
 
     const prevPage = () => {
         setCounter(prev => prev - 1)
-        LoadPage()
+        LoadPage(false, counter - 1, search)
     }
 
     const nextPage = () => {
         setCounter(prev => prev + 1)
-        LoadPage()
+        LoadPage(false, counter + 1, search)
     }
 
     const goSearch = () => {
+        setLoadingNothing(false)
         setCounter(0)
-        store.fetchDataScr(`${store.url}/pages/`, "POST", { "counter": counter, "search": search }).then(
-            (data) => {
-                console.log(data)
-                setPages(data)
-            })
+        LoadPage(true, 0, search)
+    }
+
+    const clearSearch = () => {
+        setCounter(0)
+        LoadPage(false, 0, "")
     }
 
     return (
         <>
-            <Chipper goSearch={goSearch} search={search} setSearch={setSearch} dataType={dataType} setDataType={setDataType} setSize={setSize} />
-            <PagesList pages={pages} dataType={dataType} size={size} />
-            <Toolbar prevPage={prevPage} nextPage={nextPage} counter={counter} pl={pages.length} />
+            <Chipper clearSearch={clearSearch} goSearch={goSearch} search={search} setSearch={setSearch} dataType={dataType} setDataType={setDataType} setSize={setSize} />
+            {!loadingNothing && <>
+                {!loadingInd && <PagesList pages={pages} dataType={dataType} size={size} />}
+                {!loadingInd && <Toolbar prevPage={prevPage} nextPage={nextPage} counter={counter} pl={pages.length} />}
+                {loadingInd &&
+                    <Grid
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                        className={classes.container}
+                    >
+                        <CircularProgress />
+                    </Grid>
+                }
+            </>}
+            {loadingNothing &&
+                <Grid
+                    container
+                    direction="column"
+                    justify="center"
+                    alignItems="center"
+                    className={classes.container}
+                >
+                    <Typography> Ничего не найдено по запросу </Typography>
+                    <div>
+                        <Image
+                            alt="img"
+                            src="/illustrations/astronaut.png"
+                            //layout="fill"
+                            width={600}
+                            height={562}
+                        //objectFit="cover"
+                        //quality={100}
+                        />
+                    </div>
+                </Grid>
+            }
         </>
     )
 }));

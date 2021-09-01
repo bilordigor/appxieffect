@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
 
-import { Chip, Divider, FormControl, FormLabel, RadioGroup, Radio, FormControlLabel, Popper, ClickAwayListener, Paper, MenuItem, MenuList, IconButton, Button, Grid, InputBase, Typography, makeStyles, useTheme } from '@material-ui/core';
+import { Chip, Divider, FormControl, FormLabel, RadioGroup, Radio, FormControlLabel, Popper, ClickAwayListener, Paper, MenuItem, MenuList, IconButton, Button, Grid, InputBase, Typography, makeStyles, useTheme, Tooltip } from '@material-ui/core';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import ClearIcon from '@material-ui/icons/Clear';
 
 import { inject, observer } from 'mobx-react'
 
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Chipper = inject('store')(observer(({ goSearch, search, setSearch, dataType, setDataType, setSize, store, loadingMoreCourses }) => {
+const Chipper = inject('store')(observer(({ clearSearch, goSearch, search, setSearch, dataType, setDataType, setSize, store, loadingMoreCourses }) => {
     const classes = useStyles();
     const theme = useTheme()
     const [open, setOpen] = React.useState(false);
@@ -69,6 +70,11 @@ const Chipper = inject('store')(observer(({ goSearch, search, setSearch, dataTyp
         })
         //console.log("dataType", dataType)
     };
+
+    const clearSearchHere = () => {
+        setSearch("")
+        clearSearch()
+    }
 
     return (
         <Grid container direction="column" className={classes.root}>
@@ -111,9 +117,16 @@ const Chipper = inject('store')(observer(({ goSearch, search, setSearch, dataTyp
                     placeholder="Поиск страниц"
                     inputProps={{ 'aria-label': 'Поиск страниц' }}
                 />
-                <IconButton onClick={() => goSearch()} type="submit" className={classes.iconButton} aria-label="search">
-                    <SearchIcon />
-                </IconButton>
+                {search.length != 0 && <Tooltip title="Очистить поиск">
+                    <IconButton onClick={() => clearSearchHere()} type="submit" className={classes.iconButton} aria-label="search">
+                        <ClearIcon />
+                    </IconButton>
+                </Tooltip>}
+                <Tooltip title="Найти">
+                    <IconButton onClick={() => goSearch()} type="submit" className={classes.iconButton} aria-label="search">
+                        <SearchIcon />
+                    </IconButton>
+                </Tooltip>
             </Grid>
             <Divider className={classes.divider} />
         </Grid>
