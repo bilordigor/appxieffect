@@ -6,6 +6,8 @@ import { Chip, Divider, FormControl, FormLabel, RadioGroup, Radio, FormControlLa
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 import { inject, observer } from 'mobx-react'
 
@@ -18,14 +20,15 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 4,
         background: theme.palette.blueGrey["1"],
     },
-
     divider: {
+        width: "100%",
+        height: 1,
         backgroundColor: theme.palette.primary.contrastText
     },
     input: {
         color: theme.palette.primary.contrastText,
-        marginLeft: theme.spacing(1),
-        flex: 1,
+        //marginLeft: theme.spacing(1),
+        // flex: 1,
         // minWidth: 100,
         maxWidth: 200,
     },
@@ -44,10 +47,24 @@ const useStyles = makeStyles((theme) => ({
     },
     popperPaperGrid: {
         padding: 8,
+    },
+    gridSpacer: {
+        marginLeft: "auto",
+    },
+    gridNavWrap: {
+        width: 120,
+        marginRight: 0,
+        marginLeft: 0,
+    },
+    Typography: {
+        marginRight: 2,
+        marginLeft: 2,
+        color: theme.palette.primary.contrastText,
+        cursor: "default",
     }
 }));
 
-const Chipper = inject('store')(observer(({ clearSearch, goSearch, search, setSearch, dataType, setDataType, setSize, store, loadingMoreCourses }) => {
+const Chipper = inject('store')(observer(({ prevPage, nextPage, counter, pl, clearSearch, goSearch, search, setSearch, dataType, setDataType, setSize, store, loadingMoreCourses }) => {
     const classes = useStyles();
     const theme = useTheme()
     const [open, setOpen] = React.useState(false);
@@ -77,8 +94,15 @@ const Chipper = inject('store')(observer(({ clearSearch, goSearch, search, setSe
     }
 
     return (
-        <Grid container direction="column" className={classes.root}>
+        <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+            className={classes.root}
+        >
             <Grid
+                item
                 container
                 direction="row"
                 justify="flex-start"
@@ -117,6 +141,9 @@ const Chipper = inject('store')(observer(({ clearSearch, goSearch, search, setSe
                     placeholder="Поиск страниц"
                     inputProps={{ 'aria-label': 'Поиск страниц' }}
                 />
+                {search.length === 0 && <IconButton disabled onClick={() => clearSearchHere()} type="submit" className={classes.iconButton} aria-label="search">
+                    <ClearIcon />
+                </IconButton>}
                 {search.length != 0 && <Tooltip title="Очистить поиск">
                     <IconButton onClick={() => clearSearchHere()} type="submit" className={classes.iconButton} aria-label="search">
                         <ClearIcon />
@@ -127,6 +154,40 @@ const Chipper = inject('store')(observer(({ clearSearch, goSearch, search, setSe
                         <SearchIcon />
                     </IconButton>
                 </Tooltip>
+
+                {/* <Tooltip title="Очистить поиск">
+                        <IconButton disabled={search.length === 0} onClick={() => clearSearchHere()} type="submit" className={classes.iconButton} aria-label="search">
+                            <ClearIcon />
+                        </IconButton>
+                    </Tooltip> */}
+                <Grid className={classes.gridSpacer}>
+
+                </Grid>
+                <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                    className={classes.gridNavWrap}
+                >
+                    <Tooltip title="Назад">
+                        <span>
+                            <IconButton onClick={prevPage} type="submit" className={classes.iconButton} disabled={counter === 0 ? true : false}>
+                                <NavigateBeforeIcon />
+                            </IconButton>
+                        </span>
+                    </Tooltip>
+                    <Tooltip title="Страница">
+                        <Typography className={classes.Typography} variant="subtitle1"> {`${counter + 1}`} </Typography>
+                    </Tooltip>
+                    <Tooltip title="Вперёд">
+                        <span>
+                            <IconButton onClick={nextPage} type="submit" className={classes.iconButton} disabled={pl < 50 ? true : false}>
+                                <NavigateNextIcon />
+                            </IconButton>
+                        </span>
+                    </Tooltip>
+                </Grid>
             </Grid>
             <Divider className={classes.divider} />
         </Grid>
