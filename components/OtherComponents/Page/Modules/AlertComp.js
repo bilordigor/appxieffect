@@ -5,7 +5,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import ClearIcon from '@material-ui/icons/Clear';
 import { inject, observer } from 'mobx-react'
-
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     gridButtons: {
@@ -32,6 +32,12 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: props => props.fontWeight,
         textDecoration: props => props.textDecoration,
         lineHeight: "normal",
+    },
+    Alert: {
+        width: "100%",
+    },
+    AlertMessage: {
+        width: "100%",
     }
 }));
 
@@ -48,14 +54,12 @@ const StyledToggleButtonGroup = withStyles((theme) => ({
     },
 }))(ToggleButtonGroup);
 
-const Header = inject('store')(observer(({ store, values, listeners, index, setComponentsData, deleteItemInPages, setSelectId }) => {
-
+const AlertComp = inject('store')(observer(({ store, values, listeners, index, setComponentsData, deleteItemInPages, setSelectId }) => {
     // Simulated props for the purpose of the example
     const props = { fontSize: values.fontSize, textAlign: values.textAlign, fontStyle: values.fontStyle, fontWeight: values.fontWeight, textDecoration: values.textDecoration, backgroundColor: 'black', color: 'white' };
     // Pass the props as the first argument of useStyles()
     console.log("props", props)
     const classes = useStyles(props);
-
     return (
         <>
             <Grid
@@ -65,18 +69,28 @@ const Header = inject('store')(observer(({ store, values, listeners, index, setC
                 alignItems="flex-start"
                 onClick={() => setSelectId(index)}
             >
+
                 <Grid className={classes.gridTextWrapper}>
-                    <Input
+                    <Alert
+                        variant="filled"
+                        className={classes.Alert}
+                        severity={values.alertType}
                         classes={{
-                            input: classes.text
+                            message: classes.AlertMessage
                         }}
-                        type="text"
-                        disableUnderline
-                        multiline
-                        fullWidth
-                        value={values.label}
-                        onChange={(event) => setComponentsData(index, "label", event.target.value)}
-                    />
+                    >
+                        <Input
+                            classes={{
+                                input: classes.text
+                            }}
+                            type="text"
+                            disableUnderline
+                            multiline
+                            fullWidth
+                            value={values.label}
+                            onChange={(event) => setComponentsData(index, "label", event.target.value)}
+                        />
+                    </Alert>
                 </Grid>
                 <Grid className={classes.gridButtons}>
                     <StyledToggleButtonGroup
@@ -93,11 +107,8 @@ const Header = inject('store')(observer(({ store, values, listeners, index, setC
                 </Grid>
             </Grid>
         </>
-
     );
 }));
 
-// onClickAway={() => setEdit(false)}
 
-export default Header
-
+export default AlertComp

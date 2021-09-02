@@ -98,10 +98,10 @@ const Text = inject('store')(observer(({ store, values, listeners, index, setCom
                         size="small"
                         aria-label="text formatting"
                     >
-                        <ToggleButton onClick={() => deleteItemInPages(index)}>
+                        <ToggleButton value="clear" onClick={() => deleteItemInPages(index)}>
                             <ClearIcon />
                         </ToggleButton>
-                        <ToggleButton>
+                        <ToggleButton value="drag">
                             <DragIndicatorIcon {...listeners} />
                         </ToggleButton>
                     </StyledToggleButtonGroup>

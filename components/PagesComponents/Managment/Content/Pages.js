@@ -112,6 +112,12 @@ const Pages = inject('store')(observer(({ store }) => {
                 components: [...dialogPageCreationData.components, { type: "text", fontSize: 14, textAlign: "left", fontWeight: "normal", fontStyle: "normal", textDecoration: "none", label: "текст" }]
             }));
         }
+        if (type === "alert") {
+            setDialogPageCreationData(prevState => ({
+                ...prevState,
+                components: [...dialogPageCreationData.components, { type: "alert", alertType: "success", fontSize: 14, textAlign: "left", fontWeight: "normal", fontStyle: "normal", textDecoration: "none", label: "текст уведомления" }]
+            }));
+        }
         if (type === "divider") {
             setDialogPageCreationData(prevState => ({
                 ...prevState,

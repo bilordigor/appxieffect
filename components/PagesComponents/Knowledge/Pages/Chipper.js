@@ -141,11 +141,11 @@ const Chipper = inject('store')(observer(({ prevPage, nextPage, counter, pl, cle
                     placeholder="Поиск страниц"
                     inputProps={{ 'aria-label': 'Поиск страниц' }}
                 />
-                {search.length === 0 && <IconButton disabled onClick={() => clearSearchHere()} type="submit" className={classes.iconButton} aria-label="search">
+                {search.length === 0 && <IconButton disabled onClick={clearSearchHere} type="submit" className={classes.iconButton} aria-label="search">
                     <ClearIcon />
                 </IconButton>}
                 {search.length != 0 && <Tooltip title="Очистить поиск">
-                    <IconButton onClick={() => clearSearchHere()} type="submit" className={classes.iconButton} aria-label="search">
+                    <IconButton onClick={clearSearchHere} type="submit" className={classes.iconButton} aria-label="search">
                         <ClearIcon />
                     </IconButton>
                 </Tooltip>}

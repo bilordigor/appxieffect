@@ -65,10 +65,10 @@ const DividerComponent = ({ values, listeners, index, setComponentsData, deleteI
                         //onChange={handleFormat}
                         aria-label="text formatting"
                     >
-                        <ToggleButton onClick={() => deleteItemInPages(index)}>
+                        <ToggleButton value="clear" onClick={() => deleteItemInPages(index)}>
                             <ClearIcon />
                         </ToggleButton>
-                        <ToggleButton>
+                        <ToggleButton value="drag">
                             <DragIndicatorIcon {...listeners} />
                         </ToggleButton>
                     </StyledToggleButtonGroup>

@@ -35,6 +35,10 @@ import Looks4Icon from '@material-ui/icons/Looks4';
 import Looks5Icon from '@material-ui/icons/Looks5';
 import Looks6Icon from '@material-ui/icons/Looks6';
 import ClearIcon from '@material-ui/icons/Clear';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import InfoIcon from '@material-ui/icons/Info';
+import ErrorIcon from '@material-ui/icons/Error';
+import WarningIcon from '@material-ui/icons/Warning';
 
 import "react-contexify/dist/ReactContexify.css";
 import Sortable from '../../../../../OtherComponents/Page/Sortable';
@@ -60,6 +64,11 @@ const useStylesTool = makeStyles((theme) => ({
 
 const ToolbarComp = ({ value, index, setComponentsData }) => {
     const classes = useStylesTool();
+
+    const handleAlertType = (event, newFormats) => {
+        //console.log(index, "fontSize", newFormats)
+        setComponentsData(index, "alertType", newFormats)
+    };
 
     const handleFontSize = (event, newFormats) => {
         //console.log(index, "fontSize", newFormats)
@@ -145,10 +154,10 @@ const ToolbarComp = ({ value, index, setComponentsData }) => {
                     // onChange={handleFormat}
                     aria-label="text formatting"
                 >
-                    <ToggleButton selected={value.fontWeight === "bold" ? true : false} onClick={handleFontWeight} aria-label="bold">
+                    <ToggleButton selected={value.fontWeight === "bold" ? true : false} onClick={handleFontWeight} value="bold" aria-label="bold">
                         <FormatBoldIcon />
                     </ToggleButton>
-                    <ToggleButton selected={value.fontStyle === "italic" ? true : false} onClick={handleFontStyle} aria-label="italic">
+                    <ToggleButton selected={value.fontStyle === "italic" ? true : false} onClick={handleFontStyle} value="italic" aria-label="italic">
                         <FormatItalicIcon />
                     </ToggleButton>
                     <ToggleButton selected={value.textDecoration === "underline" ? true : false} onClick={handleTextDecoration} value="underlined" aria-label="underlined">
@@ -218,10 +227,10 @@ const ToolbarComp = ({ value, index, setComponentsData }) => {
                     size="small"
                     aria-label="text formatting"
                 >
-                    <ToggleButton selected={value.fontWeight === "bold" ? true : false} onClick={handleFontWeight} aria-label="bold">
+                    <ToggleButton selected={value.fontWeight === "bold" ? true : false} onClick={handleFontWeight} value="bold" aria-label="bold">
                         <FormatBoldIcon />
                     </ToggleButton>
-                    <ToggleButton selected={value.fontStyle === "italic" ? true : false} onClick={handleFontStyle} aria-label="italic">
+                    <ToggleButton selected={value.fontStyle === "italic" ? true : false} onClick={handleFontStyle} value="italic" aria-label="italic">
                         <FormatItalicIcon />
                     </ToggleButton>
                     <ToggleButton selected={value.textDecoration === "underline" ? true : false} onClick={handleTextDecoration} value="underlined" aria-label="underlined">
@@ -231,7 +240,109 @@ const ToolbarComp = ({ value, index, setComponentsData }) => {
             </Grid>
         )
     }
-    return null
+    if (value?.type === "alert") {
+        return (
+            <Grid
+                container
+                direction="row"
+                justify="flex-start"
+                alignItems="center"
+                className={classes.paper}>
+                <StyledToggleButtonGroup
+                    size="small"
+                    value={value.alertType}
+                    exclusive
+                    onChange={handleAlertType}
+                >
+                    <ToggleButton value={"success"}>
+                        <CheckCircleIcon />
+                    </ToggleButton>
+                    <ToggleButton value={"info"}>
+                        <InfoIcon />
+                    </ToggleButton>
+                    <ToggleButton value={"warning"}>
+                        <WarningIcon />
+                    </ToggleButton>
+                    <ToggleButton value={"error"}>
+                        <ErrorIcon />
+                    </ToggleButton>
+                </StyledToggleButtonGroup>
+                <Divider flexItem orientation="vertical" className={classes.divider} />
+                <StyledToggleButtonGroup
+                    size="small"
+                    value={value.fontSize}
+                    exclusive
+                    onChange={handleFontSize}
+                    aria-label="text alignment"
+                >
+                    <ToggleButton value={26}>
+                        <LooksOneIcon />
+                    </ToggleButton>
+                    <ToggleButton value={22}>
+                        <LooksTwoIcon />
+                    </ToggleButton>
+                    <ToggleButton value={18}>
+                        <Looks3Icon />
+                    </ToggleButton>
+                    <ToggleButton value={14}>
+                        <Looks4Icon />
+                    </ToggleButton>
+                    <ToggleButton value={12}>
+                        <Looks5Icon />
+                    </ToggleButton>
+                    <ToggleButton value={10}>
+                        <Looks6Icon />
+                    </ToggleButton>
+                </StyledToggleButtonGroup>
+                <Divider flexItem orientation="vertical" className={classes.divider} />
+                <StyledToggleButtonGroup
+                    size="small"
+                    value={value.textAlign}
+                    exclusive
+                    onChange={handleTextAlign}
+                    aria-label="text alignment"
+                >
+                    <ToggleButton value="left" aria-label="left aligned">
+                        <FormatAlignLeftIcon />
+                    </ToggleButton>
+                    <ToggleButton value="center" aria-label="centered">
+                        <FormatAlignCenterIcon />
+                    </ToggleButton>
+                    <ToggleButton value="right" aria-label="right aligned">
+                        <FormatAlignRightIcon />
+                    </ToggleButton>
+                    <ToggleButton value="justify" aria-label="right aligned">
+                        <FormatAlignJustifyIcon />
+                    </ToggleButton>
+                </StyledToggleButtonGroup>
+                <Divider flexItem orientation="vertical" className={classes.divider} />
+                <StyledToggleButtonGroup
+                    size="small"
+                    aria-label="text formatting"
+                >
+                    <ToggleButton selected={value.fontWeight === "bold" ? true : false} onClick={handleFontWeight} value="bold" aria-label="bold">
+                        <FormatBoldIcon />
+                    </ToggleButton>
+                    <ToggleButton selected={value.fontStyle === "italic" ? true : false} onClick={handleFontStyle} value="italic" aria-label="italic">
+                        <FormatItalicIcon />
+                    </ToggleButton>
+                    <ToggleButton selected={value.textDecoration === "underline" ? true : false} onClick={handleTextDecoration} value="underlined" aria-label="underlined">
+                        <FormatUnderlinedIcon />
+                    </ToggleButton>
+                </StyledToggleButtonGroup>
+            </Grid>
+        )
+    }
+    return (
+        <Grid
+            container
+            direction="row"
+            justify="flex-start"
+            alignItems="center"
+            className={classes.paper}>
+
+        </Grid>
+    )
 }
 
 const defaultInitializer = (index) => index;
@@ -248,6 +359,7 @@ const useStyles = makeStyles((theme) => ({
     },
     gridMain: {
         margin: 0,
+        //paddingLeft: 4,
         padding: 0,
         width: "100%",
         height: "100%",
@@ -358,6 +470,10 @@ const useStyles = makeStyles((theme) => ({
     },
     infoLabel: {
         color: theme.palette.primary.contrastText,
+    },
+    ToolbarSpacer: {
+        height: 72,
+        width: "100%",
     }
 }));
 
@@ -367,7 +483,8 @@ const StepTwo = inject('store')(observer(({ selectId, setSelectId, deleteItemInP
 
     const components = [
         { title: "Текст", subtitle: "Блок текста с возможностью форматирования", type: "text" },
-        { title: "Заголовок", subtitle: "Блок с различными заголовками и возможностью форматирования", type: "h" },
+        { title: "Заголовок", subtitle: "Блок с заголовка и возможностью форматирования", type: "h" },
+        { title: "Уведомление", subtitle: "Текст, выделенный цветом", type: "alert" },
         { title: "Разделитель", subtitle: "Горизонтальная черта, разделяет соседние блоки", type: "divider" },
     ]
 
@@ -388,38 +505,39 @@ const StepTwo = inject('store')(observer(({ selectId, setSelectId, deleteItemInP
                 direction="column"
                 justify="flex-start"
                 alignItems="center"
-                className={classes.gridMain}
             >
                 {selectId != null && <ToolbarComp index={selectId} value={dialogPageCreationData.components[selectId]} setComponentsData={setComponentsData} />}
+                {/* {selectId == null && <div className={classes.ToolbarSpacer}>
+
+                </div>} */}
+                {dialogPageCreationData.components.length === 0 && <Grid
+                    item
+                    container
+                    direction="column"
+                    className={classes.gridMainImgWrapper}
+                    justify="flex-start"
+                    alignItems="center"
+                >
+                    <Typography variant="h5" className={classes.infoLabel}> Страница пока пуста </Typography>
+                    <Typography variant="h5" className={classes.infoLabel}> Добавьте компоненты </Typography>
+                    <Image
+                        quality={100}
+                        alt="howtocreateamodule"
+                        src="/illustrations/mathTeacher.png"
+                        //layout='fill'
+                        width={480}
+                        height={480}
+                    />
+                </Grid>}
                 <Grid
                     container
+                    direction="column"
+                    justify="flex-start"
+                    alignItems="center"
                     className={classes.gridMain}
                 >
-                    <Grid
-                        item
-                        container
-                        direction="column"
-                        className={classes.gridMainImgWrapper}
-                        justify="flex-start"
-                        alignItems="center"
-                    >
-                        {dialogPageCreationData.components.length == 0 && <Typography variant="h5" className={classes.infoLabel}> Страница пока пуста </Typography>}
-                        {dialogPageCreationData.components.length == 0 && <Typography variant="h5" className={classes.infoLabel}> Добавьте компоненты </Typography>}
-                        {
-                            dialogPageCreationData.components.length == 0 && <Image
-                                quality={100}
-                                alt="howtocreateamodule"
-                                src="/illustrations/mathTeacher.png"
-                                //layout='fill'
-                                width={480}
-                                height={480}
-                            />
-                        }
-                    </Grid>
-
                     {dialogPageCreationData.components.length != 0 && <Sortable setSelectId={setSelectId} deleteItemInPages={deleteItemInPages} setComponentsData={setComponentsData} store={store} items={dialogPageCreationData.components} changeDialogPageCreationData={changeDialogPageCreationData} handle />}
                 </Grid>
-
             </Grid>
 
             {/* Компоненты */}

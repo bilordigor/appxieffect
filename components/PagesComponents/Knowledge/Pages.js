@@ -87,14 +87,13 @@ const Pages = inject('store')(observer(({ store }) => {
 
     const LoadPage = (isSearch, c, s) => {
         setLoadingInd(true)
-        //console.log("LoadPage", c, s)
-        store.fetchDataScr(`${store.url}/pages/`, "POST", { "counter": c, "search": s != "" ? s : null }).then(
+        console.log("LoadPage", c, s)
+        store.fetchDataScr(`${store.url}/pages/`, "POST", { "counter": c, "search": s }).then(
             (data) => {
-                //console.log(data)
+                console.log(data)
                 setPages(data)
                 setLoadingInd(false)
                 if (isSearch && data.length === 0) setLoadingNothing(true)
-
             })
     }
 
@@ -115,6 +114,7 @@ const Pages = inject('store')(observer(({ store }) => {
     }
 
     const clearSearch = () => {
+        setLoadingNothing(false)
         setCounter(0)
         LoadPage(false, 0, "")
     }
@@ -124,6 +124,15 @@ const Pages = inject('store')(observer(({ store }) => {
             <Chipper prevPage={prevPage} nextPage={nextPage} counter={counter} clearSearch={clearSearch} goSearch={goSearch} search={search} setSearch={setSearch} dataType={dataType} setDataType={setDataType} setSize={setSize} />
             {!loadingNothing && <>
                 {!loadingInd && <PagesList pages={pages} dataType={dataType} size={size} />}
+                {!loadingInd && pages.length < 50 && <Grid
+                    container
+                    direction="column"
+                    justify="center"
+                    alignItems="center"
+                    className={classes.container}
+                >
+                    <Typography> Это всё, что мы нашли по вашему запросу </Typography>
+                </Grid>}
                 {!loadingInd && <Toolbar prevPage={prevPage} nextPage={nextPage} counter={counter} pl={pages.length} />}
                 {loadingInd &&
                     <Grid
