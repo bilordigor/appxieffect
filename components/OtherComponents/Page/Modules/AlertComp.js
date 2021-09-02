@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { Tabs, Tab, withStyles, ButtonGroup, Input, AppBar, Toolbar, Dialog, InputLabel, NativeSelect, FormControl, DialogContent, MobileStepper, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip, InputBase } from '@material-ui/core';
+import { Tabs, Tab, withStyles, InputAdornment, Input, AppBar, Toolbar, Dialog, InputLabel, NativeSelect, FormControl, DialogContent, MobileStepper, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip, InputBase } from '@material-ui/core';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import ClearIcon from '@material-ui/icons/Clear';
 import { inject, observer } from 'mobx-react'
 import Alert from '@material-ui/lab/Alert';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import InfoIcon from '@material-ui/icons/Info';
+import WarningIcon from '@material-ui/icons/Warning';
+import ErrorIcon from '@material-ui/icons/Error';
 
 const useStyles = makeStyles((theme) => ({
     gridButtons: {
@@ -38,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
     },
     AlertMessage: {
         width: "100%",
+    },
+    icon: {
+        color: theme.palette.primary.contrastText,
     }
 }));
 
@@ -78,6 +85,7 @@ const AlertComp = inject('store')(observer(({ store, values, listeners, index, s
                         classes={{
                             message: classes.AlertMessage
                         }}
+                        icon={<span></span>}
                     >
                         <Input
                             classes={{
@@ -89,6 +97,14 @@ const AlertComp = inject('store')(observer(({ store, values, listeners, index, s
                             fullWidth
                             value={values.label}
                             onChange={(event) => setComponentsData(index, "label", event.target.value)}
+                            startAdornment={
+                                <InputAdornment position="start">
+                                    {values.alertType === "success" && <CheckCircleIcon className={classes.icon} />}
+                                    {values.alertType === "info" && <InfoIcon className={classes.icon} />}
+                                    {values.alertType === "warning" && <WarningIcon className={classes.icon} />}
+                                    {values.alertType === "error" && <ErrorIcon className={classes.icon} />}
+                                </InputAdornment>
+                            }
                         />
                     </Alert>
                 </Grid>

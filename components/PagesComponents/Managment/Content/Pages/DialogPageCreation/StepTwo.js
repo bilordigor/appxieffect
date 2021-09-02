@@ -37,8 +37,8 @@ import Looks6Icon from '@material-ui/icons/Looks6';
 import ClearIcon from '@material-ui/icons/Clear';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import InfoIcon from '@material-ui/icons/Info';
-import ErrorIcon from '@material-ui/icons/Error';
 import WarningIcon from '@material-ui/icons/Warning';
+import ErrorIcon from '@material-ui/icons/Error';
 
 import "react-contexify/dist/ReactContexify.css";
 import Sortable from '../../../../../OtherComponents/Page/Sortable';
@@ -67,7 +67,8 @@ const ToolbarComp = ({ value, index, setComponentsData }) => {
 
     const handleAlertType = (event, newFormats) => {
         //console.log(index, "fontSize", newFormats)
-        setComponentsData(index, "alertType", newFormats)
+        console.log("newFormats", newFormats)
+        if (newFormats != null) setComponentsData(index, "alertType", newFormats)
     };
 
     const handleFontSize = (event, newFormats) => {
