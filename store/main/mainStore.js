@@ -8,10 +8,12 @@ class MainStore {
     // useStore for e.g (this.rootStore.userStore)
     constructor(rootStore) {
         this.rootStore = rootStore;
-        //makeObservable(this)
+        makeObservable(this)
     }
 
-    
+    @observable mainStore = {
+
+    }
 }
 
 export default MainStore;
