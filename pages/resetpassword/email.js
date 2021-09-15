@@ -188,7 +188,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const PassResetEmail = inject('store')(observer(({store}) => {
+const PassResetEmail = inject('rootStore', 'uiStore')(observer(({ rootStore, uiStore }) => {
     const classes = useStyles();
 
     const [emailReset, setEmailReset] = React.useState('')
@@ -203,7 +203,7 @@ const PassResetEmail = inject('store')(observer(({store}) => {
         }
 
         if (!errorEmailReset && !errorEmailNotFounedReset) {
-            store.fetchData(`${store.url}/password-reset/${emailReset}/`, "GET")
+            rootStore.fetchData(`${rootStore.url}/password-reset/${emailReset}/`, "GET")
                 .then((data) => {
                     if (data != undefined) {
                         if (data.a === true) { //true
@@ -222,9 +222,9 @@ const PassResetEmail = inject('store')(observer(({store}) => {
             <Head>
                 <title>Ξ Регистрация</title>
             </Head>
-            {store.loading["/registration"] && <Loading />}
+            {uiStore.loading["/registration"] && <Loading />}
             <div className={classes.root}>
-                <BackgroundImg src="/wallpapers/hp3.jpg"/>
+                <BackgroundImg src="/wallpapers/hp3.jpg" />
                 <Grid
                     className={classes.gridroot}
                     container
@@ -277,7 +277,7 @@ const PassResetEmail = inject('store')(observer(({store}) => {
                                     <Grid item container direction="column" justify="center" alignItems="center" className={classes.gridEnterButtom}>
                                         <Button onClick={clickRegistartionButton} variant="contained" color="primary" className={classes.enterButtom}>
                                             Отправить письмо
-                                        </Button>  
+                                        </Button>
                                     </Grid>
                                 </>}
                                 {emailResetOk && <>

@@ -170,7 +170,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Registration = inject('store')(observer(({ store }) => {
+const Registration = inject('rootStore', 'uiStore')(observer(({ rootStore, uiStore }) => {
     const classes = useStyles();
 
     const [email, setEmail] = React.useState('')
@@ -223,7 +223,7 @@ const Registration = inject('store')(observer(({ store }) => {
             }
         }
         if (!errorUsername && !errorPasswordLength && !errorSymbols && !errorEmail) {
-            store.fetchData(`${store.url}/reg/`, "POST", { "email": email, "password": Crypto.SHA384(password).toString(), "username": username }) 
+            rootStore.fetchData(`${rootStore.url}/reg/`, "POST", { "email": email, "password": Crypto.SHA384(password).toString(), "username": username }) 
                 .then((data) => {
                     console.log(data)
                     if (data != undefined) {
@@ -245,7 +245,7 @@ const Registration = inject('store')(observer(({ store }) => {
             <Head>
                 <title>Ξ Регистрация</title>
             </Head>
-            {store.loading["/registration"] && <Loading />}
+            {uiStore.loading["/registration"] && <Loading />}
             <div className={classes.root}>
                 <BackgroundImg src="/wallpapers/hp1.jpg" />
                 <Grid
