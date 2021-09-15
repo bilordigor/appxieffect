@@ -27,10 +27,6 @@ import {
     theme
 } from "react-contexify";
 
-import "react-contexify/dist/ReactContexify.css";
-import Sortable from '../../../../../OtherComponents/Page/Sortable';
-
-const MENU_ID = "menu-id";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -448,8 +444,7 @@ const StepTwo = inject('store')(observer(({ store }) => {
 
                         </Grid>}
                 </Grid>
-                {mainWindowType === 'page' && store[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.length != 0 && <Sortable store={store} items={store[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components} handle />}
-                {mainWindowType === 'page' && store[store.nowEditPageMeta.type][store.nowEditPageMeta.id].components.length == 0 && <Typography> Страница пока пуста. Добавьте компоненты </Typography>}
+               
 
             </Grid>
 

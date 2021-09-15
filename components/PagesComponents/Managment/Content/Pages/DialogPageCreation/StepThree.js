@@ -55,11 +55,9 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const StepThree = inject('store')(observer(({ savePage, dialogPageCreationData, changeDialogPageCreationData, store }) => {
+const StepThree = inject('managmentStore')(observer(({ managmentStore }) => {
     const classes = useStyles();
 
-    const [checked, setChecked] = React.useState(true)
-    const [checkedA, setCheckedA] = React.useState(true)
 
     return (
         <Grid
@@ -77,8 +75,8 @@ const StepThree = inject('store')(observer(({ savePage, dialogPageCreationData, 
                 <FormControlLabel
                     control={
                         <Switch
-                            checked={dialogPageCreationData.reusable}
-                            onChange={(event) => changeDialogPageCreationData("reusable", !dialogPageCreationData.reusable)}
+                            checked={managmentStore.pageCreation.reusable}
+                            onChange={(event) => managmentStore.setPageCreation("reusable", !managmentStore.pageCreation.reusable)}
                             name="reusable"
                             color="primary"
                         />
@@ -90,8 +88,8 @@ const StepThree = inject('store')(observer(({ savePage, dialogPageCreationData, 
                 <FormControlLabel
                     control={
                         <Switch
-                            checked={dialogPageCreationData.public}
-                            onChange={(event) => changeDialogPageCreationData("public", !dialogPageCreationData.public)}
+                            checked={managmentStore.pageCreation.public}
+                            onChange={(event) => managmentStore.setPageCreation("public", !managmentStore.pageCreation.public)}
                             name="public"
                             color="primary"
                         />
@@ -99,7 +97,7 @@ const StepThree = inject('store')(observer(({ savePage, dialogPageCreationData, 
                     label="Сделать страницу публичной. Все пользователи смогут её увидеть "
                 />
             </FormControl>
-            <Button onClick={() => savePage(true)} variant="contained" color="primary" className={classes.Button}>
+            <Button onClick={() => managmentStore.savePage(true)} variant="contained" color="primary" className={classes.Button}>
                 Завершить работу над страницей
             </Button>
         </Grid>

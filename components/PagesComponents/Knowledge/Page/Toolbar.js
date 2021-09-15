@@ -32,22 +32,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Toolbar = inject('store')(observer(({ loading, meta, store, }) => {
+const Toolbar = inject('knowledgeStore')(observer(({ knowledgeStore }) => {
     const classes = useStyles();
     const theme = useTheme();
     const router = useRouter()
-
-    const [dataType, setDataType] = React.useState("list")
-    const [size, setSize] = React.useState({
-        md: 6,
-        lg: 4,
-        xl: 3,
-    })
-
-    const goBack = () => {
-        
-        router.back()
-    }
 
     return (
         <>
@@ -61,8 +49,8 @@ const Toolbar = inject('store')(observer(({ loading, meta, store, }) => {
             >
                 <Grid item xs zeroMinWidth>
                     {
-                        loading ? <Skeleton animation="wave" variant="text" /> :
-                            <Typography variant="h5" className={classes.mainLabel} noWrap>{meta.name}</Typography>
+                        knowledgeStore.page.loading ? <Skeleton animation="wave" variant="text" /> :
+                            <Typography variant="h5" className={classes.mainLabel} noWrap>{knowledgeStore.page.name}</Typography>
                     }
                 </Grid>
                 <Tooltip title="Информация о странице">
@@ -71,7 +59,7 @@ const Toolbar = inject('store')(observer(({ loading, meta, store, }) => {
                     </IconButton>
                 </Tooltip>
                 <Tooltip title="Назад">
-                    <IconButton onClick={() => goBack()} className={classes.IconButton}>
+                    <IconButton onClick={() => router.back()} className={classes.IconButton}>
                         <UndoIcon />
                     </IconButton>
                 </Tooltip>

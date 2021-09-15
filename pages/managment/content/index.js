@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Content = inject('store')(observer(({ store }) => {
+const Content = inject('rootStore')(observer(({ rootStore }) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -128,9 +128,9 @@ const Content = inject('store')(observer(({ store }) => {
               aria-label="full width tabs example"
             >
               <Tab label={<Typography className={classes.tabLabel}>Страницы</Typography>} {...a11yProps(0)} />
-              <Tab label={<Typography className={classes.tabLabel}>Модули</Typography>} {...a11yProps(1)} />
+              {/* <Tab label={<Typography className={classes.tabLabel}>Модули</Typography>} {...a11yProps(1)} /> */}
               {/* <Tab label={<Typography className={classes.tabLabel}>Модерация</Typography>} {...a11yProps(2)} /> */}
-              <Tab label={<Typography className={classes.tabLabel}><MoreHorizIcon /></Typography>} {...a11yProps(2)} />
+              {/* <Tab label={<Typography className={classes.tabLabel}><MoreHorizIcon /></Typography>} {...a11yProps(2)} /> */}
             </AntTabs>
           </AppBar>
           <SwipeableViews
@@ -142,15 +142,15 @@ const Content = inject('store')(observer(({ store }) => {
             <TabPanel value={value} index={0} dir={theme.direction}>
               <Pages />
             </TabPanel>
-            <TabPanel value={value} index={1} dir={theme.direction}>
+            {/* <TabPanel value={value} index={1} dir={theme.direction}>
               <Modules />
-            </TabPanel>
+            </TabPanel> */}
             {/* <TabPanel value={value} index={2} dir={theme.direction}> */}
             {/* <Moderate/> */}
             {/* </TabPanel> */}
-            <TabPanel value={value} index={2} dir={theme.direction}>
+            {/* <TabPanel value={value} index={2} dir={theme.direction}> */}
               {/* <Other /> */}
-            </TabPanel>
+            {/* </TabPanel> */}
           </SwipeableViews>
         </Grid>
       </NavigationAll>

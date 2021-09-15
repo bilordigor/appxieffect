@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/display-name */
 import React from 'react';
 
@@ -11,7 +12,8 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 import Image from 'next/image'
 
-import { inject, observer } from 'mobx-react'
+import { inject, observer, } from 'mobx-react'
+import { toJS } from "mobx"
 
 
 // import Chipper from './Modules/Chipper';
@@ -116,39 +118,41 @@ const useStyles = makeStyles(
     { defaultTheme },
 );
 
-function CustomPagination() {
-    const { state, apiRef } = useGridSlotComponentProps();
+// function CustomPagination() {
+//     const { state, apiRef } = useGridSlotComponentProps();
 
-    return (
-        <Pagination
-            color="primary"
-            variant="outlined"
-            shape="rounded"
-            page={state.pagination.page}
-            count={state.pagination.pageCount}
-            // @ts-expect-error
-            renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
-            onChange={(event, value) => apiRef.current.setPage(value)}
-        />
-    );
-}
-
-
+//     return (
+//         <Pagination
+//             color="primary"
+//             variant="outlined"
+//             shape="rounded"
+//             page={state.pagination.page}
+//             count={state.pagination.pageCount}
+//             // @ts-expect-error
+//             renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
+//             onChange={(event, value) => apiRef.current.setPage(value)}
+//         />
+//     );
+// }
 
 
 
-const DataList = inject('store')(observer(({ changeOldPage, deletePage, pages, store }) => {
+
+
+const DataList = inject('rootStore', 'managmentStore')(observer(({ rootStore, managmentStore }) => {
     const classes = useStyles();
     const theme = useTheme();
 
-    const [openDialog, setOpenDialog] = React.useState(null)
-    const [selectId, setSelectId] = React.useState()
+    React.useEffect(() => {
+        managmentStore.LoadPageList()
+        // console.log("pages", toJS(managmentStore.pageCreationList.pages))
+    }, []);
 
-    const dialogOpen = (params) => {
-        console.log("params", params)
-        setOpenDialog(params)
-        //console.log(openDialog)
-    }
+    //const [rows, setRows] = React.useState(managmentStore.pageCreationList.pages)
+
+    // React.useEffect(() => {
+    //     setRows(managmentStore.pageCreationList.pages)
+    // }, [managmentStore.pageCreationList.pages]);
 
     const kindSelect = (value) => {
         if (value === "practice") return "Практика"
@@ -160,8 +164,6 @@ const DataList = inject('store')(observer(({ changeOldPage, deletePage, pages, s
         if (value === "wip") return "В Разработке"
         if (value === "published") return "Опубликован"
     }
-
-
 
     const columns = [
         {
@@ -246,7 +248,7 @@ const DataList = inject('store')(observer(({ changeOldPage, deletePage, pages, s
                 <Grid>
                     <Tooltip title="Изменить">
                         <IconButton
-                            onClick={() => changeOldPage(params.row.id)}
+                            onClick={() => managmentStore.changeOldPageList(params.row.id)}
                             variant="contained"
                             //color="primary"
                             size="small"
@@ -257,7 +259,7 @@ const DataList = inject('store')(observer(({ changeOldPage, deletePage, pages, s
                     </Tooltip>
                     <Tooltip title="Удалить">
                         <IconButton
-                            onClick={() => deletePage(params.row.id)}
+                            onClick={() => managmentStore.deletePageInList(params.row.id)}
                             variant="contained"
                             //color="primary"
                             size="small"
@@ -287,7 +289,8 @@ const DataList = inject('store')(observer(({ changeOldPage, deletePage, pages, s
         <div style={{ display: 'flex', height: '100%', width: '100%', marginTop: 16, }} className={classes.root}>
             <div style={{ flexGrow: 1 }}>
                 <DataGrid
-                    rows={pages}
+                    rows={[...managmentStore.pageCreationList.pages]}
+                    //rows={rows}
                     columns={columns}
                     className={classes.root}
                     autoHeight

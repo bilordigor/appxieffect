@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const QuiсkWidgets = inject('store')(observer(({ store }) => {
+const QuiсkWidgets = inject('rootStore')(observer(({ rootStore }) => {
     const classes = useStyles();
     const theme = useTheme();
 

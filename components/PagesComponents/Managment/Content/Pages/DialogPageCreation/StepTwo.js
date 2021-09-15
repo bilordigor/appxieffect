@@ -40,8 +40,8 @@ import InfoIcon from '@material-ui/icons/Info';
 import WarningIcon from '@material-ui/icons/Warning';
 import ErrorIcon from '@material-ui/icons/Error';
 
-import "react-contexify/dist/ReactContexify.css";
-import Sortable from '../../../../../OtherComponents/Page/Sortable';
+import DnDList from './../../../../../OtherComponents/DnDList/DnDList';
+import ComponentsList from './Components/ComponentsList';
 
 const StyledToggleButtonGroup = withStyles((theme) => ({
     grouped: {
@@ -59,40 +59,59 @@ const StyledToggleButtonGroup = withStyles((theme) => ({
 const useStylesTool = makeStyles((theme) => ({
     paper: {
         marginLeft: 16,
+    },
+    paperNone: {
+        marginLeft: 16,
+        height: 46,
     }
 }));
 
-const ToolbarComp = ({ value, index, setComponentsData }) => {
+const ToolbarComp = inject('managmentStore')(observer(({ managmentStore }) => {
     const classes = useStylesTool();
+    let value = null
+    if (managmentStore.pageCreationList.selectId != null) {
+        const index = managmentStore.pageCreationList.selectId
+        value = managmentStore.pageCreation.components[index]
+    } else {
+        return (
+            <Grid
+                container
+                direction="row"
+                justify="flex-start"
+                alignItems="center"
+                className={classes.paperNone}>
 
+            </Grid>
+        )
+    }
     const handleAlertType = (event, newFormats) => {
         //console.log(index, "fontSize", newFormats)
         console.log("newFormats", newFormats)
-        if (newFormats != null) setComponentsData(index, "alertType", newFormats)
+        if (newFormats != null) managmentStore.setPageCreationComponents(index, "alertType", newFormats)
     };
 
     const handleFontSize = (event, newFormats) => {
         //console.log(index, "fontSize", newFormats)
-        setComponentsData(index, "fontSize", newFormats)
+        managmentStore.setPageCreationComponents(index, "fontSize", newFormats)
     };
 
     const handleTextAlign = (event, newAlignment) => {
-        setComponentsData(index, "textAlign", newAlignment)
+        managmentStore.setPageCreationComponents(index, "textAlign", newAlignment)
     };
 
     const handleFontStyle = () => {
-        if (value.fontStyle === "normal") return setComponentsData(index, "fontStyle", "italic")
-        return setComponentsData(index, "fontStyle", "normal");
+        if (value.fontStyle === "normal") return managmentStore.setPageCreationComponents(index, "fontStyle", "italic")
+        return managmentStore.setPageCreationComponents(index, "fontStyle", "normal");
     };
 
     const handleFontWeight = () => {
-        if (value.fontWeight === "normal") return setComponentsData(index, "fontWeight", "bold");
-        return setComponentsData(index, "fontWeight", "normal");
+        if (value.fontWeight === "normal") return managmentStore.setPageCreationComponents(index, "fontWeight", "bold");
+        return managmentStore.setPageCreationComponents(index, "fontWeight", "normal");
     };
 
     const handleTextDecoration = () => {
-        if (value.textDecoration === "none") return setComponentsData(index, "textDecoration", "underline");
-        return setComponentsData(index, "textDecoration", "none");
+        if (value.textDecoration === "none") return managmentStore.setPageCreationComponents(index, "textDecoration", "underline");
+        return managmentStore.setPageCreationComponents(index, "textDecoration", "none");
     };
 
     if (value?.type === "h") {
@@ -340,11 +359,11 @@ const ToolbarComp = ({ value, index, setComponentsData }) => {
             direction="row"
             justify="flex-start"
             alignItems="center"
-            className={classes.paper}>
+            className={classes.paperNone}>
 
         </Grid>
     )
-}
+}));
 
 const defaultInitializer = (index) => index;
 function createRange(length, initializer = defaultInitializer) {
@@ -392,6 +411,7 @@ const useStyles = makeStyles((theme) => ({
             display: "none !important",
             background: "traimport",
         }
+
     },
     gridAction: {
         //height: 48,
@@ -478,7 +498,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const StepTwo = inject('store')(observer(({ selectId, setSelectId, deleteItemInPages, setComponentsData, pushNewItemToPages, dialogPageCreationData, changeDialogPageCreationData, store }) => {
+const StepTwo = inject('managmentStore')(observer(({ managmentStore }) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -487,6 +507,7 @@ const StepTwo = inject('store')(observer(({ selectId, setSelectId, deleteItemInP
         { title: "Заголовок", subtitle: "Блок с заголовка и возможностью форматирования", type: "h" },
         { title: "Уведомление", subtitle: "Текст, выделенный цветом", type: "alert" },
         { title: "Разделитель", subtitle: "Горизонтальная черта, разделяет соседние блоки", type: "divider" },
+        { title: "Изображение", subtitle: "Компонент изображения", type: "img" },
     ]
 
     return (
@@ -507,11 +528,8 @@ const StepTwo = inject('store')(observer(({ selectId, setSelectId, deleteItemInP
                 justify="flex-start"
                 alignItems="center"
             >
-                {selectId != null && <ToolbarComp index={selectId} value={dialogPageCreationData.components[selectId]} setComponentsData={setComponentsData} />}
-                {/* {selectId == null && <div className={classes.ToolbarSpacer}>
-
-                </div>} */}
-                {dialogPageCreationData.components.length === 0 && <Grid
+                <ToolbarComp />
+                {managmentStore.pageCreation.components.length === 0 && <Grid
                     item
                     container
                     direction="column"
@@ -530,15 +548,17 @@ const StepTwo = inject('store')(observer(({ selectId, setSelectId, deleteItemInP
                         height={480}
                     />
                 </Grid>}
-                <Grid
+                {managmentStore.pageCreation.components.length != 0 && <Grid
                     container
                     direction="column"
                     justify="flex-start"
                     alignItems="center"
                     className={classes.gridMain}
                 >
-                    {dialogPageCreationData.components.length != 0 && <Sortable setSelectId={setSelectId} deleteItemInPages={deleteItemInPages} setComponentsData={setComponentsData} store={store} items={dialogPageCreationData.components} changeDialogPageCreationData={changeDialogPageCreationData} handle />}
-                </Grid>
+
+                    {/* {managmentStore.pageCreation.components.length != 0 && <Sortable dialogPageContentData={dialogPageContentData} changeDialogPageContentData={changeDialogPageContentData} setSelectId={setSelectId} deleteItemInPages={deleteItemInPages} managmentStore.setPageCreationComponents={managmentStore.setPageCreationComponents} store={store} items={dialogPageCreationData.components} changeDialogPageCreationData={changeDialogPageCreationData} handle />} */}
+                    <DnDList state={managmentStore.pageCreation.components} setState={managmentStore.setPageCreation} ComponentsList={<ComponentsList />} />
+                </Grid>}
             </Grid>
 
             {/* Компоненты */}
@@ -599,7 +619,7 @@ const StepTwo = inject('store')(observer(({ selectId, setSelectId, deleteItemInP
                                     justify="center"
                                     alignItems="center"
                                 >
-                                    <Button onClick={() => pushNewItemToPages(item.type)}>
+                                    <Button onClick={() => managmentStore.pushNewComponent(item.type)}>
                                         <Tooltip title="Добавить Компонент">
                                             <AddIcon className={classes.icon} />
                                         </Tooltip>

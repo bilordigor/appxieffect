@@ -4,6 +4,7 @@ import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import ClearIcon from '@material-ui/icons/Clear';
+import { inject, observer } from 'mobx-react'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +44,8 @@ const StyledToggleButtonGroup = withStyles((theme) => ({
     },
 }))(ToggleButtonGroup);
 
-const DividerComponent = ({ values, listeners, index, setComponentsData, deleteItemInPages, setSelectId }) => {
+const DividerComp = inject('managmentStore')(observer(({ managmentStore, index }) => {
+    // Simulated props for the purpose of the example
     const classes = useStyles();
     return (
         <>
@@ -52,7 +54,7 @@ const DividerComponent = ({ values, listeners, index, setComponentsData, deleteI
                 direction="row"
                 justify="flex-start"
                 alignItems="center"
-                onClick={() => setSelectId(index)}
+                onClick={() => managmentStore.setPageCreationList("selectId", index)}
             >
                 <Grid className={classes.gridTextWrapper}>
                     <Divider flexItem className={classes.divider} />
@@ -65,11 +67,11 @@ const DividerComponent = ({ values, listeners, index, setComponentsData, deleteI
                         //onChange={handleFormat}
                         aria-label="text formatting"
                     >
-                        <ToggleButton value="clear" onClick={() => deleteItemInPages(index)}>
+                        <ToggleButton value="clear" onClick={() => managmentStore.deleteComponent(index)}>
                             <ClearIcon />
                         </ToggleButton>
                         <ToggleButton value="drag">
-                            <DragIndicatorIcon {...listeners} />
+                            <DragIndicatorIcon />
                         </ToggleButton>
                     </StyledToggleButtonGroup>
                     {/* </Paper> */}
@@ -77,6 +79,6 @@ const DividerComponent = ({ values, listeners, index, setComponentsData, deleteI
             </Grid>
         </>
     );
-}
+}));
 
-export default DividerComponent
+export default DividerComp

@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Homework = inject('store')(observer(({ store }) => {
+const Homework = inject('rootStore')(observer(({ rootStore }) => {
     const classes = useStyles();
     const theme = useTheme();
 

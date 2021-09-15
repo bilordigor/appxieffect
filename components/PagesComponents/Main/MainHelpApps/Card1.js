@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Card1 = inject('store')(observer((props) => {
+const Card1 = inject('rootStore')(observer(({ rootStore }) => {
     const classes = useStyles();
     const theme = useTheme();
 

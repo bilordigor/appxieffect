@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const NavigationAll = inject('store')(observer(({ store, children }) => {
+const NavigationAll = inject('rootStore', 'settingsStore', 'uiStore')(observer(({ rootStore, settingsStore, uiStore, children }) => {
     const classes = useStyles();
     const theme = useTheme();
     const [openHelpMenu, setOpenHelpMenu] = React.useState(false);
@@ -36,7 +36,7 @@ const NavigationAll = inject('store')(observer(({ store, children }) => {
     const router = useRouter()
 
     React.useEffect(() => {
-        store.fetchDataScr(`${store.url}/settings/main/`, "GET")
+        rootStore.fetchDataScr(`${rootStore.url}/settings/main/`, "GET")
             .then((data) => {
                 console.log(data)
                 if (data.a != undefined) {
@@ -44,28 +44,28 @@ const NavigationAll = inject('store')(observer(({ store, children }) => {
                         router.push("/login")
                     }
                 } else {
-                    store.fetchDataScr(`${store.url}/avatar/`, "GET")
+                    rootStore.fetchDataScr(`${rootStore.url}/avatar/`, "GET")
                         .then((data) => {
                             //console.log("avatar", data)
                             if (data != undefined && data.message != "The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.") {
-                                store.setSettings("avatar", data)
+                                settingsStore.setSettings("avatar", data)
                             }
                         });
-                    store.fetchDataScr(`${store.url}/settings/`, "GET")
+                    rootStore.fetchDataScr(`${rootStore.url}/settings/`, "GET")
                         .then((data) => {
                             console.log(data)
                             if (data != undefined) {
                                 let emailArr = data.email.split("@", 2)
-                                store.setSettings("username", data.username)
-                                store.setSettings("emailBefore", emailArr[0])
-                                store.setSettings("emailAfter", "@" + emailArr[1])
-                                store.setSettings("darkTheme", data["dark-theme"])
-                                store.setSettings("emailConfirmed", data["email-confirmed"])
+                                settingsStore.setSettings("username", data.username)
+                                settingsStore.setSettings("emailBefore", emailArr[0])
+                                settingsStore.setSettings("emailAfter", "@" + emailArr[1])
+                                settingsStore.setSettings("darkTheme", data["dark-theme"])
+                                settingsStore.setSettings("emailConfirmed", data["email-confirmed"])
                             } else {
                                 console.log("Проблемы с сервером")
                             }
                         });
-                    store.setLoading("/")
+                    uiStore.setLoading("/")
 
                 }
             })
@@ -73,8 +73,8 @@ const NavigationAll = inject('store')(observer(({ store, children }) => {
 
     return (
         <>
-            {store.loading["/"] && <Loading />}
-            {!store.loading["/"] && <div className={classes.root}>
+            {uiStore.loading["/"] && <Loading />}
+            {!uiStore.loading["/"] && <div className={classes.root}>
                 <Hidden only="xs">
                     <Sidebar />
                 </Hidden>

@@ -180,11 +180,9 @@ const Views = React.memo(({ views }) => {
 })
 
 
-const PagesList = inject('store')(observer(({ pages, dataType, size, store }) => {
+const PagesList = inject('knowledgeStore')(observer(({ knowledgeStore, dataType, size }) => {
     const classes = useStyles();
     const theme = useTheme();
-
-    const [openMenu, setOpenMenu] = React.useState(null)
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -203,7 +201,7 @@ const PagesList = inject('store')(observer(({ pages, dataType, size, store }) =>
             className={classes.container}
         >
             {
-                pages.map((page, index) => (
+                knowledgeStore.pageList.pages.map((page, index) => (
                     <Grid xs={12} sm={12} md={size.md} lg={size.lg} xl={size.xl} item
                         className={clsx(classes.gridCard, { [classes.cardColumn]: dataType === "grid" })}
                         container key={index}>

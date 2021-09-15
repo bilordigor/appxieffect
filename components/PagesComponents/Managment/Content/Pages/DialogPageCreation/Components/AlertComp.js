@@ -61,11 +61,12 @@ const StyledToggleButtonGroup = withStyles((theme) => ({
     },
 }))(ToggleButtonGroup);
 
-const AlertComp = inject('store')(observer(({ store, values, listeners, index, setComponentsData, deleteItemInPages, setSelectId }) => {
+const AlertComp = inject('managmentStore')(observer(({ managmentStore, index }) => {
     // Simulated props for the purpose of the example
+    const values = managmentStore.pageCreation.components[index]
     const props = { fontSize: values.fontSize, textAlign: values.textAlign, fontStyle: values.fontStyle, fontWeight: values.fontWeight, textDecoration: values.textDecoration, backgroundColor: 'black', color: 'white' };
     // Pass the props as the first argument of useStyles()
-    console.log("props", props)
+    //console.log("props", props)
     const classes = useStyles(props);
     return (
         <>
@@ -74,7 +75,7 @@ const AlertComp = inject('store')(observer(({ store, values, listeners, index, s
                 direction="row"
                 justify="flex-start"
                 alignItems="flex-start"
-                onClick={() => setSelectId(index)}
+                onClick={() => managmentStore.setPageCreationList("selectId", index)}
             >
 
                 <Grid className={classes.gridTextWrapper}>
@@ -96,7 +97,7 @@ const AlertComp = inject('store')(observer(({ store, values, listeners, index, s
                             multiline
                             fullWidth
                             value={values.label}
-                            onChange={(event) => setComponentsData(index, "label", event.target.value)}
+                            onChange={(event) => managmentStore.setPageCreationComponents(index, "label", event.target.value)}
                             startAdornment={
                                 <InputAdornment position="start">
                                     {values.alertType === "success" && <CheckCircleIcon className={classes.icon} />}
@@ -113,11 +114,11 @@ const AlertComp = inject('store')(observer(({ store, values, listeners, index, s
                         size="small"
                         aria-label="text formatting"
                     >
-                        <ToggleButton value="clear" onClick={() => deleteItemInPages(index)}>
+                        <ToggleButton value="clear" onClick={() => managmentStore.deleteComponent(index)}>
                             <ClearIcon />
                         </ToggleButton>
                         <ToggleButton value="drag">
-                            <DragIndicatorIcon {...listeners} />
+                            <DragIndicatorIcon />
                         </ToggleButton>
                     </StyledToggleButtonGroup>
                 </Grid>

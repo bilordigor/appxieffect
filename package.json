@@ -34,6 +34,7 @@
     "notistack": "^1.0.9",
     "react": "17.0.2",
     "react-avatar-editor": "^11.1.0",
+    "react-beautiful-dnd": "^13.1.0",
     "react-bottom-scroll-listener": "^5.0.0",
     "react-contexify": "^5.0.0",
     "react-dark-mode-toggle": "^0.2.0",

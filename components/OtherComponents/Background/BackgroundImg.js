@@ -16,12 +16,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BackgroundImg = inject('store')(observer(({ store, src, alt = 'background' }) => {
+const BackgroundImg = inject('uiStore')(observer(({ uiStore, src, alt = 'background' }) => {
   const classes = useStyles();
   const theme = useTheme();
   const router = useRouter()
   const onLoad = () => {
-    store.setLoading(router.pathname)
+    uiStore.setLoading(router.pathname)
   }
 
   return (

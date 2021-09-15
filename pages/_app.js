@@ -4,8 +4,7 @@ import Head from "next/head";
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Provider } from 'mobx-react'
-import { useStore } from '../store'
-import Context from '../store'
+import { useStore } from '../store/rootStore'
 //import { useFileUpload } from "use-file-upload";
 import { inject, observer } from 'mobx-react'
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -30,7 +29,7 @@ import 'katex/dist/katex.min.css';
 
 const MyApp = (observer(({ Component, pageProps }) => {
 
-  const store = useStore(pageProps.initialState)
+  const rootStore = useStore(pageProps.initialState)
 
   const themeWhite = createMuiTheme({
     palette: {
@@ -126,8 +125,17 @@ const MyApp = (observer(({ Component, pageProps }) => {
         {/* <link rel="shortcut icon" href="/static/favicon.ico" /> */}
       </Head>
       {/* <Context.Provider value={{ files, selectFiles }}> */}
-      <Provider store={store}>
-        <ThemeProvider theme={store.settings.darkTheme ? themeDark : themeWhite}>
+      <Provider
+        store={rootStore}
+        rootStore={rootStore}
+        uiStore={rootStore.uiStore}
+        mainStore={rootStore.mainStore}
+        knowledgeStore={rootStore.knowledgeStore}
+        managmentStore={rootStore.managmentStore}
+        settingsStore={rootStore.settingsStore}
+        contentStore={rootStore.contentStore}
+      >
+        <ThemeProvider theme={rootStore.settingsStore.settings.darkTheme ? themeDark : themeWhite}>
           <SnackbarProvider
             autoHideDuration={800}
             anchorOrigin={{

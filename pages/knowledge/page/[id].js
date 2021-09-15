@@ -19,33 +19,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Page = inject('store')(observer(({ store }) => {
+const Page = inject('rootStore', 'knowledgeStore')(observer(({ rootStore, knowledgeStore }) => {
 
     const classes = useStyles();
     const theme = useTheme();
-    const router = useRouter();
-
-    const [loading, setLoading] = React.useState(true)
-
-    const [meta, setMeta] = React.useState({
-        components: [{}, {}, {}, {}, {}, {}] 
-    })
-
-    const LoadMeta = () => {
-        let str = document.location.href.toString()
-        const id = str.slice(str.lastIndexOf("/") + 1)
-        console.log("id", id)
-        store.fetchDataScr(`${store.url}/pages/${id}/`, "GET").then(
-            (data) => {
-                console.log("meta", data)
-                setMeta(data)
-                setLoading(false)
-            })
-    }
 
     React.useEffect(() => {
         // LoadComponents()
-        LoadMeta()
+        knowledgeStore.loadPage()
     }, []);
 
 
@@ -66,8 +47,8 @@ const Page = inject('store')(observer(({ store }) => {
                     alignItems="center"
                     container
                 >
-                    <Toolbar loading={loading} meta={meta} />
-                    <PageCompList loading={loading} components={meta.components} />
+                    <Toolbar />
+                    <PageCompList />
                 </Grid>
             </NavigationAll>
 

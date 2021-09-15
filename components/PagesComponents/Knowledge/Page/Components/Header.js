@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Header = inject('store')(observer(({ store, value }) => {
+const Header = inject('rootStore')(observer(({ rootStore, value }) => {
 
     // Simulated props for the purpose of the example
     const props = {  fontSize: value.fontSize, textAlign: value.textAlign, fontStyle: value.fontStyle, fontWeight: value.fontWeight, textDecoration: value.textDecoration, backgroundColor: 'black', color: 'white' };

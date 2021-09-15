@@ -197,7 +197,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const UserAccount = inject('store')(observer(({ store }) => {
+const UserAccount = inject('rootStore' , 'settingsStore')(observer(({ rootStore, settingsStore }) => {
     const classes = useStyles();
     const options = ['Участник', 'Ученик', 'Преподаватель', 'Автор', 'Родитель'];
 
@@ -266,8 +266,8 @@ const UserAccount = inject('store')(observer(({ store }) => {
         const img = canvas.toDataURL()
         console.log(img)
         //setF(i)
-        store.setSettings('avatar', img)
-        store.fetchDataScr(`${store.url}/avatar/`, "POST", img)
+        settingsStore.setSettings('avatar', img)
+        settingsStore.fetchDataScr(`${rootStore.url}/avatar/`, "POST", img)
             .then((data) => {
                 console.log(data)
                 // if (data.message != undefined) {
@@ -286,8 +286,8 @@ const UserAccount = inject('store')(observer(({ store }) => {
     }
 
     const saveNewUsername = () => {
-        store.fetchDataScr(`${store.url}/settings/`, "POST", {
-            "changed": { "username": store.settings.username }
+        rootStore.fetchDataScr(`${rootStore.url}/settings/`, "POST", {
+            "changed": { "username": settingsStore.settings.username }
         })
             .then((data) => {
                 if (data.a) {
@@ -328,7 +328,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
                                 <div className={classes.background}>
                                     <Image
                                         alt="avatarimg"
-                                        src={store.settings.avatar == undefined ? "/defaultAvatar.jpg" : store.settings.avatar}
+                                        src={settingsStore.settings.avatar == undefined ? "/defaultAvatar.jpg" : settingsStore.settings.avatar}
                                         width={102}
                                         height={102}
                                         // layout="fill"
@@ -346,8 +346,8 @@ const UserAccount = inject('store')(observer(({ store }) => {
                             <OutlinedInput
                                 className={classes.OutlinedInput}
                                 type='text'
-                                value={store.settings.username}
-                                onChange={(event) => store.setSettings("username", event.target.value)}
+                                value={settingsStore.settings.username}
+                                onChange={(event) => settingsStore.setSettings("username", event.target.value)}
                                 endAdornment={
                                     <InputAdornment position="end">
                                         <IconButton
@@ -472,9 +472,9 @@ const UserAccount = inject('store')(observer(({ store }) => {
                             justify="flex-start"
                             alignItems="center"
                         >
-                            {!hiddenEmail && <Typography className={classes.labelEmailBefore}> {store.settings.emailBefore} </Typography>}
-                            {hiddenEmail && <Typography className={classes.labelEmailBefore}> {"*".repeat(store.settings.emailBefore.length)} </Typography>}
-                            <Typography className={classes.labelEmailAfter}> {store.settings.emailAfter} </Typography>
+                            {!hiddenEmail && <Typography className={classes.labelEmailBefore}> {settingsStore.settings.emailBefore} </Typography>}
+                            {hiddenEmail && <Typography className={classes.labelEmailBefore}> {"*".repeat(settingsStore.settings.emailBefore.length)} </Typography>}
+                            <Typography className={classes.labelEmailAfter}> {settingsStore.settings.emailAfter} </Typography>
                             {hiddenEmail && <Link className={classes.link} onClick={() => setHiddenEmail(false)}> Показать </Link>}
                             {!hiddenEmail && <Link className={classes.link} onClick={() => setHiddenEmail(true)}> Скрыть </Link>}
 

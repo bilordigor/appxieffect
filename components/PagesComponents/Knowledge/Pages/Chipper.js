@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Chipper = inject('store')(observer(({ prevPage, nextPage, counter, pl, clearSearch, goSearch, search, setSearch, dataType, setDataType, setSize, store, loadingMoreCourses }) => {
+const Chipper = inject('knowledgeStore')(observer(({ knowledgeStore, dataType, setDataType, setSize }) => {
     const classes = useStyles();
     const theme = useTheme()
     const [open, setOpen] = React.useState(false);
@@ -87,11 +87,6 @@ const Chipper = inject('store')(observer(({ prevPage, nextPage, counter, pl, cle
         })
         //console.log("dataType", dataType)
     };
-
-    const clearSearchHere = () => {
-        setSearch("")
-        clearSearch()
-    }
 
     return (
         <Grid
@@ -135,22 +130,21 @@ const Chipper = inject('store')(observer(({ prevPage, nextPage, counter, pl, cle
                     </Paper>
                 </Popper>
                 <InputBase
-                    value={search}
-                    onChange={(event) => setSearch(event.target.value)}
+                    value={knowledgeStore.pageList.search}
+                    onChange={(event) => knowledgeStore.setPageListData("search", event.target.value)}
                     className={classes.input}
                     placeholder="Поиск страниц"
                     inputProps={{ 'aria-label': 'Поиск страниц' }}
                 />
-                {search.length === 0 && <IconButton disabled onClick={clearSearchHere} type="submit" className={classes.iconButton} aria-label="search">
-                    <ClearIcon />
-                </IconButton>}
-                {search.length != 0 && <Tooltip title="Очистить поиск">
-                    <IconButton onClick={clearSearchHere} type="submit" className={classes.iconButton} aria-label="search">
-                        <ClearIcon />
-                    </IconButton>
-                </Tooltip>}
+                <Tooltip title="Очистить поиск">
+                    <span>
+                        <IconButton onClick={knowledgeStore.clearSearch} disabled={knowledgeStore.pageList.search.length === 0} type="submit" className={classes.iconButton} aria-label="search">
+                            <ClearIcon />
+                        </IconButton>
+                    </span>
+                </Tooltip>
                 <Tooltip title="Найти">
-                    <IconButton onClick={() => goSearch()} type="submit" className={classes.iconButton} aria-label="search">
+                    <IconButton onClick={() => knowledgeStore.goSearch()} className={classes.iconButton} aria-label="search">
                         <SearchIcon />
                     </IconButton>
                 </Tooltip>
@@ -172,17 +166,17 @@ const Chipper = inject('store')(observer(({ prevPage, nextPage, counter, pl, cle
                 >
                     <Tooltip title="Назад">
                         <span>
-                            <IconButton onClick={prevPage} type="submit" className={classes.iconButton} disabled={counter === 0 ? true : false}>
+                            <IconButton onClick={knowledgeStore.prevPage} type="submit" className={classes.iconButton} disabled={knowledgeStore.pageList.counter === 0 ? true : false}>
                                 <NavigateBeforeIcon />
                             </IconButton>
                         </span>
                     </Tooltip>
                     <Tooltip title="Страница">
-                        <Typography className={classes.Typography} variant="subtitle1"> {`${counter + 1}`} </Typography>
+                        <Typography className={classes.Typography} variant="subtitle1"> {`${knowledgeStore.pageList.counter + 1}`} </Typography>
                     </Tooltip>
                     <Tooltip title="Вперёд">
                         <span>
-                            <IconButton onClick={nextPage} type="submit" className={classes.iconButton} disabled={pl < 50 ? true : false}>
+                            <IconButton onClick={knowledgeStore.nextPage} type="submit" className={classes.iconButton} disabled={knowledgeStore.pageList.pages.length < 50 ? true : false}>
                                 <NavigateNextIcon />
                             </IconButton>
                         </span>

@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const PageCompList = inject('store')(observer(({ loading, components, store }) => {
+const PageCompList = inject('knowledgeStore')(observer(({ knowledgeStore }) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -48,9 +48,9 @@ const PageCompList = inject('store')(observer(({ loading, components, store }) =
             alignItems="center"
             className={classes.wrapperRoot}
         >
-            {components.map((value, index) => (
+            {knowledgeStore.page.components.map((value, index) => (
                 <Grid className={classes.wrapper} key={index}>
-                    {loading ? <Skeleton variant="rect" animation="wave" height={64} /> :
+                    {knowledgeStore.page.loading ? <Skeleton variant="rect" animation="wave" height={64} /> :
                         componentsSelect(value)}
                 </Grid>
             ))}

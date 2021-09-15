@@ -20,7 +20,7 @@ const useStylesToolbar = makeStyles((theme) => ({
     }
 }));
 
-const Toolbar = ({ prevPage, nextPage, counter, pl }) => {
+const Toolbar = inject('knowledgeStore')(observer(({ knowledgeStore }) => {
     const classes = useStylesToolbar();
 
     return (
@@ -28,22 +28,22 @@ const Toolbar = ({ prevPage, nextPage, counter, pl }) => {
             <Grid
                 container
                 direction="row"
-                justify="center"
+                justify="center"    
                 alignItems="center"
             >
-                <Button onClick={prevPage} className={classes.Button} variant="contained" color="primary" disabled={counter === 0 ? true : false}>
+                <Button onClick={knowledgeStore.prevPage} className={classes.Button} variant="contained" color="primary" disabled={knowledgeStore.pageList.counter === 0 ? true : false}>
                     Назад
                 </Button>
                 <Typography className={classes.Typography} variant="subtitle1">
-                    {`Страница ${counter + 1}`}
+                    {`Страница ${knowledgeStore.pageList.counter + 1}`}
                 </Typography>
-                <Button onClick={nextPage} className={classes.Button} variant="contained" color="primary" disabled={pl < 50 ? true : false}>
+                <Button onClick={knowledgeStore.nextPage} className={classes.Button} variant="contained" color="primary" disabled={knowledgeStore.pageList.pages.length < 50 ? true : false}>
                     Вперёд
                 </Button>
             </Grid>
         </>
     )
-}
+}));
 
 const useStyles = makeStyles((theme) => ({
     gridLoading: {
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Pages = inject('store')(observer(({ store }) => {
+const Pages = inject('knowledgeStore')(observer(({ knowledgeStore }) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -75,56 +75,16 @@ const Pages = inject('store')(observer(({ store }) => {
         xl: 3,
     })
 
-    const [pages, setPages] = React.useState([])
-    const [counter, setCounter] = React.useState(0)
-    const [search, setSearch] = React.useState("")
-    const [loadingInd, setLoadingInd] = React.useState(true)
-    const [loadingNothing, setLoadingNothing] = React.useState(false)
-
     React.useEffect(() => {
-        LoadPage(false, counter, search)
+        knowledgeStore.loadPageList()
     }, []);
-
-    const LoadPage = (isSearch, c, s) => {
-        setLoadingInd(true)
-        console.log("LoadPage", c, s)
-        store.fetchDataScr(`${store.url}/pages/`, "POST", { "counter": c, "search": s }).then(
-            (data) => {
-                console.log(data)
-                setPages(data)
-                setLoadingInd(false)
-                if (isSearch && data.length === 0) setLoadingNothing(true)
-            })
-    }
-
-    const prevPage = () => {
-        setCounter(prev => prev - 1)
-        LoadPage(false, counter - 1, search)
-    }
-
-    const nextPage = () => {
-        setCounter(prev => prev + 1)
-        LoadPage(false, counter + 1, search)
-    }
-
-    const goSearch = () => {
-        setLoadingNothing(false)
-        setCounter(0)
-        LoadPage(true, 0, search)
-    }
-
-    const clearSearch = () => {
-        setLoadingNothing(false)
-        setCounter(0)
-        LoadPage(false, 0, "")
-    }
 
     return (
         <>
-            <Chipper prevPage={prevPage} nextPage={nextPage} counter={counter} clearSearch={clearSearch} goSearch={goSearch} search={search} setSearch={setSearch} dataType={dataType} setDataType={setDataType} setSize={setSize} />
-            {!loadingNothing && <>
-                {!loadingInd && <PagesList pages={pages} dataType={dataType} size={size} />}
-                {!loadingInd && pages.length < 50 && <Grid
+            <Chipper dataType={dataType} setDataType={setDataType} setSize={setSize} />
+            {!knowledgeStore.pageList.loadingNothing && <>
+                {!knowledgeStore.pageList.loadingInd && <PagesList dataType={dataType} size={size} />}
+                {!knowledgeStore.pageList.loadingInd && knowledgeStore.pageList.pages.length < 50 && <Grid
                     container
                     direction="column"
                     justify="center"
@@ -133,8 +93,8 @@ const Pages = inject('store')(observer(({ store }) => {
                 >
                     <Typography> Это всё, что мы нашли по вашему запросу </Typography>
                 </Grid>}
-                {!loadingInd && <Toolbar prevPage={prevPage} nextPage={nextPage} counter={counter} pl={pages.length} />}
-                {loadingInd &&
+                {!knowledgeStore.pageList.loadingInd && <Toolbar/>}
+                {knowledgeStore.pageList.loadingInd &&
                     <Grid
                         container
                         direction="row"
@@ -146,7 +106,7 @@ const Pages = inject('store')(observer(({ store }) => {
                     </Grid>
                 }
             </>}
-            {loadingNothing &&
+            {knowledgeStore.pageList.loadingNothing &&
                 <Grid
                     container
                     direction="column"

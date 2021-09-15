@@ -28,18 +28,18 @@ const useStylesProfile = makeStyles((theme) => ({
     }
 }));
 
-const Castomize = inject('store')(observer(({ store }) => {
+const Castomize = inject('rootStore' , 'settingsStore')(observer(({ rootStore, settingsStore }) => {
     const classes = useStylesProfile();
     // const [isDarkMode, setIsDarkMode] = useState(() => false);
     const { enqueueSnackbar } = useSnackbar();
 
     const saveNewTheme = () => {
-        store.fetchDataScr(`${store.url}/settings/`, "POST", {
-            "changed": { "dark-theme": !store.settings.darkTheme }
+        rootStore.fetchDataScr(`${rootStore.url}/settings/`, "POST", {
+            "changed": { "dark-theme": !settingsStore.settings.darkTheme }
         })
             .then((data) => {
                 if (data.a) {
-                    store.setSettings("darkTheme", !store.settings.darkTheme)
+                    settingsStore.setSettings("darkTheme", !settingsStore.settings.darkTheme)
                     enqueueSnackbar('Успешно', {
                         variant: 'success',
 
@@ -60,7 +60,7 @@ const Castomize = inject('store')(observer(({ store }) => {
                     <Grid>
                         <DarkModeToggle
                             onChange={saveNewTheme}
-                            checked={store.settings.darkTheme}
+                            checked={settingsStore.settings.darkTheme}
                             size={80}
                         />
                     </Grid>

@@ -3,22 +3,16 @@ import Link from "next/link";
 import clsx from 'clsx';
 import { Input, AppBar, Toolbar, Dialog, InputLabel, NativeSelect, FormControl, DialogContent, MobileStepper, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Menu, MenuItem, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip } from '@material-ui/core';
 
-import { SnackbarProvider, useSnackbar } from 'notistack';
-
 import { inject, observer } from 'mobx-react'
 
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-import { useSwipeable } from 'react-swipeable';
 import StepOne from './DialogPageCreation/StepOne';
 import StepTwo from './DialogPageCreation/StepTwo';
 import StepThree from './DialogPageCreation/StepThree';
-
-
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -134,13 +128,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const DialogPageCreation = inject('store')(observer(({ selectId, setSelectId, savePage, deleteItemInPages, setComponentsData, pushNewItemToPages, dialogPageCreationData, changeDialogPageCreationData, dialogPageCreation, setDialogPageCreation, store }) => {
+const DialogPageCreation = inject('rootStore', 'managmentStore')(observer(({ rootStore, managmentStore }) => {
     const classes = useStyles();
     const theme = useTheme();
-
-    React.useEffect(() => {
-        if (dialogPageCreation) console.log("Эффект")
-    })
 
     const [activeStep, setActiveStep] = React.useState(0);
 
@@ -156,8 +146,8 @@ const DialogPageCreation = inject('store')(observer(({ selectId, setSelectId, sa
         <Dialog
             className={classes.dialog}
             fullScreen
-            open={dialogPageCreation}
-            onClose={() => setDialogPageCreation(false)}
+            open={managmentStore.pageCreationList.dialogOpen}
+            onClose={() => managmentStore.setPageCreationList("dialogOpen", false)}
             scroll='paper'
             aria-labelledby="scroll-dialog-title"
             aria-describedby="scroll-dialog-description"
@@ -175,12 +165,12 @@ const DialogPageCreation = inject('store')(observer(({ selectId, setSelectId, sa
                         </Grid>
                         <Grid>
                             <Tooltip title="Сохранить">
-                                <IconButton onClick={() => savePage()}>
+                                <IconButton onClick={() => managmentStore.savePage()}>
                                     <SaveIcon className={classes.icon} />
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Закрыть. Перед закрытием сохраните, иначе прогресс будет потерян">
-                                <IconButton onClick={() => setDialogPageCreation(false)}>
+                                <IconButton onClick={() => managmentStore.setPageCreationList("dialogOpen", false)}>
                                     <CloseIcon className={classes.icon} />
                                 </IconButton>
                             </Tooltip>
@@ -202,9 +192,9 @@ const DialogPageCreation = inject('store')(observer(({ selectId, setSelectId, sa
                         [classes.gridMainStepFour]: activeStep == 1,
                     })}
                 >
-                    {activeStep == 0 && <StepOne dialogPageCreationData={dialogPageCreationData} changeDialogPageCreationData={changeDialogPageCreationData}/>}
-                    {activeStep == 1 && <StepTwo selectId={selectId} setSelectId={setSelectId} deleteItemInPages={deleteItemInPages} setComponentsData={setComponentsData} pushNewItemToPages={pushNewItemToPages} dialogPageCreationData={dialogPageCreationData} changeDialogPageCreationData={changeDialogPageCreationData}/>}
-                    {activeStep == 2 && <StepThree savePage={savePage} dialogPageCreationData={dialogPageCreationData} changeDialogPageCreationData={changeDialogPageCreationData}/>}
+                    {activeStep == 0 && <StepOne />}
+                    {activeStep == 1 && <StepTwo />}
+                    {activeStep == 2 && <StepThree />}
 
                 </Grid>
             </DialogContent>

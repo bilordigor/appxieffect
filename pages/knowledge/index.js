@@ -14,10 +14,10 @@ import { inject, observer } from 'mobx-react'
 
 import NavigationAll from '../../components/OtherComponents/Navigation/NavigationAll'
 //import Background from '../../components/OtherComponents/Background/Background.js'
-import Modules from '../../components/PagesComponents/Knowledge/Modules';
+//import Modules from '../../garbage/Modules';
 import Pages from '../../components/PagesComponents/Knowledge/Pages';
 //import Moderate from '../../components/PagesComponents/Knowledge/Moderate';
-import Other from '../../components/PagesComponents/Knowledge/Other';
+//import Other from '../../garbage/Other';
 
 const AntTabs = withStyles((theme) => ({
   root: {
@@ -105,35 +105,6 @@ const Knowledge = inject('store')(observer(({ store }) => {
     setValue(index);
   };
 
-  React.useEffect(() => {
-    if (value === 0) {
-      store.fetchDataScr(`${store.url}/filters/`, "GET")
-        .then((data) => {
-          console.log("filtersI:", data)
-          if (data != undefined) {
-            //store.setFiltersGlobal(data)
-            if (!store.allLoading) store.loadingMoreCourses()
-          }
-        });
-    }
-    //store.getNewCourses()
-  }, []);
-
-  const bottomLoading = () => {
-    //console.log("scrolling")
-    if (value === 0) {
-      if (!store.allLoading) {
-        store.counterUp()
-        store.loadingMoreCourses()
-      }
-    }
-  }
-
-  useBottomScrollListener(bottomLoading, {
-    offset: 100,
-    // debounce: 0,
-    // triggerOnNoScroll: true
-  });
   return (
     <>
       <Head>
@@ -152,10 +123,10 @@ const Knowledge = inject('store')(observer(({ store }) => {
               textColor="primary"
               aria-label="full width tabs example"
             >
-              <Tab onClick={() => sessionStorage.setItem('KnowledgeTab', "Modules")} label={<Typography className={classes.tabLabel}>Модули</Typography>} {...a11yProps(0)} />
-              <Tab onClick={() => sessionStorage.setItem('KnowledgeTab', "Pages")} label={<Typography className={classes.tabLabel}>Страницы</Typography>} {...a11yProps(1)} />
+              <Tab onClick={() => sessionStorage.setItem('KnowledgeTab', "Pages")} label={<Typography className={classes.tabLabel}>Страницы</Typography>} {...a11yProps(0)} />
+              {/* <Tab onClick={() => sessionStorage.setItem('KnowledgeTab', "Pages")} label={<Typography className={classes.tabLabel}>Страницы</Typography>} {...a11yProps(1)} /> */}
               {/* <Tab label={<Typography className={classes.tabLabel}>Модерация</Typography>} {...a11yProps(2)} /> */}
-              <Tab onClick={() => sessionStorage.setItem('KnowledgeTab', "Others")} label={<Typography className={classes.tabLabel}><MoreHorizIcon /></Typography>} {...a11yProps(2)} />
+              {/* <Tab onClick={() => sessionStorage.setItem('KnowledgeTab', "Others")} label={<Typography className={classes.tabLabel}><MoreHorizIcon /></Typography>} {...a11yProps(2)} /> */}
             </AntTabs>
           </AppBar>
           <SwipeableViews
@@ -165,17 +136,18 @@ const Knowledge = inject('store')(observer(({ store }) => {
             onChangeIndex={handleChangeIndex}
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <Modules />
-            </TabPanel>
-            <TabPanel value={value} index={1} dir={theme.direction}>
               <Pages />
             </TabPanel>
+            {/* <TabPanel value={value} index={0} dir={theme.direction}> */}
+              {/* <Modules /> */}
+            {/* </TabPanel> */}
+            
             {/* <TabPanel value={value} index={2} dir={theme.direction}> */}
             {/* <Moderate/> */}
             {/* </TabPanel> */}
-            <TabPanel value={value} index={2} dir={theme.direction}>
-              <Other />
-            </TabPanel>
+            {/* <TabPanel value={value} index={2} dir={theme.direction}> */}
+              {/* <Other /> */}
+            {/* </TabPanel> */}
           </SwipeableViews>
         </Grid>
       </NavigationAll>

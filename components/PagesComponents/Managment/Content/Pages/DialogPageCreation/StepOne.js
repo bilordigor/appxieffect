@@ -52,11 +52,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const StepOne = inject('store')(observer(({ dialogPageCreationData, changeDialogPageCreationData, store }) => {
+const StepOne = inject('managmentStore')(observer(({ managmentStore }) => {
     const classes = useStyles();
     const theme = useTheme();
 
-    const [checked, setChecked] = React.useState(false)
 
     return (
         <Grid
@@ -77,8 +76,8 @@ const StepOne = inject('store')(observer(({ dialogPageCreationData, changeDialog
                 <Input
                     required
                     className={classes.input}
-                    value={dialogPageCreationData.name}
-                    onChange={(event) => changeDialogPageCreationData("name", event.target.value)}
+                    value={managmentStore.pageCreation.name}
+                    onChange={(event) => managmentStore.setPageCreation("name", event.target.value)}
                 // margin='dense'
                 //multiline={true}
                 // fullWidth={true}
@@ -91,8 +90,8 @@ const StepOne = inject('store')(observer(({ dialogPageCreationData, changeDialog
                 <Input
                     required
                     className={classes.input}
-                    value={dialogPageCreationData.description}
-                    onChange={(event) => changeDialogPageCreationData("description", event.target.value)}
+                    value={managmentStore.pageCreation.description}
+                    onChange={(event) => managmentStore.setPageCreation("description", event.target.value)}
                     multiline={true}
                 // fullWidth={true}
                 />
@@ -104,8 +103,8 @@ const StepOne = inject('store')(observer(({ dialogPageCreationData, changeDialog
                 <Input
                     required
                     className={classes.input}
-                    value={dialogPageCreationData.theme}
-                    onChange={(event) => changeDialogPageCreationData("theme", event.target.value)}
+                    value={managmentStore.pageCreation.theme}
+                    onChange={(event) => managmentStore.setPageCreation("theme", event.target.value)}
                     multiline={true}
                 // fullWidth={true}
                 />
@@ -118,8 +117,8 @@ const StepOne = inject('store')(observer(({ dialogPageCreationData, changeDialog
                 <NativeSelect
                     className={classes.NativeSelect}
                     // defaultValue={'Не выбрано'}
-                    value={dialogPageCreationData.kind}
-                    onChange={(event) => changeDialogPageCreationData("kind", event.target.value)}
+                    value={managmentStore.pageCreation.kind}
+                    onChange={(event) => managmentStore.setPageCreation("kind", event.target.value)}
                     inputProps={{
                         name: 'age',
                         id: 'uncontrolled-native',
@@ -135,8 +134,8 @@ const StepOne = inject('store')(observer(({ dialogPageCreationData, changeDialog
                 <FormControlLabel
                     control={
                         <Switch
-                            checked={dialogPageCreationData.blueprint}
-                            onChange={() => changeDialogPageCreationData("blueprint", !dialogPageCreationData.blueprint)}
+                            checked={managmentStore.pageCreation.blueprint}
+                            onChange={() => managmentStore.setPageCreation("blueprint", !managmentStore.pageCreation.blueprint)}
                             name="checkedB"
                             color="primary"
                         />

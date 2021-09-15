@@ -96,14 +96,14 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Managment = inject('store')(observer(({ store }) => {
+const Managment = inject('rootStore')(observer(({ rootStore }) => {
   const classes = useStyles();
   const theme = useTheme();
   const { enqueueSnackbar } = useSnackbar();
 
   const [role, setRole] = React.useState({ author: null, moderator: null })
   React.useEffect(() => {
-    store.fetchDataScr(`${store.url}/settings/roles/`, "GET")
+    rootStore.fetchDataScr(`${rootStore.url}/settings/roles/`, "GET")
       .then((data) => {
         setRole(data)
         console.log("role", role)
@@ -112,7 +112,7 @@ const Managment = inject('store')(observer(({ store }) => {
   }, []);
 
   const becomeAuther = () => {
-    store.fetchDataScr(`${store.url}/authors/permit/`, "GET")
+    rootStore.fetchDataScr(`${rootStore.url}/authors/permit/`, "GET")
       .then((data) => {
         if (data.a) return setRole([...role, author = "current"])
         if (!data.a) {

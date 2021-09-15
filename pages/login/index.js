@@ -158,7 +158,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Login = inject('store')(observer(({ store }) => {
+const Login = inject('rootStore', 'uiStore')(observer(({ rootStore, uiStore }) => {
     const classes = useStyles();
 
     const [email, setEmail] = React.useState('')
@@ -187,7 +187,7 @@ const Login = inject('store')(observer(({ store }) => {
         setErrorPassword(false)
         setErrorServer(false)
         if (email.length > 0 && password.length > 0) {
-            store.fetchData(`${store.url}/auth/`, "POST", { "email": email, "password": Crypto.SHA384(password).toString() })
+            rootStore.fetchData(`${rootStore.url}/auth/`, "POST", { "email": email, "password": Crypto.SHA384(password).toString() })
                 .then((data) => {
                     if (data != undefined) {
                         if (data.a == "Success") {
@@ -217,7 +217,7 @@ const Login = inject('store')(observer(({ store }) => {
             <Head>
                 <title>Ξ Авторизация</title>
             </Head>
-            {store.loading["/login"] && <Loading />}
+            {uiStore.loading["/login"] && <Loading />}
             <div className={classes.root}>
                 <BackgroundImg src="/wallpapers/hp4.jpg" />
                 <Grid

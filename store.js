@@ -541,7 +541,7 @@ class Store {
 
 
 
-  @action async getCookie(name) {
+  @computed async getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
@@ -643,7 +643,7 @@ function initializeStore(initialData = null) {
   const _store = store ?? new Store()
 
   // If your page has Next.js data fetching methods that use a Mobx store, it will
-  // get hydrated here, check `pages/ssg.js` and `pages/ssr.js` for more details
+  // get hydrated here
   if (initialData) {
     _store.hydrate(initialData)
   }

@@ -1,26 +1,11 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, withStyles, ButtonGroup, Input, AppBar, Toolbar, Dialog, InputLabel, NativeSelect, FormControl, DialogContent, MobileStepper, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip, InputBase } from '@material-ui/core';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
-import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
-import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
-import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
-import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
-import FormatBoldIcon from '@material-ui/icons/FormatBold';
-import FormatItalicIcon from '@material-ui/icons/FormatItalic';
-import FormatUnderlinedIcon from '@material-ui/icons/FormatUnderlined';
-import FormatColorFillIcon from '@material-ui/icons/FormatColorFill';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import LooksOneIcon from '@material-ui/icons/LooksOne';
-import LooksTwoIcon from '@material-ui/icons/LooksTwo';
-import Looks3Icon from '@material-ui/icons/Looks3';
-import Looks4Icon from '@material-ui/icons/Looks4';
-import Looks5Icon from '@material-ui/icons/Looks5';
-import Looks6Icon from '@material-ui/icons/Looks6';
 import ClearIcon from '@material-ui/icons/Clear';
-
 import { inject, observer } from 'mobx-react'
+
 
 const useStyles = makeStyles((theme) => ({
     gridButtons: {
@@ -63,12 +48,13 @@ const StyledToggleButtonGroup = withStyles((theme) => ({
     },
 }))(ToggleButtonGroup);
 
-const Text = inject('store')(observer(({ store, values, listeners, index, setComponentsData, deleteItemInPages, setSelectId }) => {
-
+const Header = inject('managmentStore')(observer(({ managmentStore, index }) => {
+    // Simulated props for the purpose of the example
+    const values = managmentStore.pageCreation.components[index]
     // Simulated props for the purpose of the example
     const props = { fontSize: values.fontSize, textAlign: values.textAlign, fontStyle: values.fontStyle, fontWeight: values.fontWeight, textDecoration: values.textDecoration, backgroundColor: 'black', color: 'white' };
     // Pass the props as the first argument of useStyles()
-    console.log("props", props)
+    //console.log("props", props)
     const classes = useStyles(props);
 
     return (
@@ -78,7 +64,7 @@ const Text = inject('store')(observer(({ store, values, listeners, index, setCom
                 direction="row"
                 justify="flex-start"
                 alignItems="flex-start"
-                onClick={() => setSelectId(index)}
+                onClick={() => managmentStore.setPageCreationList("selectId", index)}
             >
                 <Grid className={classes.gridTextWrapper}>
                     <Input
@@ -90,7 +76,7 @@ const Text = inject('store')(observer(({ store, values, listeners, index, setCom
                         multiline
                         fullWidth
                         value={values.label}
-                        onChange={(event) => setComponentsData(index, "label", event.target.value)}
+                        onChange={(event) => managmentStore.setPageCreationComponents(index, "label", event.target.value)}
                     />
                 </Grid>
                 <Grid className={classes.gridButtons}>
@@ -98,20 +84,21 @@ const Text = inject('store')(observer(({ store, values, listeners, index, setCom
                         size="small"
                         aria-label="text formatting"
                     >
-                        <ToggleButton value="clear" onClick={() => deleteItemInPages(index)}>
+                        <ToggleButton value="clear" onClick={() => managmentStore.deleteComponent(index)}>
                             <ClearIcon />
                         </ToggleButton>
                         <ToggleButton value="drag">
-                            <DragIndicatorIcon {...listeners} />
+                            <DragIndicatorIcon />
                         </ToggleButton>
                     </StyledToggleButtonGroup>
                 </Grid>
             </Grid>
         </>
+
     );
 }));
 
 // onClickAway={() => setEdit(false)}
 
-export default Text
+export default Header
 
