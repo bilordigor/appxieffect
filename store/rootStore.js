@@ -3,11 +3,11 @@ import { enableStaticRendering } from 'mobx-react'
 import { useMemo } from 'react'
 
 import UIStore from "./ui/uiStore";
-import MainStore from "./main/MainStore";
-import KnowledgeStore from "./knowledge/KnowledgeStore";
-import ManagmentStore from "./managment/ManagmentStore";
-import SettingsStore from "./settings/SettingsStore";
-import ContentStore from "./content/ContentStore";
+import MainStore from "./main/mainStore";
+import KnowledgeStore from "./knowledge/knowledgeStore";
+import ManagmentStore from "./managment/managmentStore";
+import SettingsStore from "./settings/settingsStore";
+import ContentStore from "./content/contentStore";
 
 enableStaticRendering(typeof window === 'undefined')
 
