@@ -65,7 +65,9 @@ class ManagmentStore {
         if (type === "img") {
             this.pageCreation.components.push({ type: "img", aid: null, iid: null, })
         }
-        //this.idComponents()
+        if (type === "quiz") {
+            this.pageCreation.components.push({ type: "quiz", quizType: "single", content: [{ type: "text", fontSize: 14, fontWeight: "normal", fontStyle: "normal", textDecoration: "none", label: "текст" }],  })
+        } 
         console.log("compot", this.pageCreation.components)
     }
 

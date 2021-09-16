@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import ToggleButton from '@material-ui/core/ToggleButton';
+import ToggleButtonGroup from '@material-ui/core/ToggleButtonGroup';
 import ClearIcon from '@material-ui/icons/Clear';
 import { inject, observer } from 'mobx-react'
 import Image from 'next/image'
-import { Dialog, DialogContent, Input, Slider, withStyles, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Menu, MenuItem, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip } from '@material-ui/core';
-
+import { Dialog, DialogContent, Input, Slider, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, CardMedia, Avatar, CardContent, CardHeader, Menu, MenuItem, Button, Card, CardActions, Grid, Box, Typography, useTheme, Tooltip } from '@material-ui/core';
+import { withStyles, makeStyles } from '@material-ui/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import AvatarEditor from 'react-avatar-editor'
 import { useFileUpload } from "use-file-upload"
@@ -286,21 +286,29 @@ const ImageComp = inject('rootStore', 'knowledgeStore', 'contentStore', 'managme
 
     const uploadImg = () => {
         if (img != null) {
-        rootStore.fetchDataScr(`${rootStore.url}/wip/images/`, "POST", img).then(
-            (data) => {
-                if (data) {
-                    console.log("done", data)
-                    contentStore.setImage(data.aid, data.iid, img)
-                    managmentStore.setPageCreationComponents(index, "aid", data.aid)
-                    managmentStore.setPageCreationComponents(index, "iid", data.iid)
-                    setOpenDialog(false)
+            rootStore.fetchDataScr(`${rootStore.url}/wip/images/`, "POST", img).then(
+                (data) => {
+                    if (data) {
+                        console.log("done", data)
+                        contentStore.setImage(data.aid, data.iid, img)
+                        managmentStore.setPageCreationComponents(index, "aid", data.aid)
+                        managmentStore.setPageCreationComponents(index, "iid", data.iid)
+                        setOpenDialog(false)
 
-                } else {
-                    console.log("fail", data)
-                }
+                    } else {
+                        console.log("fail", data)
+                    }
 
-            })
+                })
         }
+    }
+
+    const deleteImgComp = (index) => {
+        rootStore.fetchDataScr(`${rootStore.url}/wip/image/${values.iid}/`, "DELETE").then(
+            (data) => {
+                console.log("Delete Image Success", data)
+                managmentStore.deleteComponent(index)
+            })
     }
 
     return (
@@ -340,7 +348,7 @@ const ImageComp = inject('rootStore', 'knowledgeStore', 'contentStore', 'managme
                         size="small"
                         aria-label="text formatting"
                     >
-                        <ToggleButton value="clear" onClick={() => managmentStore.deleteComponent(index)}>
+                        <ToggleButton value="clear" onClick={deleteImgComp(index)}>
                             <ClearIcon />
                         </ToggleButton>
                         <ToggleButton value="drag">

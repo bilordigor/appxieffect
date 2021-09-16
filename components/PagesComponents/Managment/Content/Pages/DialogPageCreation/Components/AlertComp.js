@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Tabs, Tab, withStyles, InputAdornment, Input, AppBar, Toolbar, Dialog, InputLabel, NativeSelect, FormControl, DialogContent, MobileStepper, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip, InputBase } from '@material-ui/core';
+import { Tabs, Tab, InputAdornment, Input, AppBar, Toolbar, Dialog, InputLabel, NativeSelect, FormControl, DialogContent, MobileStepper, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, CardMedia, Avatar, CardContent, CardHeader, Button, Card, CardActions, Grid, Box, Typography, useTheme, Tooltip, InputBase } from '@material-ui/core';
+import { withStyles, makeStyles } from '@material-ui/styles';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import ToggleButton from '@material-ui/core/ToggleButton';
+import ToggleButtonGroup from '@material-ui/core/ToggleButtonGroup';
 import ClearIcon from '@material-ui/icons/Clear';
 import { inject, observer } from 'mobx-react'
 import Alert from '@material-ui/lab/Alert';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ButtonGroup, Hidden, Button, Grid, Paper, Typography, makeStyles, withStyles, Divider, useTheme, Tooltip } from '@material-ui/core';
+import { ButtonGroup, Hidden, Button, Grid, Paper, Typography, makeStyles, Divider, useTheme, Tooltip } from '@material-ui/core';
 import { inject, observer } from 'mobx-react'
 
 import CancelPresentationIcon from '@material-ui/icons/CancelPresentation';

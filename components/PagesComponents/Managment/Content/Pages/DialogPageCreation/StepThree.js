@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import cx from 'clsx';
-import { FormControl, FormControlLabel, Grid, Switch, Button, Typography, makeStyles, useTheme, Tooltip } from '@material-ui/core';
+import { FormControl, FormControlLabel, Grid, Switch, Button, Typography, useTheme, Tooltip } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 
 import { SnackbarProvider, useSnackbar } from 'notistack';
 

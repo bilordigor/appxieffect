@@ -2,8 +2,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Router from 'next/router'
 import React from 'react';
-import { Accordion, AccordionSummary, Typography, AccordionDetails, Grid } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { Accordion, AccordionSummary, Typography, AccordionDetails, Grid, useTheme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles'
 
 import { inject, observer } from 'mobx-react'
 import NavigationAll from '../../components/OtherComponents/Navigation/NavigationAll'

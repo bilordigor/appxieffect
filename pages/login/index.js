@@ -9,7 +9,7 @@ import { inject, observer } from 'mobx-react'
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import EmailIcon from '@material-ui/icons/Email';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 import Loading from './../../components/OtherComponents/Loading/Loading';
 
 let Crypto = require('crypto-js')

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { ButtonGroup, Button, makeStyles, withStyles, Divider, useTheme, Tooltip } from '@material-ui/core';
+import { ButtonGroup, Button, Divider, useTheme, Tooltip } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import { inject, observer } from 'mobx-react'
 
 const useStyles = makeStyles((theme) => ({

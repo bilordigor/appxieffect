@@ -3,8 +3,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { CircularProgress, Divider, Paper, Grid, AppBar, Toolbar, Typography, CssBaseline, useScrollTrigger, Box, Container, Fab, Zoom, Button } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { CircularProgress, Divider, useTheme, Paper, Grid, AppBar, Toolbar, Typography, CssBaseline, useScrollTrigger, Box, Container, Fab, Zoom, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles'
 
 import { inject, observer } from 'mobx-react'
 import BackgroundImg from '../../components/OtherComponents/Background/BackgroundImg'

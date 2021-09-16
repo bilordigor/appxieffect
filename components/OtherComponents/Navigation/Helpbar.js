@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link'
 import clsx from 'clsx';
 import { inject, observer } from 'mobx-react'
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import { SwipeableDrawer, Accordion, AccordionSummary, AccordionDetails, Typography, Divider, IconButton } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 

@@ -6,7 +6,7 @@ import Router from 'next/router'
 import { Tooltip, Grid, TextField, InputLabel, InputAdornment, IconButton, FormControl, OutlinedInput, FormControlLabel, Switch, AppBar, Tabs, Tab, Typography, Box, Button, Paper } from '@material-ui/core';
 import { Link as LinkUI } from '@material-ui/core'
 
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/styles'
 import clsx from 'clsx'
 import { inject, observer } from 'mobx-react'
 import Visibility from '@material-ui/icons/Visibility'

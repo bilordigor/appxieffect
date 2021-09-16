@@ -2,7 +2,7 @@
 import React from 'react';
 import Head from "next/head";
 import PropTypes from 'prop-types';
-import { makeStyles, useTheme, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { useTheme, createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Provider } from 'mobx-react'
 import { useStore } from '../store/rootStore'
 //import { useFileUpload } from "use-file-upload";
@@ -13,25 +13,12 @@ import { SnackbarProvider, useSnackbar } from 'notistack';
 import "../styles/globals.css"
 
 import '../styles/styles.css';
-// import '@react-page/editor/lib/index.css';
-// // import plugin css. We recommend to do that
-// // where you import the plugin itself,
-// // but there is a problem currently preventing us from do so,
-// // but that only applies to this example project
-// // see https://github.com/vercel/next.js/issues/19717
-import '@react-page/plugins-background/lib/index.css';
-import '@react-page/plugins-html5-video/lib/index.css';
-import '@react-page/plugins-spacer/lib/index.css';
-import '@react-page/plugins-video/lib/index.css';
-import '@react-page/plugins-image/lib/index.css';
-import '@react-page/plugins-slate/lib/index.css';
-import 'katex/dist/katex.min.css';
 
 const MyApp = (observer(({ Component, pageProps }) => {
 
   const rootStore = useStore(pageProps.initialState)
 
-  const themeWhite = createMuiTheme({
+  const themeWhite = createTheme({
     palette: {
       //mode: 'light',
       primary: {
@@ -62,7 +49,7 @@ const MyApp = (observer(({ Component, pageProps }) => {
   });
 
 
-  const themeDark = createMuiTheme({
+  const themeDark = createTheme({
     palette: {
       //mode: 'dark',
       primary: {

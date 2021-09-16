@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { makeStyles, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { inject, observer } from 'mobx-react'
 

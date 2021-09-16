@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
 
-import { Chip, Divider, Button, Grid, Typography, makeStyles, useTheme } from '@material-ui/core';
+import { Chip, Divider, Button, Grid, Typography, useTheme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles'
 
 import TuneIcon from '@material-ui/icons/Tune';
 

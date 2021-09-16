@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import cx from 'clsx';
 import clsx from 'clsx';
-import { Divider, CardContent, Popper, MenuList, Avatar, withStyles, Paper, Accordion, IconButton, Chip, AccordionSummary, AccordionDetails, CardHeader, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip } from '@material-ui/core';
-
+import { Divider, CardContent, Popper, MenuList, Avatar, Paper, Accordion, IconButton, Chip, AccordionSummary, AccordionDetails, CardHeader, Button, Card, CardActions, Grid, Box, Typography, useTheme, Tooltip } from '@material-ui/core';
+import { withStyles } from '@material-ui/styles';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';

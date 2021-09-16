@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from "next/link";
 import clsx from 'clsx';
-import { Tabs, Tab, withStyles, ButtonGroup, Input, AppBar, Toolbar, Dialog, InputLabel, NativeSelect, FormControl, DialogContent, MobileStepper, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme, Tooltip } from '@material-ui/core';
-
+import { Tabs, Tab, ButtonGroup, Input, AppBar, Toolbar, Dialog, InputLabel, NativeSelect, FormControl, DialogContent, MobileStepper, DialogActions, DialogContentText, DialogTitle, Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, CardMedia, Avatar, CardContent, CardHeader, Button, Card, CardActions, Grid, Box, Typography, useTheme, Tooltip } from '@material-ui/core';
+import { withStyles, makeStyles } from '@material-ui/styles';
 import { SnackbarProvider, useSnackbar } from 'notistack';
 
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
@@ -26,8 +26,8 @@ import FormatItalicIcon from '@material-ui/icons/FormatItalic';
 import FormatUnderlinedIcon from '@material-ui/icons/FormatUnderlined';
 import FormatColorFillIcon from '@material-ui/icons/FormatColorFill';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import ToggleButton from '@material-ui/core/ToggleButton';
+import ToggleButtonGroup from '@material-ui/core/ToggleButtonGroup';
 import LooksOneIcon from '@material-ui/icons/LooksOne';
 import LooksTwoIcon from '@material-ui/icons/LooksTwo';
 import Looks3Icon from '@material-ui/icons/Looks3';
@@ -508,6 +508,7 @@ const StepTwo = inject('managmentStore')(observer(({ managmentStore }) => {
         { title: "Уведомление", subtitle: "Текст, выделенный цветом", type: "alert" },
         { title: "Разделитель", subtitle: "Горизонтальная черта, разделяет соседние блоки", type: "divider" },
         { title: "Изображение", subtitle: "Компонент изображения", type: "img" },
+        { title: "Опрос", subtitle: "Компонент опроса", type: "quiz" },
     ]
 
     return (

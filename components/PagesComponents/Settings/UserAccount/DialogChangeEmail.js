@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 //import UploadFileIcon from '@material-ui/icons/UploadFile';
-import { Slider, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, InputAdornment, Tooltip, IconButton, Avatar, Grid, withStyles, FormControl, InputLabel, TextField, OutlinedInput, Typography, Box, Button } from '@material-ui/core'
+import { Slider, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, InputAdornment, Tooltip, IconButton, Avatar, Grid, FormControl, InputLabel, TextField, OutlinedInput, Typography, Box, Button } from '@material-ui/core'
+import { withStyles } from '@material-ui/styles';
 import { inject, observer } from 'mobx-react'
 
 import SaveIcon from '@material-ui/icons/Save';

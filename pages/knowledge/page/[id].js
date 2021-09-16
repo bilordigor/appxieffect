@@ -3,7 +3,8 @@ import React from 'react'
 import Head from 'next/head'
 import { useRouter } from "next/router";
 
-import { Divider, Paper, Grid, FormControlLabel, Button, makeStyles, useTheme, Menu, Hidden, IconButton, InputBase, Switch, Typography } from '@material-ui/core'
+import { Divider, Paper, Grid, FormControlLabel, Button, useTheme, Menu, Hidden, IconButton, InputBase, Switch, Typography } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
 
 import { inject, observer } from 'mobx-react'
 

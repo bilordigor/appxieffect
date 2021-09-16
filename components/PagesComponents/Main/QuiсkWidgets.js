@@ -1,7 +1,8 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react'
 import { Typography, Paper, Grid } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles';
 
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Lessons from './QuickWidgets/Lessons';

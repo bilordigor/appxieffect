@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import cx from 'clsx';
-import { Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Menu, MenuItem, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme } from '@material-ui/core';
+import { Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, CardMedia, Avatar, CardContent, CardHeader, Menu, MenuItem, Button, Card, CardActions, Grid, Box, Typography, useTheme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 
-import Pagination from '@material-ui/lab/Pagination';
-import PaginationItem from '@material-ui/lab/PaginationItem';
+import Pagination from '@material-ui/core/Pagination';
+import PaginationItem from '@material-ui/core/PaginationItem';
 import Image from 'next/image'
 import { SnackbarProvider, useSnackbar } from 'notistack';
 import { inject, observer } from 'mobx-react'

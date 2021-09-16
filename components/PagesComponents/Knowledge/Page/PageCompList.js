@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { CircularProgress, Grid, Typography, makeStyles, useTheme } from '@material-ui/core';
-import Skeleton from '@material-ui/lab/Skeleton';
+import { CircularProgress, Grid, Typography, useTheme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import Skeleton from '@material-ui/core/Skeleton';
 
 import { inject, observer } from 'mobx-react'
 import Text from './Components/Text';

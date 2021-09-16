@@ -3,8 +3,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { CircularProgress, FormControl, InputLabel, IconButton, InputAdornment, Tooltip, Divider, OutlinedInput, Paper, Grid, AppBar, Toolbar, Typography, CssBaseline, useScrollTrigger, Box, Container, Fab, Zoom, Button } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { CircularProgress, FormControl, useTheme, InputLabel, IconButton, InputAdornment, Tooltip, Divider, OutlinedInput, Paper, Grid, AppBar, Toolbar, Typography, CssBaseline, useScrollTrigger, Box, Container, Fab, Zoom, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles'
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { inject, observer } from 'mobx-react'
@@ -188,7 +188,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const PasswordReset = inject('rootStore')(observer(({rootStore}) => {
+const PasswordReset = inject('rootStore')(observer(({ rootStore }) => {
     const classes = useStyles();
     const theme = useTheme();
     const router = useRouter()
@@ -222,7 +222,7 @@ const PasswordReset = inject('rootStore')(observer(({rootStore}) => {
             }
         }
         if (!errorSymbolsReset && !errorPasswordLengthReset) {
-            rootStore.fetchData(`${rootStore.url}/password-reset/confirm/`, "POST", { "code": id, "password": Crypto.SHA384(passwordReset).toString()}, )
+            rootStore.fetchData(`${rootStore.url}/password-reset/confirm/`, "POST", { "code": id, "password": Crypto.SHA384(passwordReset).toString() },)
                 .then((data) => {
                     if (data != undefined) {
                         if (data.a == "Success") { //"Success"

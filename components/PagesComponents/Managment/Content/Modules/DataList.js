@@ -1,11 +1,12 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 
-import { Tooltip, IconButton, CircularProgress, Grid, Button, Typography, makeStyles, useTheme } from '@material-ui/core';
-import { DataGrid, useGridSlotComponentProps } from '@material-ui/data-grid';
-import Pagination from '@material-ui/lab/Pagination';
-import PaginationItem from '@material-ui/lab/PaginationItem';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { Tooltip, IconButton, CircularProgress, Grid, Button, Typography, useTheme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+// import { DataGrid, useGridSlotComponentProps } from '@material-ui/data-grid';
+import Pagination from '@material-ui/core/Pagination';
+import PaginationItem from '@material-ui/core/PaginationItem';
+import { createTheme } from '@material-ui/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
@@ -59,7 +60,7 @@ function customCheckbox(theme) {
     };
 }
 
-const defaultTheme = createMuiTheme();
+const defaultTheme = createTheme();
 const useStyles = makeStyles(
     (theme) => ({
         root: {
@@ -234,7 +235,7 @@ const DataList = inject('store')(observer(({ store }) => {
     return (
         <div style={{ display: 'flex', height: '100%', width: '100%', marginTop: 16, }} className={classes.root}>
             <div style={{ flexGrow: 1 }}>
-                <DataGrid
+                {/* <DataGrid
                     rows={rows}
                     columns={columns}
                     className={classes.root}
@@ -249,7 +250,7 @@ const DataList = inject('store')(observer(({ store }) => {
                 //     Pagination: CustomPagination,
                 // }}
 
-                />
+                /> */}
             </div>
         </div>
     )

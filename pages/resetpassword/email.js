@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { Grid, TextField, Tooltip, Popper, Grow, MenuList, MenuItem, InputLabel, Checkbox, ButtonGroup, InputAdornment, IconButton, FormControl, OutlinedInput, FormControlLabel, Switch, AppBar, Tabs, Tab, Typography, Box, Button, Paper } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 
 import clsx from 'clsx'
 import { inject, observer } from 'mobx-react'

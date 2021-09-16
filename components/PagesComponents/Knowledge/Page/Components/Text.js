@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Input, Grid, makeStyles } from '@material-ui/core';
-
+import { Input, Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import { inject, observer } from 'mobx-react'
 
 const useStyles = makeStyles((theme) => ({

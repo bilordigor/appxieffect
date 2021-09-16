@@ -1,5 +1,6 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core';
+import { useTheme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { inject, observer } from 'mobx-react'

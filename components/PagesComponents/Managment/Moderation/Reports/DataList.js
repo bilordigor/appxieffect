@@ -4,10 +4,10 @@ import React from 'react';
 import { CircularProgress, Grid, Button, Typography, makeStyles, useTheme } from '@material-ui/core';
 
 import { inject, observer } from 'mobx-react'
-import { DataGrid, useGridSlotComponentProps } from '@material-ui/data-grid';
-import Pagination from '@material-ui/lab/Pagination';
-import PaginationItem from '@material-ui/lab/PaginationItem';
-import { createMuiTheme } from '@material-ui/core/styles';
+//import { DataGrid, useGridSlotComponentProps } from '@material-ui/data-grid';
+import Pagination from '@material-ui/core/Pagination';
+import PaginationItem from '@material-ui/core/PaginationItem';
+import { createTheme } from '@material-ui/core/styles';
 import Image from 'next/image'
 // import Chipper from './Modules/Chipper';
 // import ModulesList from './Modules/ModulesList';
@@ -55,7 +55,7 @@ function customCheckbox(theme) {
     };
 }
 
-const defaultTheme = createMuiTheme();
+const defaultTheme = createTheme();
 const useStyles = makeStyles(
     (theme) => ({
         root: {
@@ -218,7 +218,7 @@ const DataList = inject('store')(observer(({ setPackageId, setOpenDialogReports,
     return (
         <div style={{ display: 'flex', height: '100%', width: '100%', marginTop: 16, }} className={classes.root}>
             <div style={{ flexGrow: 1 }}>
-                <DataGrid
+                {/* <DataGrid
                     rows={rows}
                     columns={columns}
                     className={classes.root}
@@ -233,7 +233,7 @@ const DataList = inject('store')(observer(({ setPackageId, setOpenDialogReports,
                 //     Pagination: CustomPagination,
                 // }}
 
-                />
+                /> */}
             </div>
         </div>
     )

@@ -4,7 +4,8 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import clsx from 'clsx';
 import { inject, observer } from 'mobx-react'
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles';
 import { Grid, Drawer, Collapse, List, Tooltip, Button, ListItem, ListItemIcon, ListItemText, Typography, Divider, IconButton } from '@material-ui/core';
 
 import HomeIcon from '@material-ui/icons/Home';

@@ -3,7 +3,8 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import clsx from 'clsx'
 import { inject, observer } from 'mobx-react'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles';
 import { Drawer, Hidden } from '@material-ui/core'
 
 import Sidebar from './Sidebar'

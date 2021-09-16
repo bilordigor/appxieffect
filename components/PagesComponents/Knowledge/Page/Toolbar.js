@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { Tooltip, Divider, Grid, Typography, makeStyles, useTheme, IconButton } from '@material-ui/core';
-import Skeleton from '@material-ui/lab/Skeleton';
-
+import { Tooltip, Divider, Grid, Typography, Skeleton, useTheme, IconButton } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import { inject, observer } from 'mobx-react'
 
 import { useRouter } from 'next/router'

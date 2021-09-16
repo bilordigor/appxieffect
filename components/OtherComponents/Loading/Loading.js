@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid, makeStyles, Typography, useTheme } from '@material-ui/core';
+import { Grid, Typography, useTheme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import Image from 'next/image'
 import Loader from './Loader';
 

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { makeStyles, Grid, Divider, withStyles } from '@material-ui/core';
+import { Grid, Divider } from '@material-ui/core';
+import { withStyles, makeStyles } from '@material-ui/styles';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import ToggleButton from '@material-ui/core/ToggleButton';
+import ToggleButtonGroup from '@material-ui/core/ToggleButtonGroup';
 import ClearIcon from '@material-ui/icons/Clear';
 import { inject, observer } from 'mobx-react'
 

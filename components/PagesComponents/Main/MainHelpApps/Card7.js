@@ -1,8 +1,9 @@
 import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
-import Pagination from '@material-ui/lab/Pagination';
-import PaginationItem from '@material-ui/lab/PaginationItem';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Pagination from '@material-ui/core/Pagination';
+import PaginationItem from '@material-ui/core/PaginationItem';
+import { useTheme } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles';
 import { inject, observer } from 'mobx-react'
 import Image from 'next/image'
 import { useSwipeable } from 'react-swipeable';

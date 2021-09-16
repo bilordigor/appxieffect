@@ -3,8 +3,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Router from 'next/router'
 import React from 'react';
-import { Grid, Box, AppBar, Tabs, Typography, Tab } from '@material-ui/core';
-import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles'
+import { Grid, Box, AppBar, Tabs, Typography, Tab, useTheme } from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/styles'
 
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 

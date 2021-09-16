@@ -3,14 +3,8 @@ import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from "next/router";
 
-import { Divider, Paper, Grid, FormControlLabel, makeStyles, useTheme, Menu, Hidden, IconButton, InputBase, Switch, Typography } from '@material-ui/core'
-// import SearchIcon from '@material-ui/icons/Search';
-// import MoreVertIcon from '@material-ui/icons/MoreVert';
-//import CoursesList from '../../../components/app/EducationPage/CoursesList';
-// import Chipper from '../../../components/app/EducationPage/Chipper';
-
-// import AddCourse from '../../../components/app/EducationPage/AddCourse';
-//import Background from '../../../components/app/help/background/background';
+import { Divider, Paper, Grid, FormControlLabel, useTheme, Menu, Hidden, IconButton, InputBase, Switch, Typography } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
 
 import { inject, observer } from 'mobx-react'
 

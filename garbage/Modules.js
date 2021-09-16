@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { CircularProgress, Grid, Typography, makeStyles, useTheme } from '@material-ui/core';
+import { CircularProgress, Grid, Typography, useTheme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles'
 
 import { inject, observer } from 'mobx-react'
 

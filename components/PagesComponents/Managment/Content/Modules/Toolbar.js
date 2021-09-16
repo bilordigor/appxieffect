@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { ButtonGroup, Button, makeStyles, withStyles, Divider, useTheme, Tooltip } from '@material-ui/core';
+import { ButtonGroup, Button, Divider, useTheme, Tooltip } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import { inject, observer } from 'mobx-react'
 
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import ToggleButton from '@material-ui/core/ToggleButton';
+import ToggleButtonGroup from '@material-ui/core/ToggleButtonGroup';
 
 import Image from 'next/image'
 // import Chipper from './Modules/Chipper';
